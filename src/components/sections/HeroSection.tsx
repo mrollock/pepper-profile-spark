@@ -27,7 +27,7 @@ export function HeroSection() {
 
         <RevealSection delay={100}>
           <p className="mx-auto mb-6 max-w-[620px] text-[clamp(1rem,2.2vw,1.15rem)] leading-[1.75] text-cream-mid">
-            Two billion people on this planet learned to love a sensation the body registers as genuine pain. Nobody changed the pepper. They added mustard, vinegar, turmeric, garlic—and made something you'd put on your food on purpose. The Pepper Sauce Principle™ names the five conditions that let you do the same thing with grief, burnout, heartbreak, generational weight, chronic pain—whatever pepper you're carrying. Not by making the burn disappear. By building a life so rich the burn becomes part of the flavor.
+            Two billion people on this planet learned to love a sensation the body registers as genuine pain. Nobody changed the pepper. They added mustard, vinegar, turmeric, garlic—and made something you'd put on your food on purpose. The Pepper Sauce Principle™ names the five conditions that let you do the same thing with grief, burnout, heartbreak, generational weight, chronic pain—whatever pepper you're carrying. Not by making the burn disappear. By building a life so full of flavor that the burn has company.
           </p>
         </RevealSection>
 
