@@ -1,13 +1,36 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Navbar } from '@/components/Navbar';
+import { HeroSection } from '@/components/sections/HeroSection';
+import { QuizSection } from '@/components/sections/QuizSection';
+import { FrameworkSection } from '@/components/sections/FrameworkSection';
+import { ConditionsSection } from '@/components/sections/ConditionsSection';
+import { InterventionSection } from '@/components/sections/InterventionSection';
+import { GenerationsSection } from '@/components/sections/GenerationsSection';
+import { SpeakingSection } from '@/components/sections/SpeakingSection';
+import { BookSection } from '@/components/sections/BookSection';
+import { ResourcesSection } from '@/components/sections/ResourcesSection';
+import { AboutSection } from '@/components/sections/AboutSection';
+import { ConnectSection } from '@/components/sections/ConnectSection';
+import { Footer } from '@/components/sections/Footer';
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <>
+      <Navbar />
+      <main id="main">
+        <HeroSection />
+        <QuizSection />
+        <FrameworkSection />
+        <ConditionsSection />
+        <InterventionSection />
+        <GenerationsSection />
+        <SpeakingSection />
+        <BookSection />
+        <ResourcesSection />
+        <AboutSection />
+        <ConnectSection />
+      </main>
+      <Footer />
+    </>
   );
 };
 
