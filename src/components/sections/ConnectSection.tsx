@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 import { RevealSection } from '@/components/RevealSection';
 
 export function ConnectSection() {
@@ -8,6 +9,7 @@ export function ConnectSection() {
   const handleSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
     if (form.name && form.email && form.email.includes('@')) {
+      supabase.from('contact_submissions').insert({ name: form.name, email: form.email, message: form.message } as any).then(null, () => {});
       setSubmitted(true);
     }
   };

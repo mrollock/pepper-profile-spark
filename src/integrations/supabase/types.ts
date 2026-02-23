@@ -14,7 +14,198 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      book_signups: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          source: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          source?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          source?: string
+        }
+        Relationships: []
+      }
+      contact_submissions: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          message: string | null
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          message?: string | null
+          name: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string | null
+          name?: string
+        }
+        Relationships: []
+      }
+      quiz_submissions: {
+        Row: {
+          chronic_fire_type: string | null
+          created_at: string
+          email: string
+          id: string
+          item_1: number | null
+          item_10: number | null
+          item_11: number | null
+          item_12: number | null
+          item_13: number | null
+          item_14: number | null
+          item_15: number | null
+          item_16: number | null
+          item_17: number | null
+          item_18: number | null
+          item_19: number | null
+          item_2: number | null
+          item_20: number | null
+          item_21: number | null
+          item_22: number | null
+          item_23: number | null
+          item_24: number | null
+          item_25: number | null
+          item_26: number | null
+          item_27: number | null
+          item_28: number | null
+          item_29: string | null
+          item_3: number | null
+          item_30: string | null
+          item_31: string | null
+          item_32: string | null
+          item_33: string | null
+          item_4: number | null
+          item_5: number | null
+          item_6: number | null
+          item_7: number | null
+          item_8: number | null
+          item_9: number | null
+          name: string
+          primary_fire_type: string | null
+          score_agency: number | null
+          score_capacity: number | null
+          score_community: number | null
+          score_generativity: number | null
+          score_validation: number | null
+          scoville_gate_triggered: boolean | null
+          scoville_items_flagged: string[] | null
+        }
+        Insert: {
+          chronic_fire_type?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          item_1?: number | null
+          item_10?: number | null
+          item_11?: number | null
+          item_12?: number | null
+          item_13?: number | null
+          item_14?: number | null
+          item_15?: number | null
+          item_16?: number | null
+          item_17?: number | null
+          item_18?: number | null
+          item_19?: number | null
+          item_2?: number | null
+          item_20?: number | null
+          item_21?: number | null
+          item_22?: number | null
+          item_23?: number | null
+          item_24?: number | null
+          item_25?: number | null
+          item_26?: number | null
+          item_27?: number | null
+          item_28?: number | null
+          item_29?: string | null
+          item_3?: number | null
+          item_30?: string | null
+          item_31?: string | null
+          item_32?: string | null
+          item_33?: string | null
+          item_4?: number | null
+          item_5?: number | null
+          item_6?: number | null
+          item_7?: number | null
+          item_8?: number | null
+          item_9?: number | null
+          name: string
+          primary_fire_type?: string | null
+          score_agency?: number | null
+          score_capacity?: number | null
+          score_community?: number | null
+          score_generativity?: number | null
+          score_validation?: number | null
+          scoville_gate_triggered?: boolean | null
+          scoville_items_flagged?: string[] | null
+        }
+        Update: {
+          chronic_fire_type?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          item_1?: number | null
+          item_10?: number | null
+          item_11?: number | null
+          item_12?: number | null
+          item_13?: number | null
+          item_14?: number | null
+          item_15?: number | null
+          item_16?: number | null
+          item_17?: number | null
+          item_18?: number | null
+          item_19?: number | null
+          item_2?: number | null
+          item_20?: number | null
+          item_21?: number | null
+          item_22?: number | null
+          item_23?: number | null
+          item_24?: number | null
+          item_25?: number | null
+          item_26?: number | null
+          item_27?: number | null
+          item_28?: number | null
+          item_29?: string | null
+          item_3?: number | null
+          item_30?: string | null
+          item_31?: string | null
+          item_32?: string | null
+          item_33?: string | null
+          item_4?: number | null
+          item_5?: number | null
+          item_6?: number | null
+          item_7?: number | null
+          item_8?: number | null
+          item_9?: number | null
+          name?: string
+          primary_fire_type?: string | null
+          score_agency?: number | null
+          score_capacity?: number | null
+          score_community?: number | null
+          score_generativity?: number | null
+          score_validation?: number | null
+          scoville_gate_triggered?: boolean | null
+          scoville_items_flagged?: string[] | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
