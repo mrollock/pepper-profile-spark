@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 import { RevealSection } from '@/components/RevealSection';
 
 export function BookSection() {
@@ -8,6 +9,7 @@ export function BookSection() {
   const handleSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
     if (email && email.includes('@')) {
+      supabase.from('book_signups').insert({ email, source: 'book_notification' } as any).then(null, () => {});
       setSubmitted(true);
     }
   };

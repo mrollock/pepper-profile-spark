@@ -1,4 +1,5 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 import {
   ITEMS,
@@ -26,6 +27,39 @@ export function QuizSection() {
   const [scovilleTriggered, setScovilleTriggered] = useState(false);
   const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
+  const submittedRef = useRef(false);
+
+  useEffect(() => {
+    if (phase !== 'results' || submittedRef.current) return;
+    submittedRef.current = true;
+
+    const scores: Record<number, number> = {};
+    for (let c = 1; c <= 5; c++) scores[c] = scoreCondition(c, responses);
+    const pFire = getPrimaryFireType(responses);
+    const cFire = getChronicFireType(responses);
+    const pLabel = pFire.map(f => FIRE_NAMES[f]).join(' · ');
+    const scovilleItems = [6, 17, 24].filter(id => (responses[id] as number) >= 5);
+
+    const row: Record<string, unknown> = {
+      name: userName,
+      email: userEmail,
+      score_validation: scores[1],
+      score_agency: scores[2],
+      score_community: scores[3],
+      score_capacity: scores[4],
+      score_generativity: scores[5],
+      primary_fire_type: pLabel,
+      chronic_fire_type: cFire ? FIRE_NAMES[cFire] : null,
+      scoville_gate_triggered: scovilleItems.length > 0,
+      scoville_items_flagged: scovilleItems.map(String),
+    };
+    for (let i = 1; i <= 33; i++) {
+      row[`item_${i}`] = responses[i] ?? null;
+    }
+
+    supabase.from('quiz_submissions').insert(row as any).then(null, () => {});
+  }, [phase]);
+
 
   const likertItems = ITEMS.filter(i => i.type === 'likert');
   const fireItems = ITEMS.filter(i => i.type === 'fire');
@@ -335,6 +369,7 @@ export function QuizSection() {
 
   const primaryLabel = primaryFire.map(f => FIRE_NAMES[f]).join(' · ');
   const primaryDesc = FIRE_DESC[primaryFire[0]];
+
 
   return (
     <section className="bg-cream-soft py-[var(--section-pad)] px-[clamp(1.25rem,5vw,3rem)]" id="quiz">
