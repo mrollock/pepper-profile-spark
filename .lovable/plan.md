@@ -1,55 +1,65 @@
 
 
-# Supabase Integration for Form Submissions & Quiz Data
+# Hero Copy, Signature Blend, and Extended Profile Upsell
 
-## Overview
-Connect Supabase to capture quiz completions, book signups, and contact form submissions. All data is inserted silently in the background with no changes to UI, copy, or quiz logic.
+## 1. Hero Section -- Replace the paragraph
 
-## Step 1: Connect Supabase
-Enable Supabase on the project and initialize the client.
+In `src/components/sections/HeroSection.tsx`, replace the single long paragraph (lines 31-36) with three new paragraphs using the exact copy from the prompt. Each paragraph gets its own `RevealSection` wrapper with staggered delays (100, 150, 200). Typographic characters (curly quotes, em dashes, trademark symbol) will be used throughout. The h1, tagline, and CTA buttons remain untouched.
 
-## Step 2: Database Tables & RLS
+## 2. Quiz Results -- Add "Your Signature Blend" section
 
-Create three tables via migration:
+In `src/components/sections/QuizSection.tsx`, add a new block after the Chronic Fire display (after line ~447) and before the CTAs.
 
-**quiz_submissions** -- 33 item columns (item_1 through item_28 as smallint, item_29 through item_33 as text), 5 computed score columns, fire type columns, scoville gate fields, plus name/email/timestamps.
+### Blend logic (computed inline in the results render):
+- **Anchors**: conditions scoring 21 or above
+- **Thin conditions**: conditions scoring 12 or below
+- **Fire-to-condition mapping**: Use the exact copy strings from the prompt, selected based on the user's primary fire type letter and which conditions are thin. If no mapping matches, use the general fallback text.
+- **Closing line** (static): "This is your recipe as it stands today. Not a grade. Not a diagnosis. A starting point -- and a reminder that you're already cooking."
 
-**book_signups** -- email, source (default 'book_notification'), timestamps.
+### Styling:
+- Heading uses the serif font (font-display class)
+- Anchor conditions shown with gold accent text
+- Thin conditions shown with muted tone
+- Same dark/warm aesthetic as surrounding results
 
-**contact_submissions** -- name, email, message, timestamps.
+## 3. Post-Quiz Upsell -- "Go Deeper" Extended Profile
 
-RLS policies on all three tables: allow anonymous INSERT only. No SELECT, UPDATE, or DELETE from client -- data is only readable via the Supabase dashboard.
+### Database changes (migration):
+Add two columns to `quiz_submissions`:
+- `extended_profile_purchased` (boolean, default false)
+- `extended_profile_purchased_at` (timestamptz, nullable)
 
-## Step 3: Create Supabase Client
-Add `src/integrations/supabase/client.ts` with the project's anon key.
+### UI changes in QuizSection.tsx results:
+- Move "Print My Results" button to appear right after the Signature Blend section
+- Replace "Want to Go Deeper?" link-to-book with a full upsell block containing:
+  - Heading: "Want to Go Deeper?"
+  - Body copy (exact text from prompt about the Extended Pepper Sauce Profile)
+  - Price display: "$29 -- one-time"
+  - CTA button: "Get My Extended Profile" -- since no payment integration is ready, this shows a confirmation form. The user's email is already captured, so it displays their email and a confirm button. On click, it updates the user's quiz_submissions row (matched by email) setting `extended_profile_purchased = true` and `extended_profile_purchased_at = now()`, then shows a confirmation message: "We'll send your Extended Profile questions within 24 hours. Your personalized report arrives within 48 hours of completion."
+  - Legal disclaimer in small muted text (exact copy from prompt)
+- Remove the old closing paragraph ("What you just shared is your recipe...") since the Signature Blend closing line and legal disclaimer now cover it
 
-## Step 4: Wire Up Submissions
-
-### QuizSection.tsx
-- When the results phase renders, fire an async insert to `quiz_submissions` with:
-  - name, email
-  - All 33 raw item responses (item_1 through item_33)
-  - 5 computed condition scores (applying reverse scoring on items 4, 14 before summing)
-  - primary_fire_type (e.g. "Personal" or "Personal . Relational")
-  - chronic_fire_type
-  - scoville_gate_triggered boolean
-  - scoville_items_flagged array (which of items 6, 17, 24 had raw value >= 5)
-- Use a `useRef` flag to prevent duplicate submissions on re-renders
-- Fire-and-forget: catch errors silently, never block UI
-
-### BookSection.tsx
-- After validation passes and before showing the thank-you message, fire an async insert to `book_signups` with email and source='book_notification'
-- Silent failure
-
-### ConnectSection.tsx
-- After validation passes and before showing the thank-you message, fire an async insert to `contact_submissions` with name, email, message
-- Silent failure
+### Results flow (top to bottom):
+1. Five Conditions bar scores with interpretations (existing)
+2. Primary Fire Type (existing)
+3. Chronic Fire Type if different (existing)
+4. Your Signature Blend (new)
+5. Print My Results button (repositioned)
+6. Want to Go Deeper? upsell (new)
+7. Legal disclaimer (new)
 
 ## Technical Details
 
-- No changes to any copy, quiz flow, scoring logic, or UI behavior
-- All inserts are async/non-blocking with `.catch(() => {})` 
-- Raw values stored for all items (reverse scoring only applied when computing condition scores)
-- The `scoville_items_flagged` column uses Postgres `text[]` array type
-- Quiz submission happens once via `useEffect` + `useRef` guard when phase becomes 'results'
+### Files modified:
+- `src/components/sections/HeroSection.tsx` -- replace paragraph block
+- `src/components/sections/QuizSection.tsx` -- add Signature Blend section, restructure CTAs, add upsell block with purchase flow
+- New migration SQL -- add `extended_profile_purchased` and `extended_profile_purchased_at` columns to `quiz_submissions`, plus an RLS policy allowing anonymous UPDATE on those two columns only (matched by email)
+
+### RLS for update:
+A new policy on `quiz_submissions` allows anonymous UPDATE but only on the `extended_profile_purchased` and `extended_profile_purchased_at` columns. This is handled via a Postgres function + trigger that restricts which columns can change, or alternatively by using a separate `extended_profile_purchases` table with insert-only RLS (safer approach). The safer approach will be used: create a new `extended_profile_purchases` table with columns (id, email, purchased_at) and an insert-only anon policy, avoiding any UPDATE on quiz_submissions.
+
+### No changes to:
+- Quiz flow, scoring logic, copy in other sections
+- Framework, conditions cards, book, footer, or any other section
+- Existing Supabase submission logic
 
