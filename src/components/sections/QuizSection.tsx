@@ -18,6 +18,132 @@ import {
 
 type Phase = 'landing' | 'quiz' | 'fireIntro' | 'fire' | 'results';
 
+/* ── Fire-to-thin-condition copy mapping ── */
+const FIRE_CONDITION_MAP: Record<string, Record<number, string>> = {
+  A: {
+    1: "\u201CWhen the fire is personal\u00A0\u2014 your own pain, your own body, your own loss\u00A0\u2014 having someone believe the burn is real changes everything. That\u2019s where to start.\u201D",
+    2: "\u201CYou\u2019re carrying personal fire, but the recipe feels like it\u2019s happening to you rather than something you\u2019re making. Even one deliberate choice about how you hold this pain shifts the whole dish.\u201D",
+  },
+  B: {
+    3: "\u201CThe burn is between you and someone else\u00A0\u2014 but you may be processing it alone. Relational fire needs a table, even when the person who caused the burn isn\u2019t sitting at it.\u201D",
+    1: "\u201CThe hardest part of relational fire is when no one sees it\u00A0\u2014 or when they take sides. Your burn deserves a witness who doesn\u2019t try to fix it.\u201D",
+  },
+  C: {
+    3: "\u201CYou\u2019re carrying a burn the whole community shares\u00A0\u2014 but you may be holding your piece of it in isolation. Communal fire can only be held communally.\u201D",
+    5: "\u201CThe fire you\u2019re carrying didn\u2019t start with you. Passing forward what you\u2019ve learned\u00A0\u2014 your recipe for holding it\u00A0\u2014 is how communal pain becomes communal wisdom.\u201D",
+  },
+  D: {
+    1: "\u201CThe fire was passed to you before you had words for it. Naming it\u00A0\u2014 saying \u2018the pepper is real, and I didn\u2019t plant it\u2019\u00A0\u2014 is the first ingredient.\u201D",
+    2: "\u201CYou inherited this fire. You didn\u2019t choose it. But you get to choose what you do with it\u00A0\u2014 and that choice is where the recipe becomes yours instead of theirs.\u201D",
+  },
+  E: {
+    4: "\u201CYou chose this burn\u00A0\u2014 you\u2019re doing hard things on purpose. But you may be pushing past your heat tolerance. Growth fire still needs graduated engagement, not an all\u2011at\u2011once blaze.\u201D",
+    3: "\u201CYou\u2019re building something difficult and meaningful\u00A0\u2014 but you\u2019re building it alone. Even intentional fire needs a table.\u201D",
+  },
+};
+
+const BLEND_FALLBACK = "\u201CEvery fire needs its own blend. The conditions that are thin in your recipe right now aren\u2019t failures\u00A0\u2014 they\u2019re the ingredients you haven\u2019t added yet. And every one of them can be strengthened.\u201D";
+
+/* ── Signature Blend Component ── */
+function SignatureBlend({ scores, primaryFire }: { scores: Record<number, number>; primaryFire: string[] }) {
+  const anchors = [1, 2, 3, 4, 5].filter(c => scores[c] >= 21);
+  const thin = [1, 2, 3, 4, 5].filter(c => scores[c] <= 12);
+
+  const fireKey = primaryFire[0];
+  const mapping = FIRE_CONDITION_MAP[fireKey] || {};
+  let fireBlendLine: string | null = null;
+  for (const c of thin) {
+    if (mapping[c]) { fireBlendLine = mapping[c]; break; }
+  }
+  if (!fireBlendLine) fireBlendLine = BLEND_FALLBACK;
+
+  return (
+    <div className="my-10 rounded-xl border border-gold/20 bg-dark p-8">
+      <h3 className="mb-3 text-center font-display text-gold-light">Your Signature Blend</h3>
+      <p className="mb-6 text-center text-[0.92rem] leading-[1.7] text-cream-mid">
+        Your fire tells us what kind of heat you&#8217;re carrying. Your conditions tell us what&#8217;s in the recipe alongside it. Together, they reveal your signature blend&nbsp;&#8212; the unique combination of ingredients that makes your sauce yours.
+      </p>
+
+      {anchors.length > 0 && (
+        <div className="mb-4">
+          <p className="mb-1 text-[0.88rem] font-semibold text-gold-light">
+            Your anchors&nbsp;&#8212; the ingredients you&#8217;re already cooking with:
+          </p>
+          <p className="text-[0.9rem] text-cream-soft">
+            {anchors.map(c => CONDITION_NAMES[c]).join(', ')}
+          </p>
+        </div>
+      )}
+
+      {thin.length > 0 && (
+        <div className="mb-4">
+          <p className="mb-1 text-[0.88rem] font-semibold text-cream-mid">
+            Where your recipe has room&nbsp;&#8212; the ingredients that could change the whole flavor:
+          </p>
+          <p className="text-[0.9rem] text-cream-mid/70">
+            {thin.map(c => CONDITION_NAMES[c]).join(', ')}
+          </p>
+        </div>
+      )}
+
+      <p className="mb-6 text-[0.92rem] italic leading-[1.7] text-cream-soft">
+        {fireBlendLine}
+      </p>
+
+      <p className="text-center text-[0.88rem] text-cream-mid">
+        This is your recipe as it stands today. Not a grade. Not a diagnosis. A starting point&nbsp;&#8212; and a reminder that you&#8217;re already cooking.
+      </p>
+    </div>
+  );
+}
+
+/* ── Extended Profile Upsell Component ── */
+function ExtendedProfileUpsell({ email }: { email: string }) {
+  const [purchased, setPurchased] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+
+  const handlePurchase = async () => {
+    setSubmitting(true);
+    try {
+      await supabase.from('extended_profile_purchases').insert({ email } as any);
+    } catch { /* non-blocking */ }
+    setPurchased(true);
+    setSubmitting(false);
+  };
+
+  if (purchased) {
+    return (
+      <div className="mt-10 rounded-xl border border-gold/20 bg-dark p-8 text-center">
+        <div className="mb-3 text-[2rem]">&#10003;</div>
+        <h3 className="mb-3 text-gold-light">You&#8217;re In</h3>
+        <p className="text-[0.95rem] leading-[1.7] text-cream-soft">
+          We&#8217;ll send your Extended Profile questions within 24 hours. Your personalized report arrives within 48 hours of completion.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-10 rounded-xl border border-gold/20 bg-dark p-8 text-center">
+      <h3 className="mb-3 font-display text-gold-light">Want to Go Deeper?</h3>
+      <p className="mx-auto mb-6 max-w-[560px] text-[0.92rem] leading-[1.7] text-cream-soft">
+        Your Pepper Sauce Profile gave you the broad strokes&nbsp;&#8212; your fire, your conditions, your signature blend. The Extended Pepper Sauce Profile takes it further: a personalized analysis of how your specific fire interacts with your specific recipe, along with concrete next steps tailored to where you are right now. Answer a few more questions, and within 48 hours you&#8217;ll receive a detailed, individualized report designed around your results.
+      </p>
+      <p className="mb-6 font-display text-[1.5rem] text-gold-light">$29&nbsp;&#8212; one&#8209;time</p>
+      <p className="mb-4 text-[0.85rem] text-cream-mid">
+        Your email: <span className="font-semibold text-cream-soft">{email}</span>
+      </p>
+      <button
+        onClick={handlePurchase}
+        disabled={submitting}
+        className="rounded-md bg-gold px-9 py-3.5 font-body text-[0.95rem] font-semibold text-dark transition-all hover:bg-gold-light hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(200,150,46,0.3)] disabled:opacity-50"
+      >
+        {submitting ? 'Processing\u2026' : 'Get My Extended Profile'}
+      </button>
+    </div>
+  );
+}
+
 export function QuizSection() {
   const [phase, setPhase] = useState<Phase>('landing');
   const [currentItem, setCurrentItem] = useState(0);
@@ -446,28 +572,25 @@ export function QuizSection() {
             </div>
           )}
 
-          {/* CTAs */}
+          {/* Signature Blend */}
+          <SignatureBlend scores={scores} primaryFire={primaryFire} />
+
+          {/* Print */}
           <div className="mt-10 text-center">
-            <p className="mb-2 font-display text-[1.2rem]">Pass the Sauce</p>
-            <p className="mb-6 text-text-light">Share your recipe with someone.</p>
-            <div className="flex flex-wrap justify-center gap-3">
-              <button
-                onClick={() => window.print()}
-                className="rounded-md bg-gold px-9 py-3.5 font-body text-[0.95rem] font-semibold text-dark transition-all hover:bg-gold-light hover:-translate-y-0.5"
-              >
-                Print My Results
-              </button>
-              <a
-                href="#book"
-                className="rounded-md bg-dark px-9 py-3.5 font-body text-[0.95rem] font-semibold text-cream transition-all hover:bg-dark-warm hover:-translate-y-0.5"
-              >
-                Want to Go Deeper?
-              </a>
-            </div>
+            <button
+              onClick={() => window.print()}
+              className="rounded-md bg-gold px-9 py-3.5 font-body text-[0.95rem] font-semibold text-dark transition-all hover:bg-gold-light hover:-translate-y-0.5"
+            >
+              Print My Results
+            </button>
           </div>
 
-          <p className="mt-10 text-center text-[0.82rem] text-text-faint">
-            What you just shared is your recipe as it stands today — not a grade, not a diagnosis, just an honest look at what you're working with. Recipes change. Kitchens get fuller. New ingredients show up. The fact that you took the time to look at yours means you're already cooking.
+          {/* Go Deeper Upsell */}
+          <ExtendedProfileUpsell email={userEmail} />
+
+          {/* Legal */}
+          <p className="mt-10 text-center text-[0.78rem] leading-[1.6] text-text-faint">
+            The Pepper Sauce Profile and Extended Pepper Sauce Profile are educational and personal development tools. They do not constitute clinical services, psychological assessment, diagnosis, or treatment. Purchasing or completing the Extended Profile does not establish a therapeutic, counseling, or professional&#8209;client relationship with Dr.&nbsp;Rollock or any affiliated entity. If you are in crisis or need clinical support, please contact the 988 Suicide and Crisis Lifeline (call or text 988) or your local emergency services.
           </p>
         </div>
       </div>
