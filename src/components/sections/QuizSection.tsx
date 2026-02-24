@@ -154,6 +154,7 @@ export function QuizSection() {
   const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const submittedRef = useRef(false);
+  const isTransitioning = useRef(false);
 
   useEffect(() => {
     if (phase !== 'results' || submittedRef.current) return;
@@ -206,28 +207,34 @@ export function QuizSection() {
   };
 
   const handleLikertSelect = (itemId: number, value: number, scoring?: string) => {
+    if (isTransitioning.current) return;
     setResponses(prev => ({ ...prev, [itemId]: value }));
     if (scoring === 'scoville' && value >= 5) {
       setScovilleTriggered(true);
     }
+    isTransitioning.current = true;
     setTimeout(() => {
       if (currentItem + 1 >= likertItems.length) {
         setPhase('fireIntro');
       } else {
         setCurrentItem(prev => prev + 1);
       }
+      isTransitioning.current = false;
       scrollToQuiz();
     }, 300);
   };
 
   const handleFireSelect = (itemId: number, value: string) => {
+    if (isTransitioning.current) return;
     setResponses(prev => ({ ...prev, [itemId]: value }));
+    isTransitioning.current = true;
     setTimeout(() => {
       if (currentItem + 1 >= fireItems.length) {
         setPhase('results');
       } else {
         setCurrentItem(prev => prev + 1);
       }
+      isTransitioning.current = false;
       scrollToQuiz();
     }, 350);
   };
