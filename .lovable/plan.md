@@ -1,59 +1,27 @@
 
 
-# Fix: Quiz Race Condition Causing Reset
+# Replace "The Dinner Table Exercise" with "The Recipe Check-In"
 
-## Problem
-The bounds guard correctly prevents the crash but causes the quiz to reset to item 1. The root cause is that `handleLikertSelect` captures `currentItem` in a closure inside `setTimeout(300ms)`. When a user clicks an option while the previous timeout is still pending, two timeouts fire and both call `setCurrentItem(prev => prev + 1)`, pushing `currentItem` past bounds. The guard then resets to 0.
+## Overview
+Replace the content inside the `InterventionSection` component while preserving the section wrapper, its classes, `id="intervention"`, and the existing dark-section styling/layout patterns.
 
-## Fix
+## Changes
 
-In `src/components/sections/QuizSection.tsx`:
+### File: `src/components/sections/InterventionSection.tsx`
 
-1. Add an `isTransitioning` ref to debounce rapid clicks:
-```typescript
-const isTransitioning = useRef(false);
-```
+Replace all content inside the `<RevealSection>` wrapper with:
 
-2. In `handleLikertSelect`, guard against double-fires:
-```typescript
-const handleLikertSelect = (itemId: number, value: number, scoring?: string) => {
-  if (isTransitioning.current) return;  // <-- prevent double click
-  setResponses(prev => ({ ...prev, [itemId]: value }));
-  if (scoring === 'scoville' && value >= 5) {
-    setScovilleTriggered(true);
-  }
-  isTransitioning.current = true;  // <-- lock
-  setTimeout(() => {
-    if (currentItem + 1 >= likertItems.length) {
-      setPhase('fireIntro');
-    } else {
-      setCurrentItem(prev => prev + 1);
-    }
-    isTransitioning.current = false;  // <-- unlock
-    scrollToQuiz();
-  }, 300);
-};
-```
+1. **Label**: "Start Tonight" (unchanged)
+2. **Heading**: "The Recipe Check-In" (replaces "The Dinner Table Exercise")
+3. **Gold divider bar** (unchanged)
+4. **Intro paragraph**: "Pick one person. It doesn't have to be at dinner -- it can be a phone call, a walk, a text thread. Ask them two things:"
+5. **Two styled prompts** (using the same `font-display` quote block styling as the current intervention text):
+   - "What pepper are you carrying right now that nobody's asked you about?"
+   - "What's one ingredient keeping you going that you haven't said out loud?"
+6. **Closing copy**: "Then just listen. Don't fix. Don't match it with your own. Let the burn and the flavor sit on the table at the same time -- because that's the whole principle in one conversation. And when they're done: *'The pepper is real. Tell me more.'*"
+7. **Second closing line**: "Then switch. Your turn."
+8. **CTA link/button**: "What's in YOUR recipe? Take the Free Pepper Sauce Profile" -- styled as a gold-toned link/button that scrolls to the `#quiz` section
 
-3. Apply the same pattern to `handleFireSelect`:
-```typescript
-const handleFireSelect = (itemId: number, value: string) => {
-  if (isTransitioning.current) return;
-  setResponses(prev => ({ ...prev, [itemId]: value }));
-  isTransitioning.current = true;
-  setTimeout(() => {
-    if (currentItem + 1 >= fireItems.length) {
-      setPhase('results');
-    } else {
-      setCurrentItem(prev => prev + 1);
-    }
-    isTransitioning.current = false;
-    scrollToQuiz();
-  }, 350);
-};
-```
+### No other files modified.
+All copy will be used exactly as provided -- no rewrites.
 
-4. Keep the existing bounds guards as a safety net (they no longer trigger but provide defense in depth).
-
-### Files modified:
-- `src/components/sections/QuizSection.tsx` -- add `isTransitioning` ref and guards in both handler functions
