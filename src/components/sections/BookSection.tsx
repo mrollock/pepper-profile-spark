@@ -41,7 +41,8 @@ export function BookSection() {
                 placeholder="Your email address"
                 aria-label="Email for book notification"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value.slice(0, 255))}
+                maxLength={255}
                 className="rounded-md border-[1.5px] border-gold/20 bg-dark-mid px-4 py-3.5 font-body text-[0.95rem] text-cream transition-colors focus:border-gold focus:outline-none"
               />
               <button
