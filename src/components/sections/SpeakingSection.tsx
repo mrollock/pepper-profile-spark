@@ -38,7 +38,7 @@ export function SpeakingSection() {
 
           <div className="mt-8 text-center">
             <a
-              href="mailto:info@imaginativefeedback.com?subject=Speaking%20Inquiry%20-%20Pepper%20Sauce%20Principle"
+              href="mailto:Michael@ifwall.com?subject=Speaking%20Inquiry%20-%20Pepper%20Sauce%20Principle"
               className="inline-block rounded-md bg-dark px-9 py-3.5 font-body text-[0.95rem] font-semibold text-cream transition-all hover:bg-dark-warm hover:-translate-y-0.5"
             >
               Book Dr. Rollock
@@ -46,7 +46,7 @@ export function SpeakingSection() {
             <p className="mt-4 text-[0.88rem] text-text-light">
               Imaginative Feedback Coaching & Consulting
               <br />
-              info@imaginativefeedback.com
+              Michael@ifwall.com
             </p>
           </div>
         </RevealSection>

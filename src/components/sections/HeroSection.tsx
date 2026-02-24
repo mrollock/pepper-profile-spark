@@ -27,17 +27,31 @@ export function HeroSection() {
 
         <RevealSection delay={100}>
           <p className="mx-auto mb-6 max-w-[620px] text-[clamp(1rem,2.2vw,1.15rem)] leading-[1.75] text-cream-mid">
-            Nobody eats a raw pepper and calls it a meal. You add mustard. Vinegar. Garlic. You blend it, bottle it, and put it on the table for the people you love. Caribbean grandmothers have always known this. Psychologists and neuroscientists are finally catching up: under the right conditions, pain and meaning can live in the same life&nbsp;— not by eliminating the burn, but by making sure the burn has company.
+            What determines whether we suffer isn&#8217;t the pain itself&nbsp;— it&#8217;s what surrounds it.
           </p>
         </RevealSection>
 
         <RevealSection delay={150}>
-          <p className="mx-auto mb-6 max-w-[620px] text-[clamp(1rem,2.2vw,1.15rem)] leading-[1.75] text-cream-mid">
-            Whether you&#8217;re carrying grief, burnout, chronic pain, or generational trauma, The Pepper Sauce Principle&#8482; names five evidence&#8209;based conditions you can act on today&nbsp;— not to eliminate the pepper, but to build a life so flavor&#8209;full that pain takes its rightful place as one ingredient among many.
+          <p className="mx-auto mt-2 mb-6 max-w-[620px] font-accent text-[clamp(1.1rem,2.5vw,1.3rem)] italic leading-[1.6] text-gold-pale">
+            Pain is the pepper. The conditions are the sauce.
           </p>
         </RevealSection>
 
         <RevealSection delay={200}>
+          <p className="mx-auto mb-6 max-w-[620px] text-[clamp(1rem,2.2vw,1.15rem)] leading-[1.75] text-cream-mid">
+            Nobody eats a raw pepper and calls it a meal. What turns heat into flavor is the recipe&nbsp;— the surrounding ingredients, the craft, the company at the table.
+          </p>
+        </RevealSection>
+
+        <RevealSection delay={250}>
+          <p className="mx-auto mb-6 max-w-[620px] text-[clamp(1rem,2.2vw,1.15rem)] leading-[1.75] text-cream-mid">
+            Whether you&#8217;re carrying grief, burnout, chronic pain, or generational trauma, The Pepper Sauce Principle&#8482; names{' '}
+            <a href="#conditions" className="text-gold-light hover:underline">five evidence-based conditions</a>{' '}
+            you can act on today&nbsp;— not to eliminate the pepper, but to build a life so flavor&#8209;full that pain takes its rightful place as one ingredient among many.
+          </p>
+        </RevealSection>
+
+        <RevealSection delay={300}>
           <p className="mx-auto mb-6 max-w-[620px] text-[clamp(1rem,2.2vw,1.15rem)] leading-[1.75] text-cream-mid">
             The free Pepper Sauce Profile&#8482; reveals what kind of fire is in your bottle right now, how you relate to the heat, and what&#8217;s already in your recipe&nbsp;— along with a signature blend of ingredients you can start adding today. Not to neutralize the pepper. To make sure it&#8217;s not the only thing you taste.
           </p>
