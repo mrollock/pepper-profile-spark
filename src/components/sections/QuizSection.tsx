@@ -295,6 +295,10 @@ export function QuizSection() {
   // QUIZ ITEM (Likert)
   if (phase === 'quiz') {
     const item = likertItems[currentItem];
+    if (!item) {
+      setCurrentItem(0);
+      return null;
+    }
     const itemIndex = ITEMS.indexOf(item);
     const condLabel = getConditionLabel(itemIndex);
     const selected = responses[item.id] as number | undefined;
@@ -408,6 +412,10 @@ export function QuizSection() {
   // FIRE ITEMS
   if (phase === 'fire') {
     const item = fireItems[currentItem];
+    if (!item) {
+      setCurrentItem(0);
+      return null;
+    }
     const selected = responses[item.id] as string | undefined;
     const progress = ((currentItem) / fireItems.length * 100).toFixed(0);
 
