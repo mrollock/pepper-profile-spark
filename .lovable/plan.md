@@ -1,50 +1,59 @@
 
 
-# Fix: Quiz Section Crash on Fire Phase
+# Fix: Quiz Race Condition Causing Reset
 
-## Problem Found
-During end-to-end testing, a runtime error was discovered:
-
-```
-TypeError: Cannot read properties of undefined (reading 'id')
-```
-
-This crash occurs at `QuizSection.tsx` line ~411 where `fireItems[currentItem]` returns `undefined` because `currentItem` can exceed the `fireItems` array bounds.
-
-## Root Cause
-When rapidly clicking through Likert items, the `setTimeout` (300ms) in `handleLikertSelect` can cause a race condition. Multiple timeouts fire, incrementing `currentItem` beyond bounds. When the phase transitions from `fireIntro` to `fire`, if React batches the state updates in an unexpected order, `currentItem` may not yet be reset to 0 when the `fire` phase render occurs.
+## Problem
+The bounds guard correctly prevents the crash but causes the quiz to reset to item 1. The root cause is that `handleLikertSelect` captures `currentItem` in a closure inside `setTimeout(300ms)`. When a user clicks an option while the previous timeout is still pending, two timeouts fire and both call `setCurrentItem(prev => prev + 1)`, pushing `currentItem` past bounds. The guard then resets to 0.
 
 ## Fix
 
-In `src/components/sections/QuizSection.tsx`, add a bounds guard at the top of the `fire` phase block (around line 409-411):
+In `src/components/sections/QuizSection.tsx`:
 
+1. Add an `isTransitioning` ref to debounce rapid clicks:
 ```typescript
-if (phase === 'fire') {
-  const item = fireItems[currentItem];
-  if (!item) {
-    // Guard: reset if out of bounds
-    setCurrentItem(0);
-    return null;
-  }
-  const selected = responses[item.id] as string | undefined;
-  ...
+const isTransitioning = useRef(false);
 ```
 
-Additionally, add the same pattern for the Likert phase to prevent any similar issue:
-
+2. In `handleLikertSelect`, guard against double-fires:
 ```typescript
-if (phase === 'quiz') {
-  const item = likertItems[currentItem];
-  if (!item) {
-    setCurrentItem(0);
-    return null;
+const handleLikertSelect = (itemId: number, value: number, scoring?: string) => {
+  if (isTransitioning.current) return;  // <-- prevent double click
+  setResponses(prev => ({ ...prev, [itemId]: value }));
+  if (scoring === 'scoville' && value >= 5) {
+    setScovilleTriggered(true);
   }
-  ...
+  isTransitioning.current = true;  // <-- lock
+  setTimeout(() => {
+    if (currentItem + 1 >= likertItems.length) {
+      setPhase('fireIntro');
+    } else {
+      setCurrentItem(prev => prev + 1);
+    }
+    isTransitioning.current = false;  // <-- unlock
+    scrollToQuiz();
+  }, 300);
+};
 ```
 
-## Technical Details
+3. Apply the same pattern to `handleFireSelect`:
+```typescript
+const handleFireSelect = (itemId: number, value: string) => {
+  if (isTransitioning.current) return;
+  setResponses(prev => ({ ...prev, [itemId]: value }));
+  isTransitioning.current = true;
+  setTimeout(() => {
+    if (currentItem + 1 >= fireItems.length) {
+      setPhase('results');
+    } else {
+      setCurrentItem(prev => prev + 1);
+    }
+    isTransitioning.current = false;
+    scrollToQuiz();
+  }, 350);
+};
+```
+
+4. Keep the existing bounds guards as a safety net (they no longer trigger but provide defense in depth).
 
 ### Files modified:
-- `src/components/sections/QuizSection.tsx` -- add bounds guards in both the Likert (`quiz`) and fire phase render blocks to handle out-of-bounds `currentItem` gracefully instead of crashing
-
-### No other changes needed.
+- `src/components/sections/QuizSection.tsx` -- add `isTransitioning` ref and guards in both handler functions
