@@ -70,7 +70,7 @@ export function QuizSection() {
 
   const handleStart = () => {
     const nameOk = userName.trim().length > 0;
-    const emailOk = userEmail.trim().length > 0 && userEmail.includes('@');
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userEmail.trim());
     setNameError(!nameOk);
     setEmailError(!emailOk);
     if (!nameOk || !emailOk) return;

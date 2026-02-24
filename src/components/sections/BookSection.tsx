@@ -8,7 +8,7 @@ export function BookSection() {
 
   const handleSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (email && email.includes('@')) {
+    if (email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
       supabase.from('book_signups').insert({ email, source: 'book_notification' } as any).then(null, () => {});
       setSubmitted(true);
     }
