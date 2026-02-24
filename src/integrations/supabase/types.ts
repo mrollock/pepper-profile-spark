@@ -59,6 +59,24 @@ export type Database = {
         }
         Relationships: []
       }
+      extended_profile_purchases: {
+        Row: {
+          email: string
+          id: string
+          purchased_at: string
+        }
+        Insert: {
+          email: string
+          id?: string
+          purchased_at?: string
+        }
+        Update: {
+          email?: string
+          id?: string
+          purchased_at?: string
+        }
+        Relationships: []
+      }
       quiz_submissions: {
         Row: {
           chronic_fire_type: string | null

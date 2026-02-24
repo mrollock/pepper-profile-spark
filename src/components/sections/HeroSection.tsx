@@ -27,17 +27,29 @@ export function HeroSection() {
 
         <RevealSection delay={100}>
           <p className="mx-auto mb-6 max-w-[620px] text-[clamp(1rem,2.2vw,1.15rem)] leading-[1.75] text-cream-mid">
-            Two billion people on this planet learned to love a sensation the body registers as genuine pain. Nobody changed the pepper. They added mustard, vinegar, turmeric, garlic—and made something you'd put on your food on purpose. The Pepper Sauce Principle™ names the five conditions that let you do the same thing with grief, burnout, heartbreak, generational weight, chronic pain—whatever pepper you're carrying. Not by making the burn disappear. By building a life so full of flavor that the burn has company.
+            Nobody eats a raw pepper and calls it a meal. You add mustard. Vinegar. Garlic. You blend it, bottle it, and put it on the table for the people you love. Caribbean grandmothers have always known this. Psychologists and neuroscientists are finally catching up: under the right conditions, pain and meaning can live in the same life&nbsp;— not by eliminating the burn, but by making sure the burn has company.
+          </p>
+        </RevealSection>
+
+        <RevealSection delay={150}>
+          <p className="mx-auto mb-6 max-w-[620px] text-[clamp(1rem,2.2vw,1.15rem)] leading-[1.75] text-cream-mid">
+            Whether you&#8217;re carrying grief, burnout, chronic pain, or generational trauma, The Pepper Sauce Principle&#8482; names five evidence&#8209;based conditions you can act on today&nbsp;— not to eliminate the pepper, but to build a life so flavor&#8209;full that pain takes its rightful place as one ingredient among many.
           </p>
         </RevealSection>
 
         <RevealSection delay={200}>
-          <p className="mb-10 font-accent text-[clamp(1.3rem,3vw,1.8rem)] italic text-gold-light">
-            "Life is painful. Make it delicious."
+          <p className="mx-auto mb-6 max-w-[620px] text-[clamp(1rem,2.2vw,1.15rem)] leading-[1.75] text-cream-mid">
+            The free Pepper Sauce Profile&#8482; reveals what kind of fire is in your bottle right now, how you relate to the heat, and what&#8217;s already in your recipe&nbsp;— along with a signature blend of ingredients you can start adding today. Not to neutralize the pepper. To make sure it&#8217;s not the only thing you taste.
           </p>
         </RevealSection>
 
         <RevealSection delay={300}>
+          <p className="mb-10 font-accent text-[clamp(1.3rem,3vw,1.8rem)] italic text-gold-light">
+            &#8220;Life is painful. Make it delicious.&#8221;
+          </p>
+        </RevealSection>
+
+        <RevealSection delay={400}>
           <div className="flex flex-wrap justify-center gap-4">
             <a
               href="#quiz"
