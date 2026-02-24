@@ -23,11 +23,11 @@ export function FrameworkSection() {
               <span className="mb-4 block font-body text-xs font-semibold uppercase tracking-[0.18em] text-gold-muted">
                 The Framework
               </span>
-              <h2>What If the Pain Isn't the Problem?</h2>
+              <h2><span className="text-gold">Can</span> a <span className="text-gold">life</span> filled with peppers <span className="text-gold">still</span> <span className="text-gold">be</span> flavor-<span className="text-gold">FULL</span>?</h2>
               <div className="mx-auto my-6 h-[3px] w-[60px] rounded-sm bg-gold md:mx-0" />
 
               <p>
-                Think about what actually happens when you make Bajan pepper sauce. You take a Scotch bonnet pepper—which, if you've ever bitten into one raw, you know that is not a meal. That is an emergency. But you add mustard. Vinegar. Turmeric. Garlic. You blend it. You bottle it. You let it sit. And now it's something you put on your food <em>on purpose</em>. Something that makes the whole plate better. The pepper didn't change. You changed what surrounds it.
+                Think about what actually happens when you make <a href="https://barbados.org/barbados-recipes-bajan-pepper-sauce.htm" target="_blank" rel="noopener noreferrer" className="text-gold hover:underline">Bajan pepper sauce</a>. You take a Scotch bonnet pepper—which, if you've ever bitten into one raw, you know that is not a meal. That is an emergency. But you add mustard. Vinegar. Turmeric. Garlic. You blend it. You bottle it. You let it sit. And now it's something you put on your food <em>on purpose</em>. Something that makes the whole plate better. The pepper didn't change. You changed what surrounds it.
               </p>
               <p className="mt-4">
                 That's not a metaphor about surviving pain. It's a recipe for <em>flourishing with it</em>. The goal was never to tolerate the pepper. The goal was to make something delicious—something you'd actually want to share.

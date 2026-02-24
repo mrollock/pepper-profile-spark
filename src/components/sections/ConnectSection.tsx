@@ -72,8 +72,8 @@ export function ConnectSection() {
           <p className="mt-8 text-[0.88rem] text-text-faint">
             Imaginative Feedback Coaching & Consulting
             <br />
-            <a href="mailto:info@imaginativefeedback.com" className="text-gold-muted hover:text-gold-light">
-              info@imaginativefeedback.com
+            <a href="mailto:Michael@ifwall.com" className="text-gold-muted hover:text-gold-light">
+              Michael@ifwall.com
             </a>
           </p>
         </RevealSection>

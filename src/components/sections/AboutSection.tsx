@@ -12,7 +12,7 @@ export function AboutSection() {
           <div className="mx-auto my-6 h-[3px] w-[60px] rounded-sm bg-gold" />
 
           <p>
-            Clinical psychologist. Associate Professor, Department of Psychiatry & Health Behavior, Augusta University. Director of Behavioral Health Services at the Pain Management Clinic. Trained in positive psychology under Martin Seligman at the University of Pennsylvania. BA from Drexel University. PhD in Clinical Psychology from UMass Boston.
+            Clinical psychologist. Associate Professor, Department of Psychiatry & Health Behavior, Augusta University. Director of Behavioral Health Services at the Pain Management Clinic. Trained in positive psychology under Martin Seligman at the University of Pennsylvania. Clinical psychologist. Associate Professor, Department of Psychiatry & Health Behavior, Augusta University. Director of Behavioral Health Services at the Pain Management Clinic. Trained in positive psychology under Martin Seligman at the University of Pennsylvania. BSc from Drexel University. PhD in Clinical Psychology from UMass Boston.. PhD in Clinical Psychology from UMass Boston.
           </p>
           <p className="mt-4">
             His work sits at the intersection of three things most people think don't belong together: Caribbean cultural wisdom, positive psychology, and pain neuroscience. He thinks they're the same conversation—and that the kitchen table figured it out first.

@@ -4,7 +4,7 @@ import { QuizSection } from '@/components/sections/QuizSection';
 import { FrameworkSection } from '@/components/sections/FrameworkSection';
 import { ConditionsSection } from '@/components/sections/ConditionsSection';
 import { InterventionSection } from '@/components/sections/InterventionSection';
-import { GenerationsSection } from '@/components/sections/GenerationsSection';
+
 import { SpeakingSection } from '@/components/sections/SpeakingSection';
 import { BookSection } from '@/components/sections/BookSection';
 import { ResourcesSection } from '@/components/sections/ResourcesSection';
@@ -22,7 +22,7 @@ const Index = () => {
         <FrameworkSection />
         <ConditionsSection />
         <InterventionSection />
-        <GenerationsSection />
+        
         <SpeakingSection />
         <BookSection />
         <ResourcesSection />

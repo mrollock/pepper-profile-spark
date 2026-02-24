@@ -12,7 +12,7 @@ export function Footer() {
         © 2026 Dr. Michael J.D. Rollock. All rights reserved. The Pepper Sauce Principle™
       </p>
       <div className="mt-4 flex justify-center gap-6">
-        <a href="mailto:info@imaginativefeedback.com" className="text-[0.82rem] text-text-faint hover:text-gold-light">
+        <a href="mailto:Michael@ifwall.com" className="text-[0.82rem] text-text-faint hover:text-gold-light">
           Contact
         </a>
         <a href="#" onClick={(e) => e.preventDefault()} className="text-[0.82rem] text-text-faint hover:text-gold-light">
