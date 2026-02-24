@@ -8,7 +8,7 @@ export function ConnectSection() {
 
   const handleSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (form.name && form.email && form.email.includes('@')) {
+    if (form.name && form.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
       supabase.from('contact_submissions').insert({ name: form.name, email: form.email, message: form.message } as any).then(null, () => {});
       setSubmitted(true);
     }
