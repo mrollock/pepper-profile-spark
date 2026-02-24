@@ -266,7 +266,7 @@ export function QuizSection() {
                 placeholder="Your first name"
                 aria-label="First name"
                 value={userName}
-                onChange={(e) => { setUserName(e.target.value); setNameError(false); }}
+                onChange={(e) => { setUserName(e.target.value.slice(0, 100)); setNameError(false); }}
                 className={cn(
                   "rounded-md border-[1.5px] bg-cream px-4 py-3.5 font-body text-[0.95rem] text-text-body transition-colors focus:border-gold focus:outline-none",
                   nameError ? 'border-ember' : 'border-cream-mid'
@@ -277,7 +277,7 @@ export function QuizSection() {
                 placeholder="Your email address"
                 aria-label="Email address"
                 value={userEmail}
-                onChange={(e) => { setUserEmail(e.target.value); setEmailError(false); }}
+                onChange={(e) => { setUserEmail(e.target.value.slice(0, 255)); setEmailError(false); }}
                 className={cn(
                   "rounded-md border-[1.5px] bg-cream px-4 py-3.5 font-body text-[0.95rem] text-text-body transition-colors focus:border-gold focus:outline-none",
                   emailError ? 'border-ember' : 'border-cream-mid'

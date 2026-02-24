@@ -34,7 +34,8 @@ export function ConnectSection() {
                 placeholder="Your name"
                 aria-label="Your name"
                 value={form.name}
-                onChange={(e) => setForm(p => ({ ...p, name: e.target.value }))}
+                onChange={(e) => setForm(p => ({ ...p, name: e.target.value.slice(0, 100) }))}
+                maxLength={100}
                 className="rounded-md border-[1.5px] border-gold/20 bg-dark-mid px-4 py-3.5 font-body text-[0.95rem] text-cream transition-colors focus:border-gold focus:outline-none"
               />
               <input
@@ -42,7 +43,8 @@ export function ConnectSection() {
                 placeholder="Your email"
                 aria-label="Your email"
                 value={form.email}
-                onChange={(e) => setForm(p => ({ ...p, email: e.target.value }))}
+                onChange={(e) => setForm(p => ({ ...p, email: e.target.value.slice(0, 255) }))}
+                maxLength={255}
                 className="rounded-md border-[1.5px] border-gold/20 bg-dark-mid px-4 py-3.5 font-body text-[0.95rem] text-cream transition-colors focus:border-gold focus:outline-none"
               />
               <input
@@ -50,7 +52,8 @@ export function ConnectSection() {
                 placeholder="What can we help with?"
                 aria-label="How can we help"
                 value={form.message}
-                onChange={(e) => setForm(p => ({ ...p, message: e.target.value }))}
+                onChange={(e) => setForm(p => ({ ...p, message: e.target.value.slice(0, 2000) }))}
+                maxLength={2000}
                 className="rounded-md border-[1.5px] border-gold/20 bg-dark-mid px-4 py-3.5 font-body text-[0.95rem] text-cream transition-colors focus:border-gold focus:outline-none"
               />
               <button
