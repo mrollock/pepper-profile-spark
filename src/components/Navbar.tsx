@@ -5,7 +5,7 @@ const NAV_LINKS = [
   { href: '#framework', label: 'Framework' },
   { href: '#speaking', label: 'Speaking' },
   { href: '#book', label: 'Book' },
-  { href: '#resources', label: 'Resources' },
+  { href: '#roots', label: 'Resources' },
   { href: '#about', label: 'About' },
   { href: '#connect', label: 'Connect' },
 ];

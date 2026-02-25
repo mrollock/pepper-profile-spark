@@ -51,13 +51,19 @@ export function HeroSection() {
           </p>
         </RevealSection>
 
+        <RevealSection delay={275}>
+          <p className="mx-auto mb-6 max-w-[620px] text-[clamp(0.95rem,2.1vw,1.1rem)] italic leading-[1.75] text-cream-mid">
+            This isn&#8217;t asking you to be strong or to push through. It&#8217;s asking what would happen if you weren&#8217;t alone in it.
+          </p>
+        </RevealSection>
+
         <RevealSection delay={300}>
           <p className="mx-auto mb-6 max-w-[620px] text-[clamp(1rem,2.2vw,1.15rem)] leading-[1.75] text-cream-mid">
             The free Pepper Sauce Profile&#8482; reveals what kind of fire is in your bottle right now, how you relate to the heat, and what&#8217;s already in your recipe&nbsp;— along with a signature blend of ingredients you can start adding today. Not to neutralize the pepper. To make sure it&#8217;s not the only thing you taste.
           </p>
         </RevealSection>
 
-        <RevealSection delay={300}>
+        <RevealSection delay={350}>
           <p className="mb-10 font-accent text-[clamp(1.3rem,3vw,1.8rem)] italic text-gold-light">
             &#8220;Life is painful. Make it delicious.&#8221;
           </p>
