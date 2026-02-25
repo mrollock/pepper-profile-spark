@@ -8,6 +8,7 @@ import { InterventionSection } from '@/components/sections/InterventionSection';
 import { SpeakingSection } from '@/components/sections/SpeakingSection';
 import { BookSection } from '@/components/sections/BookSection';
 import { ResourcesSection } from '@/components/sections/ResourcesSection';
+import { RootsResearchSection } from '@/components/sections/RootsResearchSection';
 import { AboutSection } from '@/components/sections/AboutSection';
 import { ConnectSection } from '@/components/sections/ConnectSection';
 import { Footer } from '@/components/sections/Footer';
@@ -22,7 +23,7 @@ const Index = () => {
         <FrameworkSection />
         <ConditionsSection />
         <InterventionSection />
-        
+        <RootsResearchSection />
         <SpeakingSection />
         <BookSection />
         <ResourcesSection />
