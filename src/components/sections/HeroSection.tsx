@@ -18,6 +18,31 @@ export function HeroSection() {
 
       <div className="relative z-[1] max-w-[800px]">
         <RevealSection>
+          <p className="mb-6 font-accent text-[clamp(1.2rem,2.8vw,1.5rem)] italic leading-[1.7] text-gold-pale">
+            If pain has ever felt like your punishment…<br />
+            you&#8217;re not the only one.
+          </p>
+        </RevealSection>
+
+        <RevealSection delay={100}>
+          <p className="mx-auto mb-6 max-w-[620px] text-[clamp(1rem,2.2vw,1.15rem)] leading-[1.75] text-cream-mid">
+            It can feel like a thief in your own house. A bill for something you didn&#8217;t order. A current pulling beneath a surface that looks perfectly still.
+          </p>
+        </RevealSection>
+
+        <RevealSection delay={150}>
+          <p className="mx-auto mb-6 max-w-[620px] text-[clamp(1rem,2.2vw,1.15rem)] leading-[1.75] text-cream-mid">
+            In short, it feels like punishment. Of course it does.
+          </p>
+        </RevealSection>
+
+        <RevealSection delay={200}>
+          <p className="mx-auto mt-4 mb-6 max-w-[620px] text-[clamp(1rem,2.2vw,1.15rem)] leading-[1.75] text-gold-muted">
+            So it may surprise you to hear this:
+          </p>
+        </RevealSection>
+
+        <RevealSection delay={275}>
           <h1 className="mb-6 text-cream">
             Pain is not a <span className="text-gold-light">punishment.</span>
             <br />
@@ -25,25 +50,25 @@ export function HeroSection() {
           </h1>
         </RevealSection>
 
-        <RevealSection delay={100}>
+        <RevealSection delay={375}>
           <p className="mx-auto mb-6 max-w-[620px] text-[clamp(1rem,2.2vw,1.15rem)] leading-[1.75] text-cream-mid">
             What determines whether we suffer isn&#8217;t the pain itself&nbsp;— it&#8217;s what surrounds it.
           </p>
         </RevealSection>
 
-        <RevealSection delay={150}>
+        <RevealSection delay={425}>
           <p className="mx-auto mt-2 mb-6 max-w-[620px] font-accent text-[clamp(1.1rem,2.5vw,1.3rem)] italic leading-[1.6] text-gold-pale">
             Pain is the pepper. The conditions are the sauce.
           </p>
         </RevealSection>
 
-        <RevealSection delay={200}>
+        <RevealSection delay={475}>
           <p className="mx-auto mb-6 max-w-[620px] text-[clamp(1rem,2.2vw,1.15rem)] leading-[1.75] text-cream-mid">
             Nobody eats a raw pepper and calls it a meal. What turns heat into flavor is the recipe&nbsp;— the surrounding ingredients, the craft, the company at the table.
           </p>
         </RevealSection>
 
-        <RevealSection delay={250}>
+        <RevealSection delay={525}>
           <p className="mx-auto mb-6 max-w-[620px] text-[clamp(1rem,2.2vw,1.15rem)] leading-[1.75] text-cream-mid">
             Whether you&#8217;re carrying grief, burnout, chronic pain, or generational trauma, The Pepper Sauce Principle&#8482; names{' '}
             <a href="#conditions" className="text-gold-light hover:underline">five evidence-based conditions</a>{' '}
@@ -51,25 +76,25 @@ export function HeroSection() {
           </p>
         </RevealSection>
 
-        <RevealSection delay={275}>
+        <RevealSection delay={550}>
           <p className="mx-auto mb-6 max-w-[620px] text-[clamp(0.95rem,2.1vw,1.1rem)] italic leading-[1.75] text-cream-mid">
             This isn&#8217;t asking you to be strong or to push through. It&#8217;s asking what would happen if you weren&#8217;t alone in it.
           </p>
         </RevealSection>
 
-        <RevealSection delay={300}>
+        <RevealSection delay={575}>
           <p className="mx-auto mb-6 max-w-[620px] text-[clamp(1rem,2.2vw,1.15rem)] leading-[1.75] text-cream-mid">
             The free Pepper Sauce Profile&#8482; reveals what kind of fire is in your bottle right now, how you relate to the heat, and what&#8217;s already in your recipe&nbsp;— along with a signature blend of ingredients you can start adding today. Not to neutralize the pepper. To make sure it&#8217;s not the only thing you taste.
           </p>
         </RevealSection>
 
-        <RevealSection delay={350}>
+        <RevealSection delay={625}>
           <p className="mb-10 font-accent text-[clamp(1.3rem,3vw,1.8rem)] italic text-gold-light">
             &#8220;Life is painful. Make it delicious.&#8221;
           </p>
         </RevealSection>
 
-        <RevealSection delay={400}>
+        <RevealSection delay={675}>
           <div className="flex flex-wrap justify-center gap-4">
             <a
               href="#quiz"
