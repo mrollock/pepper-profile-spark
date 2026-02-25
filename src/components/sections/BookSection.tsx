@@ -25,7 +25,7 @@ export function BookSection() {
           <div className="mx-auto my-6 h-[3px] w-[60px] rounded-sm bg-gold-muted" />
 
           <p className="mx-auto mb-6 max-w-[560px] text-[1.05rem] text-cream-soft">
-            Where positive psychology, pain neuroscience, and Caribbean cultural wisdom converge—a framework for anyone who wants to do more than survive the hard parts. For people who want to build something rich, connected, and genuinely delicious with whatever pepper life handed them.
+            Where positive psychology, pain neuroscience, and cultural wisdom from West Africa to the American South to the Caribbean converge—a framework for anyone who wants to do more than survive the hard parts. For people who want to build something rich, connected, and genuinely delicious with whatever pepper life handed them.
           </p>
           <p className="mb-8 font-accent text-[clamp(1.3rem,3vw,1.8rem)] italic text-gold-light">
             "Life is painful. Make it delicious."
