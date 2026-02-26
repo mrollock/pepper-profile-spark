@@ -31,14 +31,17 @@ const FIRE_CONDITION_MAP: Record<string, Record<number, string>> = {
   C: {
     3: "\u201CYou\u2019re carrying a burn the whole community shares\u00A0\u2014 but you may be holding your piece of it in isolation. Communal fire can only be held communally.\u201D",
     5: "\u201CThe fire you\u2019re carrying didn\u2019t start with you. Passing forward what you\u2019ve learned\u00A0\u2014 your recipe for holding it\u00A0\u2014 is how communal pain becomes communal wisdom.\u201D",
+    2: "\u201CSystemic pain can make it feel like you have no say in the recipe. But even when you can\u2019t change the system, you can still author the part that\u2019s yours. That\u2019s where Condition 2 comes in.\u201D",
   },
   D: {
     1: "\u201CThe fire was passed to you before you had words for it. Naming it\u00A0\u2014 saying \u2018the pepper is real, and I didn\u2019t plant it\u2019\u00A0\u2014 is the first ingredient.\u201D",
     2: "\u201CYou inherited this fire. You didn\u2019t choose it. But you get to choose what you do with it\u00A0\u2014 and that choice is where the recipe becomes yours instead of theirs.\u201D",
+    4: "\u201CInherited pain often arrives without instructions. Building the ability to hold what was passed down\u00A0\u2014 without being consumed by it\u00A0\u2014 is where Condition 4 becomes urgent.\u201D",
   },
   E: {
     4: "\u201CYou chose this burn\u00A0\u2014 you\u2019re doing hard things on purpose. But you may be pushing past your heat tolerance. Growth fire still needs graduated engagement, not an all\u2011at\u2011once blaze.\u201D",
     3: "\u201CYou\u2019re building something difficult and meaningful\u00A0\u2014 but you\u2019re building it alone. Even intentional fire needs a table.\u201D",
+    5: "\u201CYou\u2019re stretching toward something new but haven\u2019t yet made anything shareable from the stretch. What you\u2019re learning in the discomfort is already a recipe worth passing.\u201D",
   },
 };
 
@@ -165,9 +168,10 @@ export function QuizSection() {
     const pFire = getPrimaryFireType(responses);
     const cFire = getChronicFireType(responses);
     const pLabel = pFire.map(f => FIRE_NAMES[f]).join(' · ');
-    const scovilleItems = [6, 17, 24].filter(id => (responses[id] as number) >= 5);
+    const scovilleItems = [6, 17, 24, 29].filter(id => (responses[id] as number) >= 5);
 
-    const row: Record<string, unknown> = {
+    // Table 1: Identified profile (scores + flags only, NO raw item responses)
+    const profileRow: Record<string, unknown> = {
       name: userName,
       email: userEmail,
       score_validation: scores[1],
@@ -179,12 +183,19 @@ export function QuizSection() {
       chronic_fire_type: cFire ? FIRE_NAMES[cFire] : null,
       scoville_gate_triggered: scovilleItems.length > 0,
       scoville_items_flagged: scovilleItems.map(String),
+      gate_overwhelm: scovilleItems.includes(6),
+      gate_safety: scovilleItems.includes(17),
+      gate_burdensomeness: scovilleItems.includes(24),
+      gate_numbing: scovilleItems.includes(29),
     };
-    for (let i = 1; i <= 33; i++) {
-      row[`item_${i}`] = responses[i] ?? null;
-    }
+    supabase.from('quiz_submissions').insert(profileRow as any).then(null, () => {});
 
-    supabase.from('quiz_submissions').insert(row as any).then(null, () => {});
+    // Table 2: De-identified responses (NO email, NO user link)
+    const anonRow: Record<string, unknown> = {};
+    for (let i = 1; i <= 34; i++) {
+      anonRow[`item_${i}`] = responses[i] ?? null;
+    }
+    supabase.from('anonymous_responses').insert(anonRow as any).then(null, () => {});
   }, [phase]);
 
 
@@ -290,8 +301,11 @@ export function QuizSection() {
                 Start My Profile
               </button>
             </div>
+            <p className="mt-3 text-[0.8rem] leading-[1.5] text-text-faint italic">
+              Your individual responses are not reviewed, shared, or stored in identifiable form. Only your recipe results are saved.
+            </p>
             <p className="mt-2 text-[0.85rem] text-text-faint">
-              5–7 minutes · 33 items · Free · Not a diagnostic instrument
+              5–7 minutes · 34 items · Free · Not a diagnostic instrument
             </p>
           </div>
         </div>
@@ -521,21 +535,76 @@ export function QuizSection() {
             <p className="mb-8 font-accent italic text-gold-muted">Your Pepper Sauce Profile</p>
           </div>
 
-          {/* Safety gate */}
-          {scovilleTriggered && (
-            <div className="mb-10 rounded-[10px] border border-ember/20 bg-ember/[0.08] p-7 text-left">
-              <p className="text-[0.95rem] leading-[1.7] text-text-body">
-                <strong>Before we share your recipe,</strong> we want you to know: one of your responses tells us you may be carrying something heavier than this assessment was built for. The Pepper Sauce Principle never asks anyone to sit with something that is destroying them and call it flavor.
-              </p>
-              <p className="mt-3 text-[0.95rem] leading-[1.7] text-text-body">
-                If you're in crisis, please reach out:{' '}
-                <a href="tel:988" className="font-semibold text-ember">
-                  988 Suicide & Crisis Lifeline
-                </a>{' '}
-                (call or text 988). You deserve support. That's not replacing your recipe. It's adding an ingredient.
-              </p>
-            </div>
-          )}
+          {/* Educational-purpose framing */}
+          <p className="mb-8 text-center text-[0.88rem] leading-[1.6] text-text-light">
+            Your Pepper Sauce Profile shows broad patterns — not a personalized clinical assessment. Think of it as reading the label on your jar: you can see what's inside, but the full recipe is richer than any label can capture. Use these results as a starting point for reflection, conversation, and deciding what to explore next.
+          </p>
+
+          {/* Scoville Gate — Modular Responses */}
+          {scovilleTriggered && (() => {
+            const gateItems = [6, 17, 24, 29].filter(id => (responses[id] as number) >= 5);
+            return (
+              <div className="mb-10 rounded-[10px] border border-ember/20 bg-ember/[0.08] p-7 text-left">
+                <p className="text-[0.95rem] leading-[1.7] text-text-body">
+                  <strong>One more thing.</strong> Some of what you shared tells us the pepper you're carrying right now is serious — the kind that can do real harm if you're handling it without the right tools. That's not a judgment on your recipe. It's a sign that this particular pepper deserves a trained cook in your kitchen.
+                </p>
+
+                {gateItems.length > 1 && (
+                  <p className="mt-3 text-[0.92rem] leading-[1.7] text-text-body italic">
+                    You flagged more than one area where the heat is serious. That's not a sign that your recipe is broken — it's a sign that right now, you need more than one kind of help. That's okay. Here's where to start.
+                  </p>
+                )}
+
+                {gateItems.includes(6) && (
+                  <div className="mt-4 border-t border-ember/15 pt-4">
+                    <p className="text-[0.92rem] leading-[1.7] text-text-body">
+                      The weight you described — that feeling of not being sure you can keep carrying it — is exactly what crisis support is built for. You don't have to carry this alone, and reaching out is not a sign of weakness. It's adding an ingredient.
+                    </p>
+                    <p className="mt-2 text-[0.9rem] font-semibold text-ember">
+                      <a href="tel:988">988 Suicide &amp; Crisis Lifeline</a> (call or text 988) · <a href="sms:741741&body=HOME">Crisis Text Line</a> (text HOME to 741741)
+                    </p>
+                  </div>
+                )}
+
+                {gateItems.includes(17) && (
+                  <div className="mt-4 border-t border-ember/15 pt-4">
+                    <p className="text-[0.92rem] leading-[1.7] text-text-body">
+                      Feeling unsafe is not something you should have to cook through alone. If your safety is at risk — in your home, your relationship, or your environment — there are people trained to help with exactly this kind of heat.
+                    </p>
+                    <p className="mt-2 text-[0.9rem] font-semibold text-ember">
+                      <a href="tel:18007997233">National Domestic Violence Hotline</a> (1-800-799-7233) · If in immediate danger, <a href="tel:911">call 911</a>
+                    </p>
+                  </div>
+                )}
+
+                {gateItems.includes(24) && (
+                  <div className="mt-4 border-t border-ember/15 pt-4">
+                    <p className="text-[0.92rem] leading-[1.7] text-text-body">
+                      That thought — that the people in your life would be better off without you — is one of the most painful peppers there is. And it lies. <strong>The people in your life are not better off without you.</strong> Please talk to someone who can help you see that clearly.
+                    </p>
+                    <p className="mt-2 text-[0.9rem] font-semibold text-ember">
+                      <a href="tel:988">988 Suicide &amp; Crisis Lifeline</a> (call or text 988) · <a href="sms:741741&body=HOME">Crisis Text Line</a> (text HOME to 741741)
+                    </p>
+                  </div>
+                )}
+
+                {gateItems.includes(29) && (
+                  <div className="mt-4 border-t border-ember/15 pt-4">
+                    <p className="text-[0.92rem] leading-[1.7] text-text-body">
+                      Using something to numb the pain makes sense — when the heat is unbearable, you reach for whatever turns it down. But if that pattern is doing its own damage, your recipe needs a different kind of help. Not judgment. Not shame. Just someone who knows how to work with this.
+                    </p>
+                    <p className="mt-2 text-[0.9rem] font-semibold text-ember">
+                      <a href="tel:18006624357">SAMHSA National Helpline</a> (1-800-662-4357, free, confidential, 24/7)
+                    </p>
+                  </div>
+                )}
+
+                <p className="mt-4 border-t border-ember/15 pt-4 text-[0.92rem] leading-[1.7] text-text-body">
+                  A counselor, a therapist, a crisis line — someone who knows how to work with this kind of heat. That's not replacing your recipe. It's adding an ingredient.
+                </p>
+              </div>
+            );
+          })()}
 
           {/* Five Conditions */}
           <h3 className="mb-6 text-left">Your Five Conditions</h3>

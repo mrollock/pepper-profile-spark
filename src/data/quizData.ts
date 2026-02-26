@@ -33,7 +33,7 @@ export const ITEMS: QuizItem[] = [
   { id:18, text:"When something painful comes up, I can feel it without shutting down or being swallowed by it.", condition:4, type:"likert", scoring:"standard" },
   { id:19, text:"Even on days when I\u2019m hurting, I still move toward the things and people that matter most to me.", condition:4, type:"likert", scoring:"standard" },
   { id:20, text:"When I\u2019m in pain, I can recognize that my darkest thoughts are the pain talking \u2014 not the whole truth.", condition:4, type:"likert", scoring:"standard" },
-  { id:21, text:"Looking back over the past few years, I can hold more hard things at once than I used to \u2014 and it\u2019s not because I got tougher. It\u2019s because I grew.", condition:4, type:"likert", scoring:"standard" },
+  { id:21, text:"Looking back over the past few years, I can make room for more hard things at once than I used to.", condition:4, type:"likert", scoring:"standard" },
   { id:22, text:"I can handle more when I have people around me than when I\u2019m carrying it alone.", condition:4, type:"likert", scoring:"standard" },
   // Condition 5: Pass the Sauce (Generativity)
   { id:23, text:"Something I learned from going through pain has helped someone else go through theirs.", condition:5, type:"likert", scoring:"standard" },
@@ -42,36 +42,37 @@ export const ITEMS: QuizItem[] = [
   { id:26, text:"I know the difference between telling someone my story to help them and telling it because I still need someone to hold it.", condition:5, type:"likert", scoring:"standard" },
   { id:27, text:"The way I\u2019ve learned to hold pain is something I\u2019m passing to the next generation \u2014 a child, a student, a young person in my life.", condition:5, type:"likert", scoring:"standard" },
   { id:28, text:"When I help others with their pain, it comes from a place of fullness \u2014 not from running on empty.", condition:5, type:"likert", scoring:"standard" },
+  { id:29, text:"Right now, I am using something \u2014 a substance, a habit, a pattern \u2014 to numb my pain in ways I know are doing damage.", condition:0, type:"likert", scoring:"scoville" },
   // Fire Type
-  { id:29, type:"fire", condition:0, text:"Think about the pain that\u2019s most present in your life right now. Which of these sounds most like the pepper you\u2019re carrying?", options:[
+  { id:30, type:"fire", condition:0, text:"Think about the pain that\u2019s most present in your life right now. Which of these sounds most like the pepper you\u2019re carrying?", options:[
     {val:"A",text:"A burn that\u2019s mine alone \u2014 something I\u2019m going through personally, like loss, illness, failure, or a weight inside me that nobody gave me."},
     {val:"B",text:"A burn between me and someone else \u2014 a relationship that\u2019s broken, strained, or hurting, where the pain lives in the space between us."},
     {val:"C",text:"A burn my whole community carries \u2014 pain from systems, injustice, or collective harm that isn\u2019t just mine but belongs to all of us."},
     {val:"D",text:"A burn that was here before I was \u2014 pain passed down through my family or my people, grief I inherited from a generation I may never have met."},
     {val:"E",text:"A burn I chose to walk into \u2014 the ache of growing, stretching, becoming something new, knowing the discomfort is part of the recipe."}
   ]},
-  { id:30, type:"fire", condition:0, text:"When you picture where your pain lives, which of these fits best?", options:[
-    {val:"A",text:"It lives inside me \u2014 in my body, my mind, my spirit. It\u2019s personal."},
-    {val:"B",text:"It lives between me and another person \u2014 in a conversation we can\u2019t have, a trust that broke, a distance that won\u2019t close."},
+  { id:31, type:"fire", condition:0, text:"When you picture where your pain lives, which of these fits best?", options:[
     {val:"C",text:"It lives in the air around my community \u2014 in the news, in the systems, in what happens to people who look like me or live where I live."},
     {val:"D",text:"It lives in my family line \u2014 in the stories that were never told, the grief that was never named, the weight I feel but can\u2019t fully explain."},
-    {val:"E",text:"It lives at the edge of who I\u2019m becoming \u2014 in the stretch between who I\u2019ve been and who I\u2019m trying to be."}
+    {val:"E",text:"It lives at the edge of who I\u2019m becoming \u2014 in the stretch between who I\u2019ve been and who I\u2019m trying to be."},
+    {val:"A",text:"It lives inside me \u2014 in my body, my mind, my spirit. It\u2019s personal."},
+    {val:"B",text:"It lives between me and another person \u2014 in a conversation we can\u2019t have, a trust that broke, a distance that won\u2019t close."},
   ]},
-  { id:31, type:"fire", condition:0, text:"What is most likely to make your pain flare up?", options:[
+  { id:32, type:"fire", condition:0, text:"What is most likely to make your pain flare up?", options:[
+    {val:"E",text:"Stepping outside my comfort zone \u2014 taking on something hard because it matters to who I\u2019m becoming, even though it burns."},
     {val:"A",text:"A bad day with my health, my mood, or a private struggle that nobody else can see."},
     {val:"B",text:"A moment with the person who hurt me \u2014 or the absence of someone I need who isn\u2019t there."},
     {val:"C",text:"Watching something unjust happen to my community \u2014 or being reminded that the systems around me weren\u2019t built for people like me."},
     {val:"D",text:"A family gathering, a holiday, or a quiet moment when I feel the weight of something that started long before me."},
-    {val:"E",text:"Stepping outside my comfort zone \u2014 taking on something hard because it matters to who I\u2019m becoming, even though it burns."}
   ]},
-  { id:32, type:"fire", condition:0, text:"When your pain is at its worst, what do you need most?", options:[
-    {val:"A",text:"Someone to see what I\u2019m going through without me having to explain it \u2014 because this one is mine to carry, and I just need to be seen."},
+  { id:33, type:"fire", condition:0, text:"When your pain is at its worst, what do you need most?", options:[
     {val:"B",text:"A way to repair, release, or make peace with the person connected to my pain \u2014 or the strength to walk away."},
     {val:"C",text:"To know that my people are standing together \u2014 that I\u2019m not carrying this alone because none of us should have to."},
     {val:"D",text:"To understand where this pain came from \u2014 to name the thing my family never named, so I can decide what to carry forward and what to set down."},
-    {val:"E",text:"To be reminded that this discomfort is part of the recipe \u2014 that the heat means something is cooking, not that something is wrong."}
+    {val:"E",text:"To be reminded that this discomfort is part of the recipe \u2014 that the heat means something is cooking, not that something is wrong."},
+    {val:"A",text:"Someone to see what I\u2019m going through without me having to explain it \u2014 because this one is mine to carry, and I just need to be seen."},
   ]},
-  { id:33, type:"fire", condition:0, isChronic:true, text:"This last question is different. Think about all the kinds of fire above. Which burn have you been carrying the longest without making anything with it \u2014 the one that\u2019s been sitting in the jar, uncooked?", options:[
+  { id:34, type:"fire", condition:0, isChronic:true, text:"This last question is different. Think about all the kinds of fire above. Which burn have you been carrying the longest without making anything with it \u2014 the one that\u2019s been sitting in the jar, uncooked?", options:[
     {val:"A",text:"A personal pain I\u2019ve never fully dealt with \u2014 something private that I\u2019ve pushed down or worked around instead of facing."},
     {val:"B",text:"A relational wound that never healed \u2014 someone who hurt me, or a bond that broke, and I never made peace with it."},
     {val:"C",text:"A collective pain I\u2019ve carried for my community for so long it feels like background noise \u2014 always there, never addressed."},
@@ -137,6 +138,7 @@ export function getConditionLabel(itemIndex: number): string {
     if (item.id === 6) return CONDITION_NAMES[1];
     if (item.id === 17) return CONDITION_NAMES[3];
     if (item.id === 24) return CONDITION_NAMES[5];
+    if (item.id === 29) return CONDITION_NAMES[5];
   }
   return CONDITION_NAMES[cond] || '';
 }
@@ -154,7 +156,7 @@ export function scoreCondition(condNum: number, responses: Record<number, number
 
 export function getPrimaryFireType(responses: Record<number, number | string>): string[] {
   const counts: Record<string, number> = { A: 0, B: 0, C: 0, D: 0, E: 0 };
-  [29, 30, 31, 32].forEach(id => {
+  [30, 31, 32, 33].forEach(id => {
     const v = responses[id] as string;
     if (v) counts[v]++;
   });
@@ -168,7 +170,7 @@ export function getPrimaryFireType(responses: Record<number, number | string>): 
 }
 
 export function getChronicFireType(responses: Record<number, number | string>): string | null {
-  return (responses[33] as string) || null;
+  return (responses[34] as string) || null;
 }
 
 export function getInterpretation(score: number): string {

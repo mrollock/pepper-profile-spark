@@ -14,6 +14,123 @@ export type Database = {
   }
   public: {
     Tables: {
+      anonymous_responses: {
+        Row: {
+          completed_at: string
+          id: string
+          item_1: number | null
+          item_10: number | null
+          item_11: number | null
+          item_12: number | null
+          item_13: number | null
+          item_14: number | null
+          item_15: number | null
+          item_16: number | null
+          item_17: number | null
+          item_18: number | null
+          item_19: number | null
+          item_2: number | null
+          item_20: number | null
+          item_21: number | null
+          item_22: number | null
+          item_23: number | null
+          item_24: number | null
+          item_25: number | null
+          item_26: number | null
+          item_27: number | null
+          item_28: number | null
+          item_29: number | null
+          item_3: number | null
+          item_30: string | null
+          item_31: string | null
+          item_32: string | null
+          item_33: string | null
+          item_34: string | null
+          item_4: number | null
+          item_5: number | null
+          item_6: number | null
+          item_7: number | null
+          item_8: number | null
+          item_9: number | null
+        }
+        Insert: {
+          completed_at?: string
+          id?: string
+          item_1?: number | null
+          item_10?: number | null
+          item_11?: number | null
+          item_12?: number | null
+          item_13?: number | null
+          item_14?: number | null
+          item_15?: number | null
+          item_16?: number | null
+          item_17?: number | null
+          item_18?: number | null
+          item_19?: number | null
+          item_2?: number | null
+          item_20?: number | null
+          item_21?: number | null
+          item_22?: number | null
+          item_23?: number | null
+          item_24?: number | null
+          item_25?: number | null
+          item_26?: number | null
+          item_27?: number | null
+          item_28?: number | null
+          item_29?: number | null
+          item_3?: number | null
+          item_30?: string | null
+          item_31?: string | null
+          item_32?: string | null
+          item_33?: string | null
+          item_34?: string | null
+          item_4?: number | null
+          item_5?: number | null
+          item_6?: number | null
+          item_7?: number | null
+          item_8?: number | null
+          item_9?: number | null
+        }
+        Update: {
+          completed_at?: string
+          id?: string
+          item_1?: number | null
+          item_10?: number | null
+          item_11?: number | null
+          item_12?: number | null
+          item_13?: number | null
+          item_14?: number | null
+          item_15?: number | null
+          item_16?: number | null
+          item_17?: number | null
+          item_18?: number | null
+          item_19?: number | null
+          item_2?: number | null
+          item_20?: number | null
+          item_21?: number | null
+          item_22?: number | null
+          item_23?: number | null
+          item_24?: number | null
+          item_25?: number | null
+          item_26?: number | null
+          item_27?: number | null
+          item_28?: number | null
+          item_29?: number | null
+          item_3?: number | null
+          item_30?: string | null
+          item_31?: string | null
+          item_32?: string | null
+          item_33?: string | null
+          item_34?: string | null
+          item_4?: number | null
+          item_5?: number | null
+          item_6?: number | null
+          item_7?: number | null
+          item_8?: number | null
+          item_9?: number | null
+        }
+        Relationships: []
+      }
       book_signups: {
         Row: {
           created_at: string
@@ -82,40 +199,11 @@ export type Database = {
           chronic_fire_type: string | null
           created_at: string
           email: string
+          gate_burdensomeness: boolean | null
+          gate_numbing: boolean | null
+          gate_overwhelm: boolean | null
+          gate_safety: boolean | null
           id: string
-          item_1: number | null
-          item_10: number | null
-          item_11: number | null
-          item_12: number | null
-          item_13: number | null
-          item_14: number | null
-          item_15: number | null
-          item_16: number | null
-          item_17: number | null
-          item_18: number | null
-          item_19: number | null
-          item_2: number | null
-          item_20: number | null
-          item_21: number | null
-          item_22: number | null
-          item_23: number | null
-          item_24: number | null
-          item_25: number | null
-          item_26: number | null
-          item_27: number | null
-          item_28: number | null
-          item_29: string | null
-          item_3: number | null
-          item_30: string | null
-          item_31: string | null
-          item_32: string | null
-          item_33: string | null
-          item_4: number | null
-          item_5: number | null
-          item_6: number | null
-          item_7: number | null
-          item_8: number | null
-          item_9: number | null
           name: string
           primary_fire_type: string | null
           score_agency: number | null
@@ -130,40 +218,11 @@ export type Database = {
           chronic_fire_type?: string | null
           created_at?: string
           email: string
+          gate_burdensomeness?: boolean | null
+          gate_numbing?: boolean | null
+          gate_overwhelm?: boolean | null
+          gate_safety?: boolean | null
           id?: string
-          item_1?: number | null
-          item_10?: number | null
-          item_11?: number | null
-          item_12?: number | null
-          item_13?: number | null
-          item_14?: number | null
-          item_15?: number | null
-          item_16?: number | null
-          item_17?: number | null
-          item_18?: number | null
-          item_19?: number | null
-          item_2?: number | null
-          item_20?: number | null
-          item_21?: number | null
-          item_22?: number | null
-          item_23?: number | null
-          item_24?: number | null
-          item_25?: number | null
-          item_26?: number | null
-          item_27?: number | null
-          item_28?: number | null
-          item_29?: string | null
-          item_3?: number | null
-          item_30?: string | null
-          item_31?: string | null
-          item_32?: string | null
-          item_33?: string | null
-          item_4?: number | null
-          item_5?: number | null
-          item_6?: number | null
-          item_7?: number | null
-          item_8?: number | null
-          item_9?: number | null
           name: string
           primary_fire_type?: string | null
           score_agency?: number | null
@@ -178,40 +237,11 @@ export type Database = {
           chronic_fire_type?: string | null
           created_at?: string
           email?: string
+          gate_burdensomeness?: boolean | null
+          gate_numbing?: boolean | null
+          gate_overwhelm?: boolean | null
+          gate_safety?: boolean | null
           id?: string
-          item_1?: number | null
-          item_10?: number | null
-          item_11?: number | null
-          item_12?: number | null
-          item_13?: number | null
-          item_14?: number | null
-          item_15?: number | null
-          item_16?: number | null
-          item_17?: number | null
-          item_18?: number | null
-          item_19?: number | null
-          item_2?: number | null
-          item_20?: number | null
-          item_21?: number | null
-          item_22?: number | null
-          item_23?: number | null
-          item_24?: number | null
-          item_25?: number | null
-          item_26?: number | null
-          item_27?: number | null
-          item_28?: number | null
-          item_29?: string | null
-          item_3?: number | null
-          item_30?: string | null
-          item_31?: string | null
-          item_32?: string | null
-          item_33?: string | null
-          item_4?: number | null
-          item_5?: number | null
-          item_6?: number | null
-          item_7?: number | null
-          item_8?: number | null
-          item_9?: number | null
           name?: string
           primary_fire_type?: string | null
           score_agency?: number | null
