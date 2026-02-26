@@ -385,7 +385,7 @@ export function RootsResearchSection() {
                 No prominent voice had explicitly made the bridge that <span className="font-semibold text-gold-light">The Pepper Sauce Principle</span> makes: hot sauce as a systematic framework for living with pain.
               </p>
               <p className="mx-auto max-w-[520px] text-[0.88rem] text-cream-mid">
-                The science exists in one literature. The cultural wisdom exists in another. The psychology of voluntarily engaging with pain exists in a third. None of them name the conditions that determine whether pain produces suffering or nourishment. This framework is the recipe that brings them together.
+                The science exists in one literature. The cultural wisdom exists in another. The psychology of voluntarily engaging with pain exists in a third. The science exists in one literature. The cultural wisdom exists in another. The psychology of voluntarily engaging with pain exists in a third. None of them name the conditions that determine whether pain becomes suffering — or an ingredient in a life worth savoring. This framework is the recipe that brings them together.
               </p>
             </div>
           </RevealSection>
