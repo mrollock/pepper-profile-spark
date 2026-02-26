@@ -1,85 +1,41 @@
 
 
-# Analytics Tracking for Quiz Completion, Drop-off, and Scoville Gates
+# Hero Section Revision
 
-## Overview
+## Summary
 
-Add a lightweight analytics system to track how users move through the quiz — where they start, where they drop off, how many complete it, and which Scoville gates trigger most often. All data stored in a new database table with no PII.
+Strip the hero from 12 sequential RevealSection blocks down to 5 focused elements. The throughline ("Pain is not a punishment. It's an ingredient.") moves to the top as the H1, a single lead paragraph replaces nine prose blocks, and the CTA copy updates. No other files change.
 
-## Database Changes
+## Exact Changes — `src/components/sections/HeroSection.tsx`
 
-Create a new `quiz_analytics` table:
+Replace everything inside `<div className="relative z-[1] max-w-[800px]">` with:
 
-```sql
-CREATE TABLE public.quiz_analytics (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  session_id text NOT NULL,           -- random client-side ID per quiz attempt
-  event_type text NOT NULL,           -- 'start', 'item_answer', 'phase_change', 'complete'
-  event_data jsonb DEFAULT '{}',      -- flexible payload (item_id, phase, gate info, etc.)
-  created_at timestamptz NOT NULL DEFAULT now()
-);
-
-ALTER TABLE public.quiz_analytics ENABLE ROW LEVEL SECURITY;
-
--- Insert-only, no read/update/delete from client
-CREATE POLICY "Allow anonymous insert on quiz_analytics"
-  ON public.quiz_analytics FOR INSERT
-  WITH CHECK (true);
-
-CREATE POLICY "Block anonymous select on quiz_analytics"
-  ON public.quiz_analytics FOR SELECT
-  USING (false);
+```
+1. Eyebrow          — "A Framework by Dr. Michael J.D. Rollock"
+2. H1 Throughline   — "Pain is not a punishment. / It's an ingredient."
+3. Lead Paragraph   — Validation + promise + cultural signal (single block)
+4. Tagline          — "Life is painful. Make it delicious."
+5. CTA Row          — "Discover What's in Your Bottle" + "Explore the Framework"
 ```
 
-## Event Design
+### Element details
 
-| Event | `event_type` | `event_data` payload |
-|---|---|---|
-| User clicks "Start My Profile" | `start` | `{}` |
-| User answers a Likert item | `item_answer` | `{ "item_id": 7, "phase": "quiz", "index": 6 }` |
-| User enters fire intro | `phase_change` | `{ "phase": "fireIntro" }` |
-| User answers a fire item | `item_answer` | `{ "item_id": 30, "phase": "fire", "index": 0 }` |
-| User reaches results | `complete` | `{ "gates": ["overwhelm","numbing"], "gate_count": 2, "primary_fire": "A" }` |
+| # | Element | RevealSection delay | Key styling notes |
+|---|---------|-------------------|-------------------|
+| 1 | Eyebrow | 0 (default) | `font-body text-xs font-semibold uppercase tracking-[0.18em] text-gold-muted mb-8` |
+| 2 | H1 | 100 | Existing h1 classes + `text-cream`; "punishment." in `<span className="text-gold-light">` ; `<br />` between sentences |
+| 3 | Lead | 200 | `mx-auto max-w-[620px] text-[clamp(1rem,2.2vw,1.15rem)] leading-[1.75] text-cream-mid mt-8 mb-6`; "The Pepper Sauce Principle™" set off as `font-semibold text-gold-pale` |
+| 4 | Tagline | 325 | `font-accent text-[clamp(1.3rem,3vw,1.8rem)] italic text-gold-light mb-10` — no quotation marks |
+| 5 | CTAs | 425 | Primary: "Discover What's in Your Bottle" → `#quiz` (gold filled); Secondary: "Explore the Framework" → `#framework` (outline) — same button styles as current |
 
-- **Session ID**: Generated once via `crypto.randomUUID()` when the component mounts. No PII attached.
-- **Drop-off detection**: If a session has a `start` event but no `complete` event, the last `item_answer` reveals the exact drop-off point.
+## What stays untouched
 
-## Code Changes
+- Outer `<section>` element (id, className, inline padding style)
+- Radial gradient overlay `<div>`
+- `RevealSection` and `useScrollReveal` components/hooks
+- All other sections and files
 
-### `src/components/sections/QuizSection.tsx`
+## What is removed (12 blocks → 5)
 
-1. **Add session ID state**: `const [sessionId] = useState(() => crypto.randomUUID())`
-
-2. **Create a fire-and-forget tracking helper**:
-   ```typescript
-   const trackEvent = useCallback((event_type: string, event_data: Record<string, unknown> = {}) => {
-     supabase.from('quiz_analytics').insert({
-       session_id: sessionId,
-       event_type,
-       event_data,
-     } as any).then(null, () => {});
-   }, [sessionId]);
-   ```
-
-3. **Instrument existing handlers** (5 insertion points, no UI changes):
-   - `handleStart()` → `trackEvent('start')`
-   - `handleLikertSelect()` → `trackEvent('item_answer', { item_id, phase: 'quiz', index: currentItem })`
-   - Fire intro button click → `trackEvent('phase_change', { phase: 'fireIntro' })`
-   - `handleFireSelect()` → `trackEvent('item_answer', { item_id, phase: 'fire', index: currentItem })`
-   - Results `useEffect` → `trackEvent('complete', { gates, gate_count, primary_fire })`
-
-## Querying the Data
-
-Once deployed, analytics can be queried directly from the database:
-
-- **Completion rate**: `SELECT COUNT(*) FILTER (WHERE event_type='complete') * 100.0 / COUNT(*) FILTER (WHERE event_type='start') FROM quiz_analytics`
-- **Drop-off by item**: Find sessions with `start` but no `complete`, then get their last `item_answer` event
-- **Gate frequency**: `SELECT event_data->>'gates', COUNT(*) FROM quiz_analytics WHERE event_type='complete' GROUP BY 1`
-
-## What Does NOT Change
-
-- No UI changes — tracking is invisible to the user
-- No PII stored in analytics table (session_id is random, not linked to email/name)
-- Existing `quiz_submissions` and `anonymous_responses` tables are untouched
-- All inserts are non-blocking (fire-and-forget)
+All intermediate prose blocks are deleted from the hero. None of that content is added elsewhere — it already exists in FrameworkSection, QuizSection, ConditionsSection, and InterventionSection.
 
