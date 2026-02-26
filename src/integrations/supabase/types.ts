@@ -194,6 +194,30 @@ export type Database = {
         }
         Relationships: []
       }
+      quiz_analytics: {
+        Row: {
+          created_at: string
+          event_data: Json | null
+          event_type: string
+          id: string
+          session_id: string
+        }
+        Insert: {
+          created_at?: string
+          event_data?: Json | null
+          event_type: string
+          id?: string
+          session_id: string
+        }
+        Update: {
+          created_at?: string
+          event_data?: Json | null
+          event_type?: string
+          id?: string
+          session_id?: string
+        }
+        Relationships: []
+      }
       quiz_submissions: {
         Row: {
           chronic_fire_type: string | null

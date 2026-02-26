@@ -158,6 +158,15 @@ export function QuizSection() {
   const [emailError, setEmailError] = useState(false);
   const submittedRef = useRef(false);
   const isTransitioning = useRef(false);
+  const [sessionId] = useState(() => crypto.randomUUID());
+
+  const trackEvent = useCallback((event_type: string, event_data: Record<string, unknown> = {}) => {
+    supabase.from('quiz_analytics').insert({
+      session_id: sessionId,
+      event_type,
+      event_data,
+    } as any).then(null, () => {});
+  }, [sessionId]);
 
   useEffect(() => {
     if (phase !== 'results' || submittedRef.current) return;
@@ -190,6 +199,14 @@ export function QuizSection() {
     };
     supabase.from('quiz_submissions').insert(profileRow as any).then(null, () => {});
 
+    // Analytics: completion event
+    const gateNames: string[] = [];
+    if (scovilleItems.includes(6)) gateNames.push('overwhelm');
+    if (scovilleItems.includes(17)) gateNames.push('safety');
+    if (scovilleItems.includes(24)) gateNames.push('burdensomeness');
+    if (scovilleItems.includes(29)) gateNames.push('numbing');
+    trackEvent('complete', { gates: gateNames, gate_count: gateNames.length, primary_fire: pFire[0] || null });
+
     // Table 2: De-identified responses (NO email, NO user link)
     const anonRow: Record<string, unknown> = {};
     for (let i = 1; i <= 34; i++) {
@@ -212,6 +229,7 @@ export function QuizSection() {
     setNameError(!nameOk);
     setEmailError(!emailOk);
     if (!nameOk || !emailOk) return;
+    trackEvent('start');
     setPhase('quiz');
     setCurrentItem(0);
     setTimeout(scrollToQuiz, 100);
@@ -220,6 +238,7 @@ export function QuizSection() {
   const handleLikertSelect = (itemId: number, value: number, scoring?: string) => {
     if (isTransitioning.current) return;
     setResponses(prev => ({ ...prev, [itemId]: value }));
+    trackEvent('item_answer', { item_id: itemId, phase: 'quiz', index: currentItem });
     if (scoring === 'scoville' && value >= 5) {
       setScovilleTriggered(true);
     }
@@ -238,6 +257,7 @@ export function QuizSection() {
   const handleFireSelect = (itemId: number, value: string) => {
     if (isTransitioning.current) return;
     setResponses(prev => ({ ...prev, [itemId]: value }));
+    trackEvent('item_answer', { item_id: itemId, phase: 'fire', index: currentItem });
     isTransitioning.current = true;
     setTimeout(() => {
       if (currentItem + 1 >= fireItems.length) {
@@ -419,7 +439,7 @@ export function QuizSection() {
               Now let's find out what kind of fire you're carrying.
             </p>
             <button
-              onClick={() => { setPhase('fire'); setCurrentItem(0); scrollToQuiz(); }}
+              onClick={() => { trackEvent('phase_change', { phase: 'fireIntro' }); setPhase('fire'); setCurrentItem(0); scrollToQuiz(); }}
               className="rounded-md bg-gold px-9 py-3.5 font-body text-[0.95rem] font-semibold text-dark transition-all hover:bg-gold-light hover:-translate-y-0.5"
             >
               Continue
