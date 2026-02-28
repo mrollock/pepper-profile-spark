@@ -479,6 +479,69 @@
   }
 }
 
+/* ================================================
+   EVIDENCE SECTION
+   ================================================ */
+
+.evidence-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .evidence-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.evidence-card {
+  background: hsl(var(--cream));
+  border: 1px solid hsl(var(--cream-mid));
+  border-radius: 8px;
+  padding: 2rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.evidence-card:hover {
+  border-color: hsl(var(--gold));
+  box-shadow: 0 8px 30px rgba(61, 53, 37, 0.08);
+}
+
+.evidence-finding {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: hsl(var(--text-body));
+  line-height: 1.3;
+  margin-bottom: 0.8rem;
+}
+
+.evidence-detail {
+  font-family: 'Libre Franklin', sans-serif;
+  font-size: 0.9rem;
+  color: hsl(var(--text-light));
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.evidence-source {
+  font-family: 'Libre Franklin', sans-serif;
+  font-size: 0.75rem;
+  color: hsl(var(--text-faint));
+  font-style: italic;
+  margin-bottom: 0.6rem;
+}
+
+.evidence-condition {
+  font-family: 'Libre Franklin', sans-serif;
+  font-size: 0.8rem;
+  color: hsl(var(--gold));
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
 @media (max-width: 480px) {
   .source-entry {
     padding: 1.1rem 1rem;
