@@ -1,8 +1,6 @@
-import { forwardRef } from 'react';
-
-export const Footer = forwardRef<HTMLElement>((_props, ref) => {
+export function Footer() {
   return (
-    <footer ref={ref} className="bg-dark px-[clamp(1.25rem,5vw,3rem)] py-12 text-center text-[0.85rem] text-cream-mid">
+    <footer className="bg-dark px-[clamp(1.25rem,5vw,3rem)] py-12 text-center text-[0.85rem] text-cream-mid">
       <p className="font-medium text-cream-soft">Dr. Michael J.D. Rollock</p>
       <p className="text-[0.82rem]">
         Associate Professor · Augusta University · Clinical Psychologist · Speaker
@@ -26,6 +24,4 @@ export const Footer = forwardRef<HTMLElement>((_props, ref) => {
       </div>
     </footer>
   );
-});
-
-Footer.displayName = 'Footer';
+}
