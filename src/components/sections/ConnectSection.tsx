@@ -15,15 +15,15 @@ export function ConnectSection() {
   };
 
   return (
-    <section className="sec-dark relative bg-dark py-[var(--section-pad)] px-[clamp(1.25rem,5vw,3rem)]" id="connect">
+    <section className="bg-cream py-[var(--section-pad)] px-[clamp(1.25rem,5vw,3rem)]" id="connect">
       <div className="mx-auto max-w-[var(--content-max)] text-center">
         <RevealSection>
-          <span className="mb-4 block font-body text-xs font-semibold uppercase tracking-[0.18em] text-gold-light">
+          <span className="mb-4 block font-body text-xs font-semibold uppercase tracking-[0.18em] text-gold">
             Connect
           </span>
-          <h2 className="text-cream">Pull Up a Chair</h2>
+          <h2 className="text-text-body">Pull Up a Chair</h2>
           <div className="mx-auto my-6 h-[3px] w-[60px] rounded-sm bg-gold-muted" />
-          <p className="text-cream-soft">
+          <p className="text-text-light">
             Whether you want to bring the Pepper Sauce Principle to your conference, your clinic, your church, or your classroom—or you just want to be the first to know what's next—this is your seat at the table.
           </p>
 
@@ -36,7 +36,7 @@ export function ConnectSection() {
                 value={form.name}
                 onChange={(e) => setForm(p => ({ ...p, name: e.target.value.slice(0, 100) }))}
                 maxLength={100}
-                className="rounded-md border-[1.5px] border-gold/20 bg-dark-mid px-4 py-3.5 font-body text-[0.95rem] text-cream transition-colors focus:border-gold focus:outline-none"
+                className="rounded-md border-[1.5px] border-gold/20 bg-background px-4 py-3.5 font-body text-[0.95rem] text-foreground transition-colors focus:border-gold focus:outline-none"
               />
               <input
                 type="email"
@@ -45,7 +45,7 @@ export function ConnectSection() {
                 value={form.email}
                 onChange={(e) => setForm(p => ({ ...p, email: e.target.value.slice(0, 255) }))}
                 maxLength={255}
-                className="rounded-md border-[1.5px] border-gold/20 bg-dark-mid px-4 py-3.5 font-body text-[0.95rem] text-cream transition-colors focus:border-gold focus:outline-none"
+                className="rounded-md border-[1.5px] border-gold/20 bg-background px-4 py-3.5 font-body text-[0.95rem] text-foreground transition-colors focus:border-gold focus:outline-none"
               />
               <input
                 type="text"
@@ -54,7 +54,7 @@ export function ConnectSection() {
                 value={form.message}
                 onChange={(e) => setForm(p => ({ ...p, message: e.target.value.slice(0, 2000) }))}
                 maxLength={2000}
-                className="rounded-md border-[1.5px] border-gold/20 bg-dark-mid px-4 py-3.5 font-body text-[0.95rem] text-cream transition-colors focus:border-gold focus:outline-none"
+                className="rounded-md border-[1.5px] border-gold/20 bg-background px-4 py-3.5 font-body text-[0.95rem] text-foreground transition-colors focus:border-gold focus:outline-none"
               />
               <button
                 onClick={handleSubmit}
@@ -64,7 +64,7 @@ export function ConnectSection() {
               </button>
             </div>
           ) : (
-            <p className="mt-6 font-accent text-[1.2rem] italic text-gold-light">
+            <p className="mt-6 font-accent text-[1.2rem] italic text-gold">
               Thank you. We'll be in touch. Pull up a chair — we saved you a seat.
             </p>
           )}
