@@ -2,32 +2,39 @@ import { RevealSection } from '@/components/RevealSection';
 
 const EVIDENCE = [
   {
-    finding: 'Community is literally analgesic.',
-    detail:
-      'When one person holds another\u2019s hand during pain, their brainwaves synchronize and the pain signal measurably decreases. Social bonding activates the same opioid system that suppresses pain.',
-    source: 'Goldstein et al., PNAS, 2018 \u00B7 Machin & Dunbar, Behaviour, 2011',
-    condition: '\u2192 Come to the Table',
+    condition: 'Condition 1: The Pepper Is Real',
+    heading: 'Naming pain changes its grip',
+    body: 'A 2022 study in The Journal of Pain developed the first validated scale measuring pain invalidation — having your pain disbelieved, discredited, or dismissed. Higher invalidation scores predicted worse pain outcomes and greater functional impairment. The first step in the framework — acknowledging that the pepper is real — is now a measurable clinical variable.',
+    citation: 'Nicola et al., The Journal of Pain, 2022',
+    doi: 'https://doi.org/10.1016/j.jpain.2022.06.008',
   },
   {
-    finding: 'Pain rewires the brain \u2014 but the rewiring is reversible.',
-    detail:
-      'Chronic pain shifts neural processing from sensory circuits to emotional ones. But this reorganization responds to new experiences and conditions \u2014 the brain\u2019s pain map can be rewritten.',
-    source: 'Hashmi et al., Brain, 2013 \u00B7 Woolf, Annals of Internal Medicine, 2004',
-    condition: '\u2192 Build Your Heat Tolerance',
+    condition: 'Condition 2: Choose Your Recipe',
+    heading: 'Believing you have a choice changes the outcome',
+    body: 'A 2022 meta-analysis in Clinical Psychology Review examined what actually drives improvement in chronic pain treatment. The answer: self-efficacy — the belief that you can influence how you hold your pain. Increases in self-efficacy mediated the effect of cognitive behavioral therapy on disability. Not the technique. The belief that you have a recipe.',
+    citation: 'Murillo et al., Clinical Psychology Review, 2022',
+    doi: 'https://doi.org/10.1016/j.cpr.2022.102160',
   },
   {
-    finding: 'Sharing what you\u2019ve made changes your immune system.',
-    detail:
-      'A generativity intervention \u2014 writing about how your experiences could help others \u2014 altered pro-inflammatory gene expression. Meaning-making that reaches beyond the self has biological consequences.',
-    source: 'Moieni et al., Psychoneuroendocrinology, 2020',
-    condition: '\u2192 Pass the Sauce',
+    condition: 'Condition 3: Come to the Table',
+    heading: 'Isolation is as dangerous as the pain itself',
+    body: 'A 2023 mega-analysis in Nature Human Behaviour synthesized 90 cohort studies with over 2.2 million individuals. Social isolation increased all-cause mortality risk by 32%. Loneliness independently increased it by 14%. "Come to the Table" is not a metaphor. When pain is processed alone, the mortality effect is comparable to smoking 15 cigarettes a day.',
+    citation: 'Wang et al., Nature Human Behaviour, 2023',
+    doi: 'https://doi.org/10.1038/s41562-023-01617-6',
   },
   {
-    finding: 'The capsaicin molecule is the proof of concept.',
-    detail:
-      'The TRPV1 receptor that detects capsaicin \u2014 the compound that makes peppers hot \u2014 first sensitizes, then desensitizes with repeated exposure. The pepper literally teaches the nerve a new prediction. This isn\u2019t an analogy. It\u2019s the biology the metaphor was built on.',
-    source: 'Caterina et al., Nature, 1997 \u00B7 Anand & Bley, Br J Anaesth, 2011',
-    condition: '\u2192 The whole framework',
+    condition: 'Condition 4: Build Your Heat Tolerance',
+    heading: 'The brain rewires through graduated engagement',
+    body: "A 2025 neuroimaging study found that habitual spicy food consumers showed significantly reduced pain-related neural amplitudes compared to non-consumers. The brain doesn\u2019t just endure repeated exposure to capsaicin — it structurally adapts. Not willpower. Neuroplasticity. The same mechanism that builds heat tolerance builds life tolerance.",
+    citation: 'He et al., Social Cognitive and Affective Neuroscience, 2025',
+    doi: 'https://doi.org/10.1093/scan/nsaf040',
+  },
+  {
+    condition: 'Condition 5: Pass the Sauce',
+    heading: "Sharing what you've made reduces your own pain",
+    body: "A 2023 longitudinal study tracked approximately 48,000 individuals across 10 years. Those who donated money or volunteered their time reported significantly less pain interference — even after controlling for demographics, baseline health, and depression. Giving what you\u2019ve built from your pain back to others is not just generous. It\u2019s analgesic.",
+    citation: 'Hu et al., Journal of Psychosomatic Research, 2023',
+    doi: 'https://doi.org/10.1016/j.jpsychores.2023.111295',
   },
 ];
 
@@ -49,18 +56,39 @@ export function EvidenceSection() {
           </p>
         </RevealSection>
 
-        <div className="evidence-grid">
+        {/* Five-card grid: 3+2 on desktop, stacked on mobile */}
+        <div className="evidence-grid-5">
           {EVIDENCE.map((e, i) => (
-            <RevealSection key={i} delay={(i % 2) * 100}>
-              <div className="evidence-card">
-                <p className="evidence-finding">{e.finding}</p>
-                <p className="evidence-detail">{e.detail}</p>
-                <p className="evidence-source">{e.source}</p>
-                <p className="evidence-condition">{e.condition}</p>
+            <RevealSection key={i} delay={(i % 3) * 100}>
+              <div className="evidence-card h-full flex flex-col">
+                <span className="evidence-condition-label">{e.condition}</span>
+                <p className="evidence-finding">{e.heading}</p>
+                <p className="evidence-detail flex-1">{e.body}</p>
+                <div className="mt-auto pt-3">
+                  <p className="evidence-source">{e.citation}</p>
+                  <a
+                    href={e.doi}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="evidence-doi"
+                  >
+                    View study →
+                  </a>
+                </div>
               </div>
             </RevealSection>
           ))}
         </div>
+
+        {/* "Why pepper?" aside */}
+        <RevealSection>
+          <div className="evidence-aside">
+            <h3 className="evidence-aside-heading">Why pepper?</h3>
+            <p className="evidence-aside-body">
+              Capsaicin — the molecule that makes peppers hot — binds to the same receptor (TRPV1) that processes physical pain. Your tongue and your nervous system use identical hardware. But that receptor also binds anandamide, the body&rsquo;s own &ldquo;bliss molecule.&rdquo; Pain and pleasure, processed by the same receptor. The metaphor isn&rsquo;t decorative. It&rsquo;s molecular.
+            </p>
+          </div>
+        </RevealSection>
       </div>
     </section>
   );
