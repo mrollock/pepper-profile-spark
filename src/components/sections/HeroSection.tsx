@@ -61,6 +61,18 @@ export function HeroSection() {
             </a>
           </div>
         </RevealSection>
+
+        <RevealSection delay={525}>
+          <div className="mx-auto mt-14 max-w-[600px] border-t border-cream-mid/15 pt-6">
+            <p className="text-[clamp(0.82rem,1.8vw,0.9rem)] leading-[1.7] text-cream-mid/70">
+              <span className="text-gold-pale/90 font-medium">Physical pain.</span>{' '}
+              <span className="text-gold-pale/90 font-medium">Emotional pain.</span>{' '}
+              <span className="text-gold-pale/90 font-medium">Racial pain.</span>{' '}
+              <span className="text-gold-pale/90 font-medium">Inherited pain.</span>{' '}
+              These are not the same experience. But your nervous system processes them through overlapping circuits. The five conditions work across all of&nbsp;them.
+            </p>
+          </div>
+        </RevealSection>
       </div>
     </section>
   );
