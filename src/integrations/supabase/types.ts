@@ -178,19 +178,34 @@ export type Database = {
       }
       extended_profile_purchases: {
         Row: {
+          amount: number | null
           email: string
           id: string
+          name: string | null
+          price_type: string | null
           purchased_at: string
+          stripe_payment_intent: string | null
+          stripe_session_id: string | null
         }
         Insert: {
+          amount?: number | null
           email: string
           id?: string
+          name?: string | null
+          price_type?: string | null
           purchased_at?: string
+          stripe_payment_intent?: string | null
+          stripe_session_id?: string | null
         }
         Update: {
+          amount?: number | null
           email?: string
           id?: string
+          name?: string | null
+          price_type?: string | null
           purchased_at?: string
+          stripe_payment_intent?: string | null
+          stripe_session_id?: string | null
         }
         Relationships: []
       }

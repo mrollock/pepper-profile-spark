@@ -103,17 +103,43 @@ function SignatureBlend({ scores, primaryFire }: { scores: Record<number, number
 }
 
 /* ── Extended Profile Upsell Component ── */
-function ExtendedProfileUpsell({ email }: { email: string }) {
+function ExtendedProfileUpsell({ email, name }: { email: string; name: string }) {
   const [purchased, setPurchased] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [purchaseCount, setPurchaseCount] = useState<number | null>(null);
+
+  useEffect(() => {
+    // Check for returning from Stripe success
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('session_id')) {
+      setPurchased(true);
+      // Clean URL
+      window.history.replaceState({}, '', window.location.pathname + '#quiz');
+    }
+    // Fetch purchase count for pricing
+    supabase
+      .from('extended_profile_purchases')
+      .select('*', { count: 'exact', head: true })
+      .then(({ count }) => setPurchaseCount(count ?? 0));
+  }, []);
+
+  const isIntro = purchaseCount !== null && purchaseCount < 50;
+  const price = isIntro ? '$14.50' : '$29';
 
   const handlePurchase = async () => {
     setSubmitting(true);
     try {
-      await supabase.from('extended_profile_purchases').insert({ email } as any);
-    } catch { /* non-blocking */ }
-    setPurchased(true);
-    setSubmitting(false);
+      const { data, error } = await supabase.functions.invoke('create-checkout', {
+        body: { email, name },
+      });
+      if (error) throw error;
+      if (data?.url) {
+        window.location.href = data.url;
+      }
+    } catch (err) {
+      console.error('Checkout error:', err);
+      setSubmitting(false);
+    }
   };
 
   if (purchased) {
@@ -134,7 +160,14 @@ function ExtendedProfileUpsell({ email }: { email: string }) {
       <p className="mx-auto mb-6 max-w-[560px] text-[0.92rem] leading-[1.7] text-cream-soft">
         Your Pepper Sauce Profile gave you the broad strokes&nbsp;&#8212; your fire, your conditions, your signature blend. The Extended Pepper Sauce Profile takes it further: a personalized analysis of how your specific fire interacts with your specific recipe, along with concrete next steps tailored to where you are right now. Answer a few more questions, and within 48 hours you&#8217;ll receive a detailed, individualized report designed around your results.
       </p>
-      <p className="mb-6 font-display text-[1.5rem] text-gold-light">$29&nbsp;&#8212; one&#8209;time</p>
+      <p className="mb-2 font-display text-[1.5rem] text-gold-light">
+        {price}&nbsp;&#8212; one&#8209;time
+      </p>
+      {isIntro && (
+        <p className="mb-4 text-[0.78rem] text-cream-mid/70">
+          Introductory pricing&nbsp;&#8212; {50 - (purchaseCount ?? 0)} spots remaining at this rate
+        </p>
+      )}
       <p className="mb-4 text-[0.85rem] text-cream-mid">
         Your email: <span className="font-semibold text-cream-soft">{email}</span>
       </p>
@@ -882,7 +915,7 @@ export function QuizSection() {
           <ShareActions shareText={shareText} shareUrl={shareUrl} />
 
           {/* ── Go Deeper Upsell ── */}
-          <ExtendedProfileUpsell email={userEmail} />
+          <ExtendedProfileUpsell email={userEmail} name={userName} />
 
           {/* ── Legal ── */}
           <p className="mt-10 text-center text-[0.78rem] leading-[1.6] text-text-faint">
