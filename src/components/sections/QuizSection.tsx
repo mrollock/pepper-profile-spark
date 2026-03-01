@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
+import { Share2, Copy, Check, Printer, Twitter, Facebook, Linkedin } from 'lucide-react';
 import {
   ITEMS,
   CONDITION_NAMES,
@@ -143,6 +144,121 @@ function ExtendedProfileUpsell({ email }: { email: string }) {
       >
         {submitting ? 'Processing\u2026' : 'Get My Extended Profile'}
       </button>
+    </div>
+  );
+}
+
+/* ── Share Actions Component ── */
+function ShareActions({ shareText, shareUrl }: { shareText: string; shareUrl: string }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(`${shareText} ${shareUrl}`);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    } catch {
+      // fallback
+      const ta = document.createElement('textarea');
+      ta.value = `${shareText} ${shareUrl}`;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    }
+  };
+
+  const handleNativeShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: 'My Pepper Sauce Profile', text: shareText, url: shareUrl });
+      } catch { /* user cancelled */ }
+    }
+  };
+
+  const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+  const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`;
+  const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
+
+  return (
+    <div className="quiz-fade-in mt-10 rounded-2xl border border-gold/15 bg-cream/80 p-8 text-center">
+      <div className="mb-2 flex items-center justify-center gap-2 text-gold-muted">
+        <Share2 className="h-4 w-4" />
+        <span className="font-body text-[0.72rem] font-semibold uppercase tracking-[0.2em]">Share Your Recipe</span>
+      </div>
+      <p className="mx-auto mb-6 max-w-[420px] text-[0.88rem] text-text-light">
+        Invite someone to discover their own recipe — or save yours for later.
+      </p>
+
+      <div className="flex flex-wrap items-center justify-center gap-3">
+        {/* Social share buttons */}
+        <a
+          href={twitterUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-lg border border-cream-mid bg-cream px-4 py-2.5 text-[0.85rem] font-medium text-text-body transition-all hover:border-gold hover:shadow-sm"
+          aria-label="Share on X / Twitter"
+        >
+          <Twitter className="h-4 w-4" />
+          <span className="hidden sm:inline">X / Twitter</span>
+        </a>
+        <a
+          href={facebookUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-lg border border-cream-mid bg-cream px-4 py-2.5 text-[0.85rem] font-medium text-text-body transition-all hover:border-gold hover:shadow-sm"
+          aria-label="Share on Facebook"
+        >
+          <Facebook className="h-4 w-4" />
+          <span className="hidden sm:inline">Facebook</span>
+        </a>
+        <a
+          href={linkedinUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-lg border border-cream-mid bg-cream px-4 py-2.5 text-[0.85rem] font-medium text-text-body transition-all hover:border-gold hover:shadow-sm"
+          aria-label="Share on LinkedIn"
+        >
+          <Linkedin className="h-4 w-4" />
+          <span className="hidden sm:inline">LinkedIn</span>
+        </a>
+
+        {/* Copy link */}
+        <button
+          onClick={handleCopyLink}
+          className={cn(
+            "inline-flex items-center gap-2 rounded-lg border px-4 py-2.5 text-[0.85rem] font-medium transition-all",
+            copied
+              ? "border-sage bg-sage/10 text-sage"
+              : "border-cream-mid bg-cream text-text-body hover:border-gold hover:shadow-sm"
+          )}
+        >
+          {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+          {copied ? 'Copied!' : 'Copy Link'}
+        </button>
+
+        {/* Native share (mobile) */}
+        {'share' in navigator && (
+          <button
+            onClick={handleNativeShare}
+            className="inline-flex items-center gap-2 rounded-lg border border-cream-mid bg-cream px-4 py-2.5 text-[0.85rem] font-medium text-text-body transition-all hover:border-gold hover:shadow-sm sm:hidden"
+          >
+            <Share2 className="h-4 w-4" />
+            Share
+          </button>
+        )}
+
+        {/* Print */}
+        <button
+          onClick={() => window.print()}
+          className="inline-flex items-center gap-2 rounded-lg bg-gold px-5 py-2.5 text-[0.85rem] font-semibold text-dark transition-all hover:bg-gold-light hover:-translate-y-0.5 hover:shadow-[0_4px_16px_rgba(200,150,46,0.3)]"
+        >
+          <Printer className="h-4 w-4" />
+          Print Results
+        </button>
+      </div>
     </div>
   );
 }
@@ -545,26 +661,31 @@ export function QuizSection() {
   const primaryLabel = primaryFire.map(f => FIRE_NAMES[f]).join(' · ');
   const primaryDesc = FIRE_DESC[primaryFire[0]];
 
+  const shareText = `I just discovered my Pepper Sauce Profile — my primary fire is ${primaryLabel}. What's yours?`;
+  const shareUrl = 'https://pepper-profile-spark.lovable.app/#quiz';
 
   return (
     <section className="bg-cream-soft py-[var(--section-pad)] px-[clamp(1.25rem,5vw,3rem)]" id="quiz">
       <div className="mx-auto max-w-[var(--wide-max)]">
-        <div className="mx-auto max-w-[680px]" role="region" aria-label="Quiz Results">
-          <div className="text-center">
-            <h2 className="mb-2">{userName}'s Recipe</h2>
-            <p className="mb-8 font-accent italic text-gold-muted">Your Pepper Sauce Profile</p>
-          </div>
+        <div className="mx-auto max-w-[720px]" role="region" aria-label="Quiz Results">
 
-          {/* Educational-purpose framing */}
-          <p className="mb-8 text-center text-[0.88rem] leading-[1.6] text-text-light">
-            Your Pepper Sauce Profile shows broad patterns — not a personalized clinical assessment. Think of it as reading the label on your jar: you can see what's inside, but the full recipe is richer than any label can capture. Use these results as a starting point for reflection, conversation, and deciding what to explore next.
-          </p>
+          {/* ── Header with decorative line ── */}
+          <div className="quiz-fade-in text-center mb-10">
+            <div className="inline-block mb-4">
+              <span className="block font-body text-xs font-semibold uppercase tracking-[0.22em] text-gold-muted mb-3">Your Pepper Sauce Profile</span>
+              <div className="mx-auto h-[3px] w-[60px] rounded-sm bg-gold mb-4" />
+            </div>
+            <h2 className="mb-3">{userName}'s Recipe</h2>
+            <p className="mx-auto max-w-[540px] text-[0.88rem] leading-[1.65] text-text-light">
+              Your profile shows broad patterns — not a personalized clinical assessment. Think of it as reading the label on your jar: you can see what's inside, but the full recipe is richer than any label can capture.
+            </p>
+          </div>
 
           {/* Scoville Gate — Modular Responses */}
           {scovilleTriggered && (() => {
             const gateItems = [6, 17, 24, 29].filter(id => (responses[id] as number) >= 5);
             return (
-              <div className="mb-10 rounded-[10px] border border-ember/20 bg-ember/[0.08] p-7 text-left">
+              <div className="quiz-fade-in mb-10 rounded-[12px] border border-ember/20 bg-ember/[0.06] p-7 text-left shadow-[0_4px_20px_rgba(184,69,26,0.08)]">
                 <p className="text-[0.95rem] leading-[1.7] text-text-body">
                   <strong>One more thing.</strong> Some of what you shared tells us the pepper you're carrying right now is serious — the kind that can do real harm if you're handling it without the right tools. That's not a judgment on your recipe. It's a sign that this particular pepper deserves a trained cook in your kitchen.
                 </p>
@@ -626,73 +747,87 @@ export function QuizSection() {
             );
           })()}
 
-          {/* Five Conditions */}
-          <h3 className="mb-6 text-left">Your Five Conditions</h3>
-          {[1, 2, 3, 4, 5].map(c => {
-            const score = scores[c];
-            const pct = ((score - 5) / 25 * 100).toFixed(0);
-            return (
-              <div key={c} className="mb-5">
-                <div className="mb-1 flex items-center justify-between text-[0.88rem] font-medium">
-                  <span>
-                    {CONDITION_NAMES[c]}{' '}
-                    <span className="text-[0.8rem] text-text-faint">({CONDITION_SUBTITLES[c]})</span>
-                  </span>
-                  <span className="font-bold">{score}/30</span>
-                </div>
-                <div className="h-2.5 w-full overflow-hidden rounded-full bg-cream-mid">
-                  <div
-                    className="h-full rounded-full transition-all duration-1000"
-                    style={{ width: `${pct}%`, backgroundColor: CONDITION_COLORS[c] }}
-                  />
-                </div>
-                <p className="mt-1 text-left text-[0.85rem] leading-[1.5] text-text-light">
-                  {getInterpretation(score)}
-                </p>
-              </div>
-            );
-          })}
-
-          {/* Primary Fire */}
-          <div className="my-8 rounded-xl bg-dark p-8 text-center">
-            <div className="mb-2 text-[2.5rem]">🌶️</div>
-            <h3 className="mb-2 text-gold-light">Your Primary Fire: {primaryLabel}</h3>
-            <p className="text-[0.95rem] text-cream-soft">{primaryDesc}</p>
+          {/* ── Primary Fire — Hero Card ── */}
+          <div className="quiz-fade-in mb-10 overflow-hidden rounded-2xl bg-dark shadow-[0_8px_40px_rgba(0,0,0,0.25)]">
+            <div className="relative px-8 py-10 text-center" style={{ background: 'linear-gradient(135deg, hsl(var(--dark)) 0%, hsl(var(--dark-warm)) 50%, hsl(43 33% 12%) 100%)' }}>
+              <div className="mb-4 text-[3rem] leading-none">🌶️</div>
+              <span className="mb-2 block font-body text-[0.7rem] font-semibold uppercase tracking-[0.25em] text-gold-muted">Your Primary Fire</span>
+              <h3 className="mb-4 text-gold-light" style={{ fontSize: 'clamp(1.4rem, 3vw, 1.8rem)' }}>{primaryLabel}</h3>
+              <p className="mx-auto max-w-[520px] text-[0.95rem] leading-[1.7] text-cream-soft">{primaryDesc}</p>
+            </div>
           </div>
 
-          {/* Chronic Fire */}
+          {/* ── Five Conditions — Enhanced Cards ── */}
+          <div className="quiz-fade-in mb-10">
+            <h3 className="mb-2 text-center">Your Five Conditions</h3>
+            <p className="mx-auto mb-8 max-w-[480px] text-center text-[0.85rem] text-text-faint">How well-stocked each ingredient is in your recipe right now</p>
+            
+            <div className="space-y-4">
+              {[1, 2, 3, 4, 5].map(c => {
+                const score = scores[c];
+                const pct = Math.max(2, ((score - 5) / 25 * 100));
+                const interp = getInterpretation(score);
+                const isStrong = score >= 21;
+                const isThin = score <= 12;
+                return (
+                  <div
+                    key={c}
+                    className={cn(
+                      "rounded-xl border p-5 transition-all",
+                      isStrong ? "border-gold/25 bg-gold-pale/30" : isThin ? "border-ember/15 bg-ember/[0.04]" : "border-cream-mid/50 bg-cream/60"
+                    )}
+                  >
+                    <div className="mb-2 flex items-baseline justify-between gap-3">
+                      <div>
+                        <span className="font-display text-[1.05rem] font-bold text-text-body">{CONDITION_NAMES[c]}</span>
+                        <span className="ml-2 text-[0.78rem] text-text-faint">({CONDITION_SUBTITLES[c]})</span>
+                      </div>
+                      <span className="whitespace-nowrap font-body text-[0.95rem] font-bold" style={{ color: CONDITION_COLORS[c] }}>
+                        {score}<span className="text-[0.78rem] font-normal text-text-faint">/30</span>
+                      </span>
+                    </div>
+                    <div className="mb-3 h-3 w-full overflow-hidden rounded-full bg-cream-mid/60">
+                      <div
+                        className="h-full rounded-full transition-all duration-1000 ease-out"
+                        style={{
+                          width: `${pct}%`,
+                          background: `linear-gradient(90deg, ${CONDITION_COLORS[c]}, ${CONDITION_COLORS[c]}cc)`,
+                        }}
+                      />
+                    </div>
+                    <p className="text-[0.85rem] leading-[1.55] text-text-light">{interp}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* ── Chronic Fire ── */}
           {chronicFire && (
-            <div className="my-8 rounded-xl bg-dark-mid p-8 text-center">
-              <p className="mb-2 font-accent italic text-gold-muted">
-                And here's the fire you've been carrying longest…
-              </p>
-              <h3 className="mb-2 text-gold-light">Your Chronic Fire: {FIRE_NAMES[chronicFire]}</h3>
-              <p className="text-[0.95rem] text-cream-soft">{FIRE_DESC[chronicFire]}</p>
-              {chronicFire !== primaryFire[0] && (
-                <p className="mt-4 border-t border-gold/15 pt-4 text-[0.9rem] text-cream-mid">
-                  Right now, you're carrying {FIRE_NAMES[primaryFire[0]]} — that's the pepper on the counter today. But the one that's been sitting in the jar the longest is {FIRE_NAMES[chronicFire]}. These are two different peppers, and they may need different ingredients. Both are real. Both deserve a recipe.
-                </p>
-              )}
+            <div className="quiz-fade-in my-8 overflow-hidden rounded-2xl shadow-[0_6px_30px_rgba(0,0,0,0.2)]" style={{ background: 'linear-gradient(145deg, hsl(var(--dark-mid)), hsl(var(--dark-warm)))' }}>
+              <div className="p-8 text-center">
+                <span className="mb-2 block font-body text-[0.68rem] font-semibold uppercase tracking-[0.25em] text-cream-mid">The fire you've been carrying longest</span>
+                <h3 className="mb-3 text-gold-light">Your Chronic Fire: {FIRE_NAMES[chronicFire]}</h3>
+                <p className="mx-auto max-w-[520px] text-[0.95rem] leading-[1.7] text-cream-soft">{FIRE_DESC[chronicFire]}</p>
+                {chronicFire !== primaryFire[0] && (
+                  <p className="mx-auto mt-5 max-w-[520px] border-t border-gold/15 pt-5 text-[0.9rem] leading-[1.7] text-cream-mid">
+                    Right now, you're carrying {FIRE_NAMES[primaryFire[0]]} — that's the pepper on the counter today. But the one that's been sitting in the jar the longest is {FIRE_NAMES[chronicFire]}. These are two different peppers, and they may need different ingredients. Both are real. Both deserve a recipe.
+                  </p>
+                )}
+              </div>
             </div>
           )}
 
-          {/* Signature Blend */}
+          {/* ── Signature Blend ── */}
           <SignatureBlend scores={scores} primaryFire={primaryFire} />
 
-          {/* Print */}
-          <div className="mt-10 text-center">
-            <button
-              onClick={() => window.print()}
-              className="rounded-md bg-gold px-9 py-3.5 font-body text-[0.95rem] font-semibold text-dark transition-all hover:bg-gold-light hover:-translate-y-0.5"
-            >
-              Print My Results
-            </button>
-          </div>
+          {/* ── Share & Print Actions ── */}
+          <ShareActions shareText={shareText} shareUrl={shareUrl} />
 
-          {/* Go Deeper Upsell */}
+          {/* ── Go Deeper Upsell ── */}
           <ExtendedProfileUpsell email={userEmail} />
 
-          {/* Legal */}
+          {/* ── Legal ── */}
           <p className="mt-10 text-center text-[0.78rem] leading-[1.6] text-text-faint">
             The Pepper Sauce Profile and Extended Pepper Sauce Profile are educational and personal development tools. They do not constitute clinical services, psychological assessment, diagnosis, or treatment. Purchasing or completing the Extended Profile does not establish a therapeutic, counseling, or professional&#8209;client relationship with Dr.&nbsp;Rollock or any affiliated entity. If you are in crisis or need clinical support, please contact the 988 Suicide and Crisis Lifeline (call or text 988) or your local emergency services.
           </p>
