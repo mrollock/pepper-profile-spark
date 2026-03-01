@@ -16,6 +16,7 @@ import {
   getChronicFireType,
   getInterpretation,
 } from '@/data/quizData';
+import { CONDITION_INSIGHTS, FRAMEWORK_REMINDER } from '@/data/conditionInsights';
 
 type Phase = 'landing' | 'quiz' | 'fireIntro' | 'fire' | 'results';
 
@@ -801,6 +802,62 @@ export function QuizSection() {
               })}
             </div>
           </div>
+
+          {/* ── Signature Ingredient (Highest Condition) ── */}
+          {(() => {
+            const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+            const highestC = Number(sorted[0][0]);
+            const lowestC = Number(sorted[sorted.length - 1][0]);
+            const highInsight = CONDITION_INSIGHTS[highestC];
+            const lowInsight = CONDITION_INSIGHTS[lowestC];
+
+            return (
+              <>
+                <div className="quiz-fade-in mb-6 rounded-xl border-l-4 border-gold bg-cream/60 p-6 text-left">
+                  <span className="mb-2 block font-body text-[0.68rem] font-semibold uppercase tracking-[0.25em] text-gold-muted">
+                    Your Signature Ingredient
+                  </span>
+                  <h4 className="mb-1 font-display text-[1.1rem] font-bold text-text-body">
+                    {CONDITION_NAMES[highestC]}
+                    <span className="ml-2 text-[0.82rem] font-normal text-text-faint">— {CONDITION_SUBTITLES[highestC]}</span>
+                  </h4>
+                  <p className="mt-3 text-[0.92rem] leading-[1.7] text-text-light">
+                    {highInsight.signatureIngredient}
+                  </p>
+                </div>
+
+                {/* ── What Your Recipe Might Need (Lowest Condition) ── */}
+                <div className="quiz-fade-in mb-6 rounded-xl border-l-4 border-ember-soft bg-cream/60 p-6 text-left">
+                  <span className="mb-2 block font-body text-[0.68rem] font-semibold uppercase tracking-[0.25em] text-ember-soft">
+                    What Your Recipe Might Need
+                  </span>
+                  <h4 className="mb-1 font-display text-[1.1rem] font-bold text-text-body">
+                    {CONDITION_NAMES[lowestC]}
+                    <span className="ml-2 text-[0.82rem] font-normal text-text-faint">— {CONDITION_SUBTITLES[lowestC]}</span>
+                  </h4>
+                  <p className="mt-3 text-[0.92rem] leading-[1.7] text-text-light">
+                    {lowInsight.whatYouMightNeed}
+                  </p>
+
+                  <div className="mt-5 rounded-lg border-t border-ember/15 bg-ember/[0.04] px-5 py-4">
+                    <span className="mb-2 block font-body text-[0.68rem] font-semibold uppercase tracking-[0.25em] text-ember-soft">
+                      🌶️ Try This Week
+                    </span>
+                    <p className="text-[0.9rem] leading-[1.65] text-text-light italic">
+                      {lowInsight.actionableInsight}
+                    </p>
+                  </div>
+                </div>
+
+                {/* ── Framework Reminder ── */}
+                <div className="quiz-fade-in mb-10 border-t border-cream-mid/40 pt-5 text-center">
+                  <p className="mx-auto max-w-[540px] text-[0.85rem] italic leading-[1.65] text-text-faint">
+                    {FRAMEWORK_REMINDER}
+                  </p>
+                </div>
+              </>
+            );
+          })()}
 
           {/* ── Chronic Fire ── */}
           {chronicFire && (
