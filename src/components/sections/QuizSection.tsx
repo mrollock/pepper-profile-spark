@@ -1,7 +1,8 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
-import { Share2, Copy, Check, Printer, Twitter, Facebook, Linkedin } from 'lucide-react';
+import { Share2, Copy, Check, Printer, Twitter, Facebook, Linkedin, Download } from 'lucide-react';
+import { downloadQuizAsText } from '@/utils/exportQuiz';
 import {
   ITEMS,
   CONDITION_NAMES,
@@ -443,6 +444,13 @@ export function QuizSection() {
             <p className="mt-2 text-[0.85rem] text-text-faint">
               5–7 minutes · 34 items · Free · Not a diagnostic instrument
             </p>
+            <button
+              onClick={downloadQuizAsText}
+              className="mt-4 inline-flex items-center gap-1.5 text-[0.82rem] text-gold-muted hover:text-gold transition-colors underline underline-offset-2"
+            >
+              <Download className="size-3.5" />
+              Download printable version (.txt)
+            </button>
           </div>
         </div>
       </section>
