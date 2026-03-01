@@ -9,7 +9,7 @@ const corsHeaders = {
 };
 
 // TODO: Change to michael@peppersauceprinciple.com once domain is verified in Resend
-const FROM_EMAIL = "Michael Rollock <onboarding@resend.dev>";
+const FROM_EMAIL = "Michael Rollock <michael@peppersauceprinciple.com>";
 const REPLY_TO = "michael@peppersauceprinciple.com";
 
 function buildPurchaseEmailHtml(data: {
