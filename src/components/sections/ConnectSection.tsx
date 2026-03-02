@@ -76,8 +76,8 @@ export function ConnectSection() {
           <p className="mt-8 text-[0.88rem] text-text-faint">
             Imaginative Feedback Coaching & Consulting
             <br />
-            <a href="mailto:michael@ifwall.com" className="text-gold-muted hover:text-gold-light">
-              michael@ifwall.com
+            <a href="mailto:michael@peppersauceprinciple.com" className="text-gold-muted hover:text-gold-light">
+              michael@peppersauceprinciple.com
             </a>
             <br />
             {MAILING_ADDRESS_SHORT.map((line, i) => (

@@ -30,7 +30,7 @@ export function Footer() {
         <Link to="/disclaimer" className="text-[0.82rem] text-text-faint hover:text-gold-light">
           Disclaimer
         </Link>
-        <a href="mailto:michael@ifwall.com" className="text-[0.82rem] text-text-faint hover:text-gold-light">
+        <a href="mailto:michael@peppersauceprinciple.com" className="text-[0.82rem] text-text-faint hover:text-gold-light">
           Contact
         </a>
       </div>
