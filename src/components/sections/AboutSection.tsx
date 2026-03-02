@@ -1,4 +1,5 @@
 import { RevealSection } from '@/components/RevealSection';
+import { CREDENTIAL_CONTEXT } from '@/data/legalCopy';
 
 export function AboutSection() {
   return (
@@ -19,6 +20,9 @@ export function AboutSection() {
           </p>
           <p className="mt-4">
             He is a speaker, a teacher, a clinician, and a son of Barbados who still keeps the pepper sauce—gold, not red—on every table. He lives in Augusta, Georgia with his wife Lindsey, also a clinical psychologist, and their two daughters, who are already learning the recipe.
+          </p>
+          <p className="mt-4">
+            {CREDENTIAL_CONTEXT}
           </p>
         </RevealSection>
       </div>
