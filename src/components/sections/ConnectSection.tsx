@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { RevealSection } from '@/components/RevealSection';
+import { EMAIL_SIGNUP_DISCLAIMER, MAILING_ADDRESS_SHORT } from '@/data/legalCopy';
 
 export function ConnectSection() {
   const [submitted, setSubmitted] = useState(false);
@@ -62,6 +63,9 @@ export function ConnectSection() {
               >
                 Send
               </button>
+              <p className="text-[0.72rem] leading-[1.5] text-text-faint">
+                {EMAIL_SIGNUP_DISCLAIMER}
+              </p>
             </div>
           ) : (
             <p className="mt-6 font-accent text-[1.2rem] italic text-gold">
@@ -72,9 +76,13 @@ export function ConnectSection() {
           <p className="mt-8 text-[0.88rem] text-text-faint">
             Imaginative Feedback Coaching & Consulting
             <br />
-            <a href="mailto:Michael@ifwall.com" className="text-gold-muted hover:text-gold-light">
-              Michael@ifwall.com
+            <a href="mailto:michael@ifwall.com" className="text-gold-muted hover:text-gold-light">
+              michael@ifwall.com
             </a>
+            <br />
+            {MAILING_ADDRESS_SHORT.map((line, i) => (
+              <span key={i}>{line}<br /></span>
+            ))}
           </p>
         </RevealSection>
       </div>

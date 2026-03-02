@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { RevealSection } from '@/components/RevealSection';
+import { EMAIL_SIGNUP_DISCLAIMER } from '@/data/legalCopy';
 
 export function BookSection() {
   const [submitted, setSubmitted] = useState(false);
@@ -51,6 +52,9 @@ export function BookSection() {
               >
                 Notify Me
               </button>
+              <p className="mt-2 text-[0.72rem] leading-[1.5] text-cream-mid/60">
+                {EMAIL_SIGNUP_DISCLAIMER}
+              </p>
             </div>
           ) : (
             <p className="mt-6 font-accent text-[1.2rem] italic text-gold-light">

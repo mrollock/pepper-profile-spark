@@ -17,6 +17,7 @@ import {
   getInterpretation,
 } from '@/data/quizData';
 import { CONDITION_INSIGHTS, FRAMEWORK_REMINDER } from '@/data/conditionInsights';
+import { PRE_ASSESSMENT_DISCLAIMER, POST_RESULTS_DISCLAIMER } from '@/data/legalCopy';
 
 type Phase = 'landing' | 'quiz' | 'fireIntro' | 'fire' | 'results';
 
@@ -499,6 +500,16 @@ export function QuizSection() {
       <section className="bg-cream-soft py-[var(--section-pad)] px-[clamp(1.25rem,5vw,3rem)]" id="quiz">
         <div className="mx-auto max-w-[var(--wide-max)]">
           <div className="quiz-fade-in mx-auto max-w-[680px]" role="region" aria-label="Pepper Sauce Profile Assessment">
+
+            {/* Pre-assessment disclaimer — shown before first item only */}
+            {currentItem === 0 && (
+              <div className="mb-8 border-t border-b border-cream-mid/40 py-4">
+                <p className="text-[0.82rem] leading-[1.6] text-text-faint">
+                  {PRE_ASSESSMENT_DISCLAIMER}
+                </p>
+              </div>
+            )}
+
             {/* Progress */}
             <div className="mb-8">
               <div className="h-1 w-full overflow-hidden rounded-sm bg-cream-mid">
@@ -910,6 +921,11 @@ export function QuizSection() {
 
           {/* ── Signature Blend ── */}
           <SignatureBlend scores={scores} primaryFire={primaryFire} />
+
+          {/* ── Post-results disclaimer ── */}
+          <p className="mt-8 text-center text-[0.82rem] leading-[1.6] text-text-faint">
+            {POST_RESULTS_DISCLAIMER}
+          </p>
 
           {/* ── Share & Print Actions ── */}
           <ShareActions shareText={shareText} shareUrl={shareUrl} />
