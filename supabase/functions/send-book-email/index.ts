@@ -64,6 +64,28 @@ serve(async (req) => {
 
     console.log("Book email sent to:", email, "id:", resendData.id);
 
+    // Send admin notification
+    try {
+      await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: FROM_EMAIL,
+          to: [REPLY_TO],
+          subject: `📖 New Book Signup: ${email}`,
+          html: `<p><strong>New book notification signup</strong></p>
+<p><strong>Email:</strong> ${email}</p>
+<p>This person signed up to be notified when the book is ready.</p>`,
+        }),
+      });
+      console.log("Admin notification sent for book signup:", email);
+    } catch (notifErr) {
+      console.error("Admin notification failed:", notifErr);
+    }
+
     return new Response(JSON.stringify({ success: true, id: resendData.id }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,

@@ -161,6 +161,31 @@ serve(async (req) => {
         } else {
           console.log("Purchase email sent to:", buyerEmail, "id:", resendData.id);
         }
+
+        // Send admin notification for purchase
+        try {
+          await fetch("https://api.resend.com/emails", {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${resendApiKey}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              from: FROM_EMAIL,
+              to: [REPLY_TO],
+              subject: `💰 New Purchase from ${buyerName || buyerEmail}`,
+              html: `<p><strong>New Extended Profile purchase</strong></p>
+<p><strong>Name:</strong> ${buyerName || "Not provided"}</p>
+<p><strong>Email:</strong> ${buyerEmail}</p>
+<p><strong>Amount:</strong> $${((session.amount_total || 0) / 100).toFixed(2)}</p>
+<p><strong>Price type:</strong> ${session.metadata?.price_type || "regular"}</p>
+<p><strong>Scoville Gate:</strong> ${scovilleTriggered ? "⚠️ TRIGGERED" : "Not triggered"}</p>`,
+            }),
+          });
+          console.log("Admin purchase notification sent");
+        } catch (notifErr) {
+          console.error("Admin purchase notification failed:", notifErr);
+        }
       }
     }
 
