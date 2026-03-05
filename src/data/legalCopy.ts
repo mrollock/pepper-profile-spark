@@ -57,7 +57,7 @@ export const EMAIL_SIGNUP_DISCLAIMER =
   'By sharing your email, you\u2019ll receive updates about The Pepper Sauce Principle from Imaginative Feedback Coaching & Consulting, LLC. We will not share your information with third parties. You can unsubscribe at any time.';
 
 /* ── Shared: Contact email ── */
-export const CONTACT_EMAIL = 'michael@peppersauceprinciple.com';
+export const CONTACT_EMAIL = 'michael@ifwall.com';
 
 /* ── Shared: Mailing address (short, for Connect section) ── */
 export const MAILING_ADDRESS_SHORT = [

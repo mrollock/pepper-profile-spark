@@ -8,9 +8,8 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-// TODO: Change to michael@peppersauceprinciple.com once domain is verified in Resend
-const FROM_EMAIL = "Michael Rollock <michael@peppersauceprinciple.com>";
-const REPLY_TO = "michael@peppersauceprinciple.com";
+const FROM_EMAIL = "Michael Rollock <michael@ifwall.com>";
+const REPLY_TO = "michael@ifwall.com";
 
 function buildPurchaseEmailHtml(data: {
   name: string;

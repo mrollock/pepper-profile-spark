@@ -46,7 +46,7 @@ export function SpeakingSection() {
             <p className="mt-4 text-[0.88rem] text-text-light">
               Imaginative Feedback Coaching & Consulting
               <br />
-              michael@peppersauceprinciple.com
+              michael@ifwall.com
             </p>
           </div>
         </RevealSection>
