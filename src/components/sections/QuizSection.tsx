@@ -350,6 +350,7 @@ export function QuizSection() {
       gate_numbing: scovilleItems.includes(29),
     };
     supabase.from('quiz_submissions').insert(profileRow as any).then(null, () => {});
+    toast.success("Profile submitted!", { description: "Your Pepper Sauce Profile results are ready below." });
 
     // Analytics: completion event
     const gateNames: string[] = [];
