@@ -300,7 +300,7 @@ export function MatrixSection() {
         <div className="mx-auto" style={{ maxWidth: 520 }}>
           <div style={{ display: "flex", gap: 16 }}>
             {/* Vertical slider (Sauce) */}
-            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", width: 40 }}>
+            <div style={{ display: "flex", alignItems: "center", width: 40 }}>
               {/* Rotated SAUCE label */}
               <div
                 className="font-body text-[10px] font-semibold uppercase tracking-[0.15em] text-text-faint"
@@ -308,7 +308,6 @@ export function MatrixSection() {
                   writingMode: "vertical-rl",
                   transform: "rotate(180deg)",
                   textAlign: "center",
-                  marginBottom: 8,
                   alignSelf: "center",
                 }}
               >
