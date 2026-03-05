@@ -448,7 +448,7 @@ export function MatrixSection() {
           </p>
           <p className="mt-4 font-body text-[15px] leading-[1.7] text-cream-mid">
             For those who want the third question —{" "}
-            <em className="font-accent italic text-gold-light">how do I make this more delicious?</em>{" "}
+            <em className="font-accent italic text-gold-light">how do I make life more delicious?</em>{" "}
             — the Extended Report takes what the Profile found, asks you to go deeper, and returns a personalized guide to building sauce from exactly where you are. Not advice. A recipe worth considering.
           </p>
         </div>
