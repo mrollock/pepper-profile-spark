@@ -38,7 +38,7 @@ export function SpeakingSection() {
 
           <div className="mt-8 text-center">
             <a
-              href="mailto:michael@peppersauceprinciple.com?subject=Speaking%20Inquiry%20-%20Pepper%20Sauce%20Principle"
+              href="mailto:michael@ifwall.com?subject=Speaking%20Inquiry%20-%20Pepper%20Sauce%20Principle"
               className="inline-block rounded-md bg-dark px-9 py-3.5 font-body text-[0.95rem] font-semibold text-cream transition-all hover:bg-dark-warm hover:-translate-y-0.5"
             >
               Book Dr. Rollock
