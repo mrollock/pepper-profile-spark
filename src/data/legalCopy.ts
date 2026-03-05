@@ -50,7 +50,7 @@ export const CREDENTIAL_CONTEXT =
 
 /* ── Section 8: Terms of Use placeholder ── */
 export const TERMS_PAGE_PLACEHOLDER =
-  'Our terms of use are currently being finalized with legal counsel. If you have questions about the terms governing your use of this site, please contact us at michael@peppersauceprinciple.com.';
+  'Our terms of use are currently being finalized with legal counsel. If you have questions about the terms governing your use of this site, please contact us at michael@ifwall.com.';
 
 /* ── Section 9: Email / newsletter disclaimer ── */
 export const EMAIL_SIGNUP_DISCLAIMER =
