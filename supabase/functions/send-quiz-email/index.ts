@@ -168,6 +168,33 @@ serve(async (req) => {
 
     console.log("Quiz email sent to:", email, "id:", resendData.id);
 
+    // Send admin notification
+    try {
+      await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: FROM_EMAIL,
+          to: [REPLY_TO],
+          subject: `🌶️ New Quiz Submission from ${name || email}`,
+          html: `<p><strong>New Pepper Sauce Profile completed</strong></p>
+<p><strong>Name:</strong> ${name || "Not provided"}</p>
+<p><strong>Email:</strong> ${email}</p>
+<p><strong>Fire Type:</strong> ${fireTypes.join(" & ")}</p>
+<p><strong>Scores:</strong> Validation ${scores[1]}, Agency ${scores[2]}, Community ${scores[3]}, Capacity ${scores[4]}, Generativity ${scores[5]}</p>
+<p><strong>Strongest:</strong> ${CONDITION_NAMES[topCond]} (${topScore})</p>
+<p><strong>Needs tending:</strong> ${CONDITION_NAMES[lowestCond]} (${lowestScore})</p>
+<p><strong>Scoville Gate:</strong> ${scoville_gate_triggered ? "⚠️ TRIGGERED" : "Not triggered"}</p>`,
+        }),
+      });
+      console.log("Admin notification sent for quiz:", email);
+    } catch (notifErr) {
+      console.error("Admin notification failed:", notifErr);
+    }
+
     return new Response(JSON.stringify({ success: true, id: resendData.id }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
