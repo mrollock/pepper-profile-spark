@@ -34,7 +34,7 @@ export const DISCLAIMER_PAGE = {
 
 /* ── Section 3: Privacy Page placeholder ── */
 export const PRIVACY_PAGE_PLACEHOLDER =
-  'Our privacy policy is currently being finalized with legal counsel. If you have questions about how your data is collected, stored, or used on this site, please contact us at michael@peppersauceprinciple.com.';
+  'Our privacy policy is currently being finalized with legal counsel. If you have questions about how your data is collected, stored, or used on this site, please contact us at michael@ifwall.com.';
 
 /* ── Section 5: Pre-assessment disclaimer ── */
 export const PRE_ASSESSMENT_DISCLAIMER =
