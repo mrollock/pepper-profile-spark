@@ -1,16 +1,11 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 
-// ─────────────────────────────────────────────
-// THE PEPPER-SAUCE MATRIX — Interactive Edition
-// The Pepper Sauce Principle™
-// ─────────────────────────────────────────────
-
 const QUADRANTS = {
   topRight: {
     name: "Delicious",
     subtitle: "Spicy & Delicious",
     color: "hsl(var(--gold))",
-    bgGradient: `radial-gradient(ellipse at 75% 25%, hsl(var(--gold) / 0.15), transparent 70%)`,
+    bgGradient: `radial-gradient(ellipse at 75% 25%, hsl(var(--gold) / 0.1), transparent 70%)`,
     description:
       "High heat. Rich sauce. This is the framework's central claim: that a life carrying real pain can also carry pleasure, meaning, connection, and joy. Not because the pain decreased. Because everything around it got richer.",
     insight: "This is where the Pepper Sauce Principle lives.",
@@ -19,7 +14,7 @@ const QUADRANTS = {
     name: "Mild & Flavor-full",
     subtitle: "Gentle",
     color: "hsl(var(--sage))",
-    bgGradient: `radial-gradient(ellipse at 25% 25%, hsl(var(--sage) / 0.12), transparent 70%)`,
+    bgGradient: `radial-gradient(ellipse at 25% 25%, hsl(var(--sage) / 0.08), transparent 70%)`,
     description:
       "Manageable heat. Rich conditions. You have the ingredients and the heat isn't overwhelming. This is the quadrant where you taste everything. Worth protecting, because pain can arrive without warning — and when it does, the sauce you've built travels with you.",
     insight: "Enjoy what's here. And know the recipe travels with you if the heat rises.",
@@ -28,7 +23,7 @@ const QUADRANTS = {
     name: "Scorching",
     subtitle: "Suffering",
     color: "hsl(var(--ember))",
-    bgGradient: `radial-gradient(ellipse at 75% 75%, hsl(var(--ember) / 0.15), transparent 70%)`,
+    bgGradient: `radial-gradient(ellipse at 75% 75%, hsl(var(--ember) / 0.08), transparent 70%)`,
     description:
       "All heat. No recipe. This is where pain becomes suffering — not because the pain is too much, but because the conditions are missing. No validation. No agency. No table. The world gets smaller. The sauce gets thinner.",
     insight: "Upward exists. That's what nobody told you.",
@@ -37,7 +32,7 @@ const QUADRANTS = {
     name: "Bland",
     subtitle: "Languishing",
     color: "hsl(var(--text-faint))",
-    bgGradient: `radial-gradient(ellipse at 25% 75%, hsl(var(--text-faint) / 0.1), transparent 70%)`,
+    bgGradient: `radial-gradient(ellipse at 25% 75%, hsl(var(--text-faint) / 0.06), transparent 70%)`,
     description:
       "Low heat. Thin sauce. Not much hurting, but not much happening either. Going through the motions. Surviving successfully without remembering to start living.",
     insight: "The absence of pain is not the presence of life.",
@@ -66,9 +61,9 @@ function MatrixDot({ x, y, quadrant }: { x: number; y: number; quadrant: Quadran
         transform: "translate(-50%, -50%)",
         zIndex: 10,
         pointerEvents: "none",
+        transition: "left 0.15s ease-out, top 0.15s ease-out",
       }}
     >
-      {/* Outer pulse ring */}
       <div
         style={{
           position: "absolute",
@@ -79,18 +74,17 @@ function MatrixDot({ x, y, quadrant }: { x: number; y: number; quadrant: Quadran
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          animation: "pulse-ring 2s ease-in-out infinite",
-          opacity: 0.3,
+          animation: "matrix-pulse-ring 2s ease-in-out infinite",
         }}
       />
-      {/* Inner dot */}
       <div
         style={{
           width: 16,
           height: 16,
           borderRadius: "50%",
           background: data.color,
-          boxShadow: `0 0 20px ${data.color}, 0 0 40px ${data.color}44`,
+          border: "2px solid hsl(var(--cream))",
+          boxShadow: `0 0 20px ${data.color}, 0 0 40px hsl(var(--gold) / 0.2)`,
         }}
       />
     </div>
@@ -99,7 +93,6 @@ function MatrixDot({ x, y, quadrant }: { x: number; y: number; quadrant: Quadran
 
 function DirectionArrow({ quadrant }: { quadrant: QuadrantKey }) {
   if (quadrant === "topRight" || quadrant === "topLeft") return null;
-
   return (
     <div
       style={{
@@ -111,7 +104,7 @@ function DirectionArrow({ quadrant }: { quadrant: QuadrantKey }) {
         flexDirection: "column",
         alignItems: "center",
         gap: 4,
-        animation: "float-up 2s ease-in-out infinite",
+        animation: "matrix-float-up 2s ease-in-out infinite",
         zIndex: 5,
         pointerEvents: "none",
       }}
@@ -119,16 +112,7 @@ function DirectionArrow({ quadrant }: { quadrant: QuadrantKey }) {
       <svg width="20" height="24" viewBox="0 0 20 24" fill="none">
         <path d="M10 24V4M10 4L2 12M10 4L18 12" stroke="hsl(var(--gold))" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
-      <span
-        style={{
-          fontFamily: "'Libre Franklin', sans-serif",
-          fontSize: "0.6rem",
-          fontWeight: 600,
-          letterSpacing: "0.2em",
-          textTransform: "uppercase" as const,
-          color: "hsl(var(--gold))",
-        }}
-      >
+      <span className="font-body text-[0.6rem] font-semibold uppercase tracking-[0.2em] text-gold">
         upward
       </span>
     </div>
@@ -145,7 +129,6 @@ function AxisSlider({
 }: {
   value: number;
   onChange: (v: number) => void;
-  label?: string;
   leftLabel: string;
   rightLabel: string;
   color: string;
@@ -191,118 +174,78 @@ function AxisSlider({
 
   const thumbStyle: React.CSSProperties = {
     position: "absolute",
-    width: 20,
-    height: 20,
+    width: 22,
+    height: 22,
     borderRadius: "50%",
-    background: color,
-    boxShadow: `0 0 10px ${color}66`,
+    background: "hsl(var(--cream))",
+    border: `2px solid ${color}`,
+    boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
     cursor: "grab",
     transform: "translate(-50%, -50%)",
+    zIndex: 2,
   };
+
+  // Larger invisible touch target
+  const touchTargetStyle: React.CSSProperties = {
+    position: "absolute",
+    width: 44,
+    height: 44,
+    borderRadius: "50%",
+    background: "transparent",
+    cursor: "grab",
+    transform: "translate(-50%, -50%)",
+    zIndex: 3,
+  };
+
+  const labelClass = "font-body text-[10px] font-semibold uppercase tracking-[0.12em] text-text-faint whitespace-nowrap";
 
   if (vertical) {
     return (
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8, height: "100%" }}>
-        <span
-          style={{
-            fontFamily: "'Libre Franklin', sans-serif",
-            fontSize: "0.65rem",
-            fontWeight: 600,
-            letterSpacing: "0.15em",
-            textTransform: "uppercase" as const,
-            color: "hsl(var(--text-faint))",
-          }}
-        >
-          {rightLabel}
-        </span>
+        <span className={labelClass} style={{ color: "hsl(var(--gold-muted))" }}>{rightLabel}</span>
         <div
           ref={trackRef}
-          onMouseDown={(e) => {
-            setDragging(true);
-            handleInteraction(e);
-          }}
-          onTouchStart={(e) => {
-            setDragging(true);
-            handleInteraction(e.touches[0]);
-          }}
+          onMouseDown={(e) => { setDragging(true); handleInteraction(e); }}
+          onTouchStart={(e) => { setDragging(true); handleInteraction(e.touches[0]); }}
           style={{
             flex: 1,
             width: 6,
-            background: `linear-gradient(to top, hsl(var(--text-faint) / 0.2), ${color}66)`,
+            background: `linear-gradient(to top, hsl(var(--text-faint) / 0.2), hsl(var(--gold) / 0.4))`,
             borderRadius: 3,
             position: "relative",
             cursor: "pointer",
             touchAction: "none",
           }}
         >
+          <div style={{ ...touchTargetStyle, left: "50%", top: `${100 - value}%` }} />
           <div style={{ ...thumbStyle, left: "50%", top: `${100 - value}%` }} />
         </div>
-        <span
-          style={{
-            fontFamily: "'Libre Franklin', sans-serif",
-            fontSize: "0.65rem",
-            fontWeight: 600,
-            letterSpacing: "0.15em",
-            textTransform: "uppercase" as const,
-            color: "hsl(var(--text-faint))",
-          }}
-        >
-          {leftLabel}
-        </span>
+        <span className={labelClass}>{leftLabel}</span>
       </div>
     );
   }
 
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 12, width: "100%" }}>
-      <span
-        style={{
-          fontFamily: "'Libre Franklin', sans-serif",
-          fontSize: "0.65rem",
-          fontWeight: 600,
-          letterSpacing: "0.15em",
-          textTransform: "uppercase" as const,
-          color: "hsl(var(--text-faint))",
-          whiteSpace: "nowrap",
-        }}
-      >
-        {leftLabel}
-      </span>
+      <span className={labelClass}>{leftLabel}</span>
       <div
         ref={trackRef}
-        onMouseDown={(e) => {
-          setDragging(true);
-          handleInteraction(e);
-        }}
-        onTouchStart={(e) => {
-          setDragging(true);
-          handleInteraction(e.touches[0]);
-        }}
+        onMouseDown={(e) => { setDragging(true); handleInteraction(e); }}
+        onTouchStart={(e) => { setDragging(true); handleInteraction(e.touches[0]); }}
         style={{
           flex: 1,
           height: 6,
-          background: `linear-gradient(to right, hsl(var(--text-faint) / 0.2), ${color}66)`,
+          background: `linear-gradient(to right, hsl(var(--text-faint) / 0.2), hsl(var(--ember) / 0.4))`,
           borderRadius: 3,
           position: "relative",
           cursor: "pointer",
           touchAction: "none",
         }}
       >
+        <div style={{ ...touchTargetStyle, top: "50%", left: `${value}%` }} />
         <div style={{ ...thumbStyle, top: "50%", left: `${value}%` }} />
       </div>
-      <span
-        style={{
-          fontFamily: "'Libre Franklin', sans-serif",
-          fontSize: "0.65rem",
-          fontWeight: 600,
-          letterSpacing: "0.15em",
-          textTransform: "uppercase" as const,
-          color: "hsl(var(--text-faint))",
-          whiteSpace: "nowrap",
-        }}
-      >
-        {rightLabel}
-      </span>
+      <span className={labelClass} style={{ color: "hsl(var(--gold-muted))" }}>{rightLabel}</span>
     </div>
   );
 }
@@ -315,417 +258,228 @@ export function MatrixSection() {
   const quadrant = getQuadrant(pepper, sauce);
   const data = QUADRANTS[quadrant];
 
-  const handlePepperChange = (v: number) => {
-    setPepper(v);
-    if (!hasInteracted) setHasInteracted(true);
-  };
-  const handleSauceChange = (v: number) => {
-    setSauce(v);
-    if (!hasInteracted) setHasInteracted(true);
-  };
+  const handlePepperChange = (v: number) => { setPepper(v); if (!hasInteracted) setHasInteracted(true); };
+  const handleSauceChange = (v: number) => { setSauce(v); if (!hasInteracted) setHasInteracted(true); };
 
   return (
     <section
       id="matrix"
-      style={{
-        position: "relative",
-        background: "hsl(var(--dark))",
-        color: "hsl(var(--cream))",
-        padding: "var(--section-pad) 1.5rem",
-        overflow: "hidden",
-      }}
+      className="sec-dark relative overflow-hidden bg-dark"
+      style={{ padding: "5rem 1.5rem 4rem" }}
     >
-      {/* Background texture */}
+      {/* Noise texture */}
       <div
+        className="pointer-events-none absolute inset-0"
         style={{
-          position: "absolute",
-          inset: 0,
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E")`,
           opacity: 0.5,
-          pointerEvents: "none",
         }}
       />
 
-      {/* Dynamic quadrant glow */}
+      {/* Ambient quadrant glow */}
       <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background: data.bgGradient,
-          transition: "background 0.8s ease",
-          pointerEvents: "none",
-        }}
+        className="pointer-events-none absolute inset-0 transition-all duration-[600ms] ease-in-out"
+        style={{ background: data.bgGradient }}
       />
 
-      {/* Header */}
-      <div style={{ position: "relative", zIndex: 1, textAlign: "center", marginBottom: "2.5rem", maxWidth: 600, margin: "0 auto 2.5rem" }}>
-        <p
-          style={{
-            fontFamily: "'Libre Franklin', sans-serif",
-            fontSize: "0.65rem",
-            fontWeight: 600,
-            letterSpacing: "0.3em",
-            textTransform: "uppercase",
-            color: "hsl(var(--gold))",
-            marginBottom: "0.75rem",
-          }}
-        >
-          The Pepper Sauce Principle™
-        </p>
-        <h2
-          style={{
-            fontFamily: "'Playfair Display', serif",
-            fontSize: "clamp(1.8rem, 4vw, 2.8rem)",
-            fontWeight: 700,
-            color: "hsl(var(--cream))",
-            marginBottom: "1rem",
-            lineHeight: 1.2,
-          }}
-        >
-          Where Are You Right Now?
-        </h2>
-        <p
-          style={{
-            fontFamily: "'Libre Franklin', sans-serif",
-            fontSize: "0.95rem",
-            color: "hsl(var(--cream-mid))",
-            lineHeight: 1.7,
-          }}
-        >
-          Move the sliders to map your current experience. The pepper is what life handed you. The sauce is what surrounds it.
-        </p>
-      </div>
-
-      {/* Matrix container */}
-      <div
-        style={{
-          position: "relative",
-          zIndex: 1,
-          maxWidth: 640,
-          margin: "0 auto",
-        }}
-      >
-        <div style={{ display: "flex", gap: 16 }}>
-          {/* Vertical slider (Sauce) */}
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", width: 40 }}>
-            <div style={{ height: "100%", minHeight: 300 }}>
-              <AxisSlider
-                value={sauce}
-                onChange={handleSauceChange}
-                leftLabel="Thin"
-                rightLabel="Rich"
-                color="hsl(var(--gold))"
-                vertical
-              />
-            </div>
-          </div>
-
-          {/* Matrix grid area */}
-          <div style={{ flex: 1 }}>
-            {/* Y-axis label */}
-            <div
-              style={{
-                textAlign: "center",
-                marginBottom: 8,
-                fontFamily: "'Libre Franklin', sans-serif",
-                fontSize: "0.7rem",
-                fontWeight: 600,
-                letterSpacing: "0.2em",
-                textTransform: "uppercase",
-                color: "hsl(var(--gold))",
-              }}
-            >
-              Sauce
-            </div>
-
-            {/* The 2×2 matrix */}
-            <div
-              style={{
-                position: "relative",
-                aspectRatio: "1 / 1",
-                borderRadius: 12,
-                overflow: "hidden",
-                border: "1px solid hsl(var(--cream) / 0.06)",
-              }}
-            >
-              {/* Quadrant backgrounds */}
-              <div
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "50%",
-                  height: "50%",
-                  background: "hsl(var(--sage) / 0.08)",
-                  borderRight: "1px solid hsl(var(--cream) / 0.06)",
-                  borderBottom: "1px solid hsl(var(--cream) / 0.06)",
-                }}
-              />
-              <div
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  right: 0,
-                  width: "50%",
-                  height: "50%",
-                  background: "hsl(var(--gold) / 0.1)",
-                  borderBottom: "1px solid hsl(var(--cream) / 0.06)",
-                }}
-              />
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: 0,
-                  left: 0,
-                  width: "50%",
-                  height: "50%",
-                  background: "hsl(var(--text-faint) / 0.05)",
-                  borderRight: "1px solid hsl(var(--cream) / 0.06)",
-                }}
-              />
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: 0,
-                  right: 0,
-                  width: "50%",
-                  height: "50%",
-                  background: "hsl(var(--ember) / 0.1)",
-                }}
-              />
-
-              {/* Quadrant labels */}
-              <div
-                style={{
-                  position: "absolute",
-                  top: "12%",
-                  left: "12%",
-                  fontFamily: "'Playfair Display', serif",
-                  fontSize: "clamp(0.7rem, 1.5vw, 0.9rem)",
-                  fontWeight: 700,
-                  color: "hsl(var(--sage))",
-                  opacity: 0.6,
-                  lineHeight: 1.3,
-                }}
-              >
-                Mild &<br />Flavor-full
-              </div>
-              <div
-                style={{
-                  position: "absolute",
-                  top: "12%",
-                  right: "12%",
-                  textAlign: "right",
-                  fontFamily: "'Playfair Display', serif",
-                  fontSize: "clamp(0.7rem, 1.5vw, 0.9rem)",
-                  fontWeight: 700,
-                  color: "hsl(var(--gold))",
-                  opacity: 0.6,
-                  lineHeight: 1.3,
-                }}
-              >
-                Spicy &<br />Delicious
-              </div>
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: "12%",
-                  left: "12%",
-                  fontFamily: "'Playfair Display', serif",
-                  fontSize: "clamp(0.7rem, 1.5vw, 0.9rem)",
-                  fontWeight: 700,
-                  color: "hsl(var(--text-faint))",
-                  opacity: 0.5,
-                }}
-              >
-                Bland
-              </div>
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: "12%",
-                  right: "12%",
-                  textAlign: "right",
-                  fontFamily: "'Playfair Display', serif",
-                  fontSize: "clamp(0.7rem, 1.5vw, 0.9rem)",
-                  fontWeight: 700,
-                  color: "hsl(var(--ember))",
-                  opacity: 0.6,
-                }}
-              >
-                Scorching
-              </div>
-
-              <DirectionArrow quadrant={quadrant} />
-              <MatrixDot x={pepper} y={sauce} quadrant={quadrant} />
-            </div>
-
-            {/* Horizontal slider (Pepper) */}
-            <div style={{ marginTop: 16 }}>
-              <AxisSlider
-                value={pepper}
-                onChange={handlePepperChange}
-                leftLabel="Low"
-                rightLabel="High"
-                color="hsl(var(--ember))"
-              />
-            </div>
-
-            {/* X-axis label */}
-            <div
-              style={{
-                textAlign: "center",
-                marginTop: 8,
-                fontFamily: "'Libre Franklin', sans-serif",
-                fontSize: "0.7rem",
-                fontWeight: 600,
-                letterSpacing: "0.2em",
-                textTransform: "uppercase",
-                color: "hsl(var(--ember))",
-              }}
-            >
-              Pepper
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Result panel */}
-      <div
-        style={{
-          position: "relative",
-          zIndex: 1,
-          maxWidth: 600,
-          margin: "2.5rem auto 0",
-        }}
-      >
-        <div
-          style={{
-            padding: "2rem",
-            background: "hsl(var(--cream) / 0.04)",
-            borderRadius: 12,
-            border: `1px solid hsl(var(--cream) / 0.08)`,
-            backdropFilter: "blur(10px)",
-          }}
-        >
-          {/* Quadrant name */}
-          <div style={{ marginBottom: "1rem" }}>
-            <span
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: "1.4rem",
-                fontWeight: 700,
-                color: data.color,
-              }}
-            >
-              {data.name}
-            </span>
-            <span
-              style={{
-                fontFamily: "'Libre Franklin', sans-serif",
-                fontSize: "0.8rem",
-                color: "hsl(var(--cream-mid))",
-                marginLeft: 12,
-              }}
-            >
-              {data.subtitle}
-            </span>
-          </div>
-
-          {/* Description */}
-          <p
-            style={{
-              fontFamily: "'Libre Franklin', sans-serif",
-              fontSize: "0.9rem",
-              color: "hsl(var(--cream-mid))",
-              lineHeight: 1.7,
-              marginBottom: "1.2rem",
-            }}
-          >
-            {data.description}
+      <div className="relative z-[1]">
+        {/* Header */}
+        <div className="mx-auto mb-10 max-w-[440px] text-center">
+          <p className="mb-3 font-body text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-gold-muted">
+            The Pepper-Sauce Matrix
           </p>
+          <h2 className="mb-4 font-display text-[clamp(1.6rem,4vw,2.2rem)] font-bold leading-[1.2] text-cream">
+            Where Are You Right Now?
+          </h2>
+          <p className="font-body text-[0.95rem] leading-[1.7] text-cream-mid">
+            Move the sliders to map your experience. The pepper is what life handed you. The sauce is what surrounds it.
+          </p>
+        </div>
 
-          {/* Insight line */}
-          <div
-            style={{
-              paddingTop: "1rem",
-              borderTop: "1px solid hsl(var(--cream) / 0.08)",
-            }}
-          >
-            <p
-              style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                fontSize: "1.1rem",
-                fontStyle: "italic",
-                color: "hsl(var(--gold-light))",
-                lineHeight: 1.5,
-              }}
-            >
-              {data.insight}
-            </p>
+        {/* Matrix container */}
+        <div className="mx-auto" style={{ maxWidth: 520 }}>
+          <div style={{ display: "flex", gap: 16 }}>
+            {/* Vertical slider (Sauce) */}
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", width: 40 }}>
+              {/* Rotated SAUCE label */}
+              <div
+                className="font-body text-[10px] font-semibold uppercase tracking-[0.15em] text-text-faint"
+                style={{
+                  writingMode: "vertical-rl",
+                  transform: "rotate(180deg)",
+                  textAlign: "center",
+                  marginBottom: 8,
+                  alignSelf: "center",
+                }}
+              >
+                Sauce
+              </div>
+              <div style={{ height: "100%", minHeight: 300 }}>
+                <AxisSlider
+                  value={sauce}
+                  onChange={handleSauceChange}
+                  leftLabel="Thin"
+                  rightLabel="Rich"
+                  color="hsl(var(--gold))"
+                  vertical
+                />
+              </div>
+            </div>
+
+            {/* Matrix grid area */}
+            <div style={{ flex: 1 }}>
+              {/* The 2×2 matrix */}
+              <div
+                style={{
+                  position: "relative",
+                  aspectRatio: "1 / 1",
+                  borderRadius: 8,
+                  overflow: "hidden",
+                  border: "1px solid rgba(168,137,62,0.13)",
+                  background: "hsl(var(--dark-warm))",
+                }}
+              >
+                {/* Quadrant backgrounds */}
+                <div style={{ position: "absolute", top: 0, left: 0, width: "50%", height: "50%", background: "rgba(90,107,66,0.08)", borderRight: "1px solid rgba(168,137,62,0.08)", borderBottom: "1px solid rgba(168,137,62,0.08)" }} />
+                <div style={{ position: "absolute", top: 0, right: 0, width: "50%", height: "50%", background: "rgba(200,150,46,0.1)", borderBottom: "1px solid rgba(168,137,62,0.08)" }} />
+                <div style={{ position: "absolute", bottom: 0, left: 0, width: "50%", height: "50%", background: "rgba(154,142,120,0.06)", borderRight: "1px solid rgba(168,137,62,0.08)" }} />
+                <div style={{ position: "absolute", bottom: 0, right: 0, width: "50%", height: "50%", background: "rgba(184,69,26,0.08)" }} />
+
+                {/* Quadrant labels */}
+                <div className="absolute font-display font-bold" style={{ top: "12%", left: "12%", fontSize: 11, color: "hsl(var(--sage))", opacity: 0.53, lineHeight: 1.3 }}>
+                  Mild &<br />Flavor-full
+                </div>
+                <div className="absolute font-display font-bold text-right" style={{ top: "12%", right: "12%", fontSize: 13, color: "hsl(var(--gold))", opacity: 0.67, lineHeight: 1.3 }}>
+                  Spicy &<br />Delicious
+                </div>
+                <div className="absolute font-display font-bold" style={{ bottom: "12%", left: "12%", fontSize: 11, color: "hsl(var(--text-faint))", opacity: 0.47 }}>
+                  Bland
+                </div>
+                <div className="absolute font-display font-bold text-right" style={{ bottom: "12%", right: "12%", fontSize: 11, color: "hsl(var(--ember))", opacity: 0.53 }}>
+                  Scorching
+                </div>
+
+                <DirectionArrow quadrant={quadrant} />
+                <MatrixDot x={pepper} y={sauce} quadrant={quadrant} />
+              </div>
+
+              {/* Horizontal slider (Pepper) */}
+              <div style={{ marginTop: 16 }}>
+                <AxisSlider
+                  value={pepper}
+                  onChange={handlePepperChange}
+                  leftLabel="Mild"
+                  rightLabel="Spicy"
+                  color="hsl(var(--ember))"
+                />
+              </div>
+
+              {/* X-axis label */}
+              <div className="mt-2 text-center font-body text-[10px] font-semibold uppercase tracking-[0.15em] text-text-faint">
+                Pepper
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* The key framework insight */}
-        {hasInteracted && (
+        {/* Result panel */}
+        <div className="mx-auto mt-8" style={{ maxWidth: 520 }}>
           <div
             style={{
-              marginTop: "1.5rem",
-              padding: "1.5rem",
-              background: "hsl(var(--gold) / 0.06)",
-              borderLeft: "3px solid hsl(var(--gold))",
-              borderRadius: 6,
-              animation: "matrix-fade-in 0.5s ease",
+              padding: "24px 28px",
+              background: "hsl(var(--dark-mid) / 0.8)",
+              backdropFilter: "blur(10px)",
+              borderRadius: 8,
+              border: `1px solid ${data.color}`,
+              borderColor: `color-mix(in srgb, ${data.color} 20%, transparent)`,
+              transition: "border-color 0.4s ease",
             }}
           >
-            <p
-              style={{
-                fontFamily: "'Libre Franklin', sans-serif",
-                fontSize: "0.88rem",
-                color: "hsl(var(--cream-mid))",
-                lineHeight: 1.7,
-              }}
-            >
-              Most of pain management tries to move you left — reduce the pepper.
-              <br />
-              <span style={{ color: "hsl(var(--gold))", fontWeight: 600 }}>
-                The Pepper Sauce Principle moves you up — enrich the sauce.
+            <div className="mb-4">
+              <span
+                className="font-display font-bold transition-colors duration-300"
+                style={{ fontSize: "clamp(1.3rem, 3vw, 1.6rem)", color: data.color }}
+              >
+                {data.name}
               </span>
+              <span className="ml-3 font-body text-xs tracking-[0.05em] text-text-faint">
+                {data.subtitle}
+              </span>
+            </div>
+
+            <p className="mb-4 font-body text-sm leading-[1.7] text-cream-mid">
+              {data.description}
             </p>
+
+            <div style={{ paddingTop: "0.75rem", borderTop: `1px solid color-mix(in srgb, ${data.color} 13%, transparent)` }}>
+              <p className="font-accent text-[13px] italic" style={{ color: data.color, opacity: 0.85 }}>
+                {data.insight}
+              </p>
+            </div>
           </div>
-        )}
+
+          {/* Reveal text after first interaction */}
+          {hasInteracted && (
+            <div className="mt-6 text-center" style={{ animation: "matrix-fade-in 0.8s ease" }}>
+              <p className="font-body text-xs leading-[1.7] text-gold-muted">
+                Most of pain management tries to move you left — reduce the pepper.
+              </p>
+              <p className="font-body text-xs font-semibold leading-[1.7] text-gold">
+                The Pepper Sauce Principle moves you up — enrich the sauce.
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* Tagline */}
+        <p className="mt-10 text-center font-accent text-[1.15rem] italic tracking-[0.02em] text-gold-muted">
+          Life is painful. Make it delicious.
+        </p>
+
+        {/* Bridge copy */}
+        <div className="mx-auto mt-12 max-w-[560px] text-center">
+          <p className="font-body text-[15px] leading-[1.7] text-cream-mid">
+            You just answered the first question:{" "}
+            <em className="font-accent italic text-gold-light">where am I on the Pepper Sauce map?</em>
+          </p>
+          <p className="mt-4 font-body text-[15px] leading-[1.7] text-cream-mid">
+            The Pepper Sauce Profile answers the second:{" "}
+            <em className="font-accent italic text-gold-light">what's in my sauce?</em>{" "}
+            Thirty-four questions that map your five conditions, name your fire, and check whether the heat you're carrying might need a professional in the kitchen with you. It's free. It takes about seven minutes.
+          </p>
+          <p className="mt-4 font-body text-[15px] leading-[1.7] text-cream-mid">
+            For those who want the third question —{" "}
+            <em className="font-accent italic text-gold-light">how do I make this more delicious?</em>{" "}
+            — the Extended Report takes what the Profile found, asks you to go deeper, and returns a personalized guide to building sauce from exactly where you are. Not advice. A recipe worth considering.
+          </p>
+        </div>
+
+        {/* CTA */}
+        <div className="mt-10 flex justify-center">
+          <a
+            href="#quiz"
+            className="inline-block rounded-md bg-gold px-9 py-3.5 font-body text-[0.95rem] font-semibold tracking-wide text-dark transition-all hover:bg-gold-light hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(200,150,46,0.3)]"
+          >
+            Discover What's in Your Bottle
+          </a>
+        </div>
       </div>
 
-      {/* Tagline */}
-      <p
-        style={{
-          position: "relative",
-          zIndex: 1,
-          textAlign: "center",
-          marginTop: "2.5rem",
-          fontFamily: "'Cormorant Garamond', serif",
-          fontSize: "1.15rem",
-          fontStyle: "italic",
-          color: "hsl(var(--gold-muted))",
-          letterSpacing: "0.02em",
-        }}
-      >
-        Life is painful. Make it delicious.
-      </p>
-
-      {/* Animations */}
       <style>{`
-        @keyframes pulse-ring {
+        @keyframes matrix-pulse-ring {
           0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
           50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
         }
-        @keyframes float-up {
+        @keyframes matrix-float-up {
           0%, 100% { transform: translateY(0); opacity: 0.4; }
           50% { transform: translateY(-6px); opacity: 0.7; }
         }
         @keyframes matrix-fade-in {
           from { opacity: 0; transform: translateY(8px); }
           to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 480px) {
+          #matrix { padding-top: 3rem !important; padding-bottom: 2.5rem !important; }
         }
       `}</style>
     </section>

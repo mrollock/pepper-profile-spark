@@ -48,12 +48,6 @@ export function HeroSection() {
         <RevealSection delay={425}>
           <div className="flex flex-wrap justify-center gap-4">
             <a
-              href="#quiz"
-              className="inline-block rounded-md bg-gold px-9 py-3.5 font-body text-[0.95rem] font-semibold tracking-wide text-dark transition-all hover:bg-gold-light hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(200,150,46,0.3)]"
-            >
-              Discover What's in Your Bottle
-            </a>
-            <a
               href="#framework"
               className="inline-block rounded-md border-2 border-cream-mid bg-transparent px-9 py-3.5 font-body text-[0.95rem] font-semibold tracking-wide text-cream transition-all hover:border-gold-light hover:text-gold-light hover:-translate-y-0.5"
             >
