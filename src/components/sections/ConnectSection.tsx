@@ -13,6 +13,7 @@ export function ConnectSection() {
     if (form.name && form.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
       supabase.from('contact_submissions').insert({ name: form.name, email: form.email, message: form.message } as any).then(null, () => {});
       setSubmitted(true);
+      toast.success("Message sent!", { description: "We'll be in touch soon." });
     }
   };
 

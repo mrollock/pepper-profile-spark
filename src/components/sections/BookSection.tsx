@@ -13,6 +13,7 @@ export function BookSection() {
     if (email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
       supabase.from('book_signups').insert({ email, source: 'book_notification' } as any).then(null, () => {});
       setSubmitted(true);
+      toast.success("You're on the list!", { description: "We'll let you know when the book is ready." });
     }
   };
 
