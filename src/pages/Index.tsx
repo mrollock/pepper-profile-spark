@@ -2,6 +2,7 @@ import { Navbar } from '@/components/Navbar';
 import { HeroSection } from '@/components/sections/HeroSection';
 import { QuizSection } from '@/components/sections/QuizSection';
 import { FrameworkSection } from '@/components/sections/FrameworkSection';
+import { MatrixSection } from '@/components/sections/MatrixSection';
 import { ConditionsSection } from '@/components/sections/ConditionsSection';
 import { InterventionSection } from '@/components/sections/InterventionSection';
 import { EvidenceSection } from '@/components/sections/EvidenceSection';
@@ -24,6 +25,7 @@ const Index = () => {
         <HeroSection />
         <QuizSection />
         <FrameworkSection />
+        <MatrixSection />
         <ConditionsSection />
         <InterventionSection />
         <EvidenceSection />
