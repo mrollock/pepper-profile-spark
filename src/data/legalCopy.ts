@@ -34,7 +34,7 @@ export const DISCLAIMER_PAGE = {
 
 /* ── Section 3: Privacy Page placeholder ── */
 export const PRIVACY_PAGE_PLACEHOLDER =
-  'Our privacy policy is currently being finalized with legal counsel. If you have questions about how your data is collected, stored, or used on this site, please contact us at michael@peppersauceprinciple.com.';
+  'Our privacy policy is currently being finalized with legal counsel. If you have questions about how your data is collected, stored, or used on this site, please contact us at michael@ifwall.com.';
 
 /* ── Section 5: Pre-assessment disclaimer ── */
 export const PRE_ASSESSMENT_DISCLAIMER =
@@ -50,14 +50,14 @@ export const CREDENTIAL_CONTEXT =
 
 /* ── Section 8: Terms of Use placeholder ── */
 export const TERMS_PAGE_PLACEHOLDER =
-  'Our terms of use are currently being finalized with legal counsel. If you have questions about the terms governing your use of this site, please contact us at michael@peppersauceprinciple.com.';
+  'Our terms of use are currently being finalized with legal counsel. If you have questions about the terms governing your use of this site, please contact us at michael@ifwall.com.';
 
 /* ── Section 9: Email / newsletter disclaimer ── */
 export const EMAIL_SIGNUP_DISCLAIMER =
   'By sharing your email, you\u2019ll receive updates about The Pepper Sauce Principle from Imaginative Feedback Coaching & Consulting, LLC. We will not share your information with third parties. You can unsubscribe at any time.';
 
 /* ── Shared: Contact email ── */
-export const CONTACT_EMAIL = 'michael@peppersauceprinciple.com';
+export const CONTACT_EMAIL = 'michael@ifwall.com';
 
 /* ── Shared: Mailing address (short, for Connect section) ── */
 export const MAILING_ADDRESS_SHORT = [
