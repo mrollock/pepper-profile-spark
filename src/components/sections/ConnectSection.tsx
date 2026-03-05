@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 import { RevealSection } from '@/components/RevealSection';
 import { EMAIL_SIGNUP_DISCLAIMER, MAILING_ADDRESS_SHORT } from '@/data/legalCopy';
 
