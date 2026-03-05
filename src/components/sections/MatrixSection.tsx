@@ -300,7 +300,7 @@ export function MatrixSection() {
         <div className="mx-auto" style={{ maxWidth: 520 }}>
           <div style={{ display: "flex", gap: 16 }}>
             {/* Vertical slider (Sauce) */}
-            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", width: 40 }}>
+            <div style={{ display: "flex", alignItems: "center", width: 40 }}>
               {/* Rotated SAUCE label */}
               <div
                 className="font-body text-[10px] font-semibold uppercase tracking-[0.15em] text-text-faint"
@@ -308,7 +308,6 @@ export function MatrixSection() {
                   writingMode: "vertical-rl",
                   transform: "rotate(180deg)",
                   textAlign: "center",
-                  marginBottom: 8,
                   alignSelf: "center",
                 }}
               >
@@ -449,7 +448,7 @@ export function MatrixSection() {
           </p>
           <p className="mt-4 font-body text-[15px] leading-[1.7] text-cream-mid">
             For those who want the third question —{" "}
-            <em className="font-accent italic text-gold-light">how do I make this more delicious?</em>{" "}
+            <em className="font-accent italic text-gold-light">how do I make life more delicious?</em>{" "}
             — the Extended Report takes what the Profile found, asks you to go deeper, and returns a personalized guide to building sauce from exactly where you are. Not advice. A recipe worth considering.
           </p>
         </div>
