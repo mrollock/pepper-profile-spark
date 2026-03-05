@@ -25,6 +25,7 @@ const Index = () => {
         <HeroSection />
         <QuizSection />
         <FrameworkSection />
+        <MatrixSection />
         <ConditionsSection />
         <InterventionSection />
         <EvidenceSection />
