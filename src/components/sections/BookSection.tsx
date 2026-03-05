@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 import { RevealSection } from '@/components/RevealSection';
 import { EMAIL_SIGNUP_DISCLAIMER } from '@/data/legalCopy';
 
@@ -12,6 +13,7 @@ export function BookSection() {
     if (email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
       supabase.from('book_signups').insert({ email, source: 'book_notification' } as any).then(null, () => {});
       setSubmitted(true);
+      toast.success("You're on the list!", { description: "We'll let you know when the book is ready." });
     }
   };
 

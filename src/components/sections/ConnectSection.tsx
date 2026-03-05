@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 import { RevealSection } from '@/components/RevealSection';
 import { EMAIL_SIGNUP_DISCLAIMER, MAILING_ADDRESS_SHORT } from '@/data/legalCopy';
 
@@ -12,6 +13,7 @@ export function ConnectSection() {
     if (form.name && form.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
       supabase.from('contact_submissions').insert({ name: form.name, email: form.email, message: form.message } as any).then(null, () => {});
       setSubmitted(true);
+      toast.success("Message sent!", { description: "We'll be in touch soon." });
     }
   };
 

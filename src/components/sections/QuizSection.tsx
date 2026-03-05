@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { Share2, Copy, Check, Printer, Twitter, Facebook, Linkedin } from 'lucide-react';
 import {
@@ -349,6 +350,7 @@ export function QuizSection() {
       gate_numbing: scovilleItems.includes(29),
     };
     supabase.from('quiz_submissions').insert(profileRow as any).then(null, () => {});
+    toast.success("Profile submitted!", { description: "Your Pepper Sauce Profile results are ready below." });
 
     // Analytics: completion event
     const gateNames: string[] = [];
