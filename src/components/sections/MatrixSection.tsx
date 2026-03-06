@@ -588,40 +588,44 @@ export function MatrixSection() {
         /* Laptop viewport optimization: fit entire matrix in one screen */
         @media (min-width: 768px) and (max-height: 920px) {
           .matrix-section {
-            padding-top: 2.5rem !important;
-            padding-bottom: 2rem !important;
+            padding-top: 2rem !important;
+            padding-bottom: 1.5rem !important;
           }
           .matrix-header {
-            margin-bottom: 1.25rem !important;
+            margin-bottom: 1rem !important;
           }
           .matrix-header h2 {
-            margin-bottom: 0.375rem !important;
+            margin-bottom: 0.25rem !important;
           }
           .matrix-intro-text {
             font-size: 0.85rem !important;
-            line-height: 1.55 !important;
+            line-height: 1.5 !important;
           }
           .matrix-container {
-            max-width: min(520px, 52vh) !important;
+            max-width: min(520px, 50vh) !important;
+          }
+          .matrix-sauce-slider {
+            min-height: unset !important;
           }
         }
         @media (min-width: 768px) and (max-height: 800px) {
           .matrix-section {
-            padding-top: 1.75rem !important;
-            padding-bottom: 1.5rem !important;
+            padding-top: 1.5rem !important;
+            padding-bottom: 1rem !important;
           }
           .matrix-header {
-            margin-bottom: 0.75rem !important;
+            margin-bottom: 0.5rem !important;
           }
           .matrix-header p:first-child {
-            margin-bottom: 0.25rem !important;
+            margin-bottom: 0.125rem !important;
+            font-size: 0.6rem !important;
           }
           .matrix-intro-text {
-            font-size: 0.8rem !important;
-            line-height: 1.5 !important;
+            font-size: 0.78rem !important;
+            line-height: 1.45 !important;
           }
           .matrix-container {
-            max-width: min(480px, 48vh) !important;
+            max-width: min(460px, 46vh) !important;
           }
         }
       `}</style>
