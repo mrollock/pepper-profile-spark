@@ -1,4 +1,5 @@
 import { RevealSection } from '@/components/RevealSection';
+import { StirTheSauce } from '@/components/StirTheSauce';
 
 export function HeroSection() {
   return (
