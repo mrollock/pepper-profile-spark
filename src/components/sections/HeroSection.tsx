@@ -32,6 +32,10 @@ export function HeroSection() {
           </h1>
         </RevealSection>
 
+        <div className="my-8">
+          <StirTheSauce />
+        </div>
+
         <RevealSection delay={200}>
           <p className="mx-auto mt-8 mb-6 max-w-[620px] text-[clamp(1rem,2.2vw,1.15rem)] leading-[1.75] text-cream-mid">
             You've carried it in your body, your family, your history&nbsp;— and everything you've been told about it treats pain as the problem to solve. It's not.{' '}
@@ -45,8 +49,6 @@ export function HeroSection() {
             Life is painful. Make it delicious.
           </p>
         </RevealSection>
-
-
 
 
         <RevealSection delay={500}>
