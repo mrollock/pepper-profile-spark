@@ -76,7 +76,7 @@ export function ConnectSection() {
           )}
 
           <p className="mt-8 text-[0.88rem] text-text-faint">
-            Imaginative Feedback Coaching & Consulting
+            <a href="https://ifwall.com" target="_blank" rel="noopener noreferrer" className="text-gold-muted hover:text-gold-light">Imaginative Feedback Coaching &amp; Consulting</a>
             <br />
             <a href="mailto:michael@ifwall.com" className="text-gold-muted hover:text-gold-light">
               michael@ifwall.com
