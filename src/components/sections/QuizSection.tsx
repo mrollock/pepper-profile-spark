@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
@@ -300,6 +301,7 @@ function ShareActions({ shareText, shareUrl }: { shareText: string; shareUrl: st
 }
 
 export function QuizSection() {
+  const navigate = useNavigate();
   const [phase, setPhase] = useState<Phase>('landing');
   const [currentItem, setCurrentItem] = useState(0);
   const [responses, setResponses] = useState<Record<number, number | string>>({});
@@ -349,8 +351,12 @@ export function QuizSection() {
       gate_burdensomeness: scovilleItems.includes(24),
       gate_numbing: scovilleItems.includes(29),
     };
-    supabase.from('quiz_submissions').insert(profileRow as any).then(null, () => {});
-    toast.success("Profile submitted!", { description: "Your Pepper Sauce Profile results are ready below." });
+    supabase.from('quiz_submissions').insert(profileRow as any).select('id').single().then(({ data: row }) => {
+      if (row?.id) {
+        navigate(`/results/${row.id}`, { replace: true });
+      }
+    }, () => {});
+    toast.success("Profile submitted!", { description: "Your Pepper Sauce Profile results are ready." });
 
     // Analytics: completion event
     const gateNames: string[] = [];

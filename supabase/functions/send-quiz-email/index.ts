@@ -93,6 +93,7 @@ serve(async (req) => {
     const record = payload.record || payload;
 
     const {
+      id: resultId,
       email,
       name,
       primary_fire_type,
@@ -141,7 +142,9 @@ serve(async (req) => {
       lowestCondition: CONDITION_NAMES[lowestCond] || "",
       lowestScore,
       scovilleTriggered: !!scoville_gate_triggered,
-      resultsUrl: "https://pepper-profile-spark.lovable.app/#quiz",
+      resultsUrl: resultId
+        ? `https://peppersauceprinciple.com/results/${resultId}`
+        : "https://peppersauceprinciple.com/#quiz",
     });
 
     // Send via Resend
