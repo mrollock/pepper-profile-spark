@@ -6,10 +6,10 @@ import {
   CONDITION_SUBTITLES,
   CONDITION_COLORS,
   FIRE_NAMES,
-  FIRE_DESC,
   getInterpretation,
 } from '@/data/quizData';
 import { CONDITION_INSIGHTS, FRAMEWORK_REMINDER } from '@/data/conditionInsights';
+import { FIRE_TYPE_COPY, CHRONIC_BRIDGE_INTRO, CHRONIC_BRIDGE_BODY, CHRONIC_BRIDGE_OUTRO } from '@/data/fireTypeInsights';
 import { POST_RESULTS_DISCLAIMER } from '@/data/legalCopy';
 import { cn } from '@/lib/utils';
 import { Share2, Copy, Check, Printer, Twitter, Facebook, Linkedin } from 'lucide-react';
@@ -174,6 +174,22 @@ function ExtendedProfileUpsell({ email, name }: { email: string; name: string })
   );
 }
 
+/* ── Fire Type Block ── */
+function FireTypeBlock({ fireKey, label }: { fireKey: string; label?: string }) {
+  const copy = FIRE_TYPE_COPY[fireKey];
+  if (!copy) return null;
+  return (
+    <div className="border-l-[3px] border-ember pl-6 py-1">
+      <h4 className="font-display text-ember" style={{ fontSize: 'clamp(1.2rem, 2.5vw, 1.5rem)' }}>
+        {copy.title}
+      </h4>
+      <p className="mt-3 font-body text-[0.938rem] leading-[1.7] text-cream-mid">
+        {copy.body}
+      </p>
+    </div>
+  );
+}
+
 /* ── Main Results Page ── */
 export default function ResultsPage() {
   const { id } = useParams<{ id: string }>();
@@ -236,14 +252,14 @@ export default function ResultsPage() {
     5: data.score_generativity ?? 0,
   };
 
-  // Parse fire type from stored label back to keys
+  // Resolve fire keys from stored label
   const primaryLabel = data.primary_fire_type || 'Unknown';
   const fireKeys = Object.entries(FIRE_NAMES).filter(([, v]) => primaryLabel.includes(v)).map(([k]) => k);
   const primaryFireKey = fireKeys[0] || 'A';
-  const primaryDesc = FIRE_DESC[primaryFireKey] || '';
 
   const chronicFireLabel = data.chronic_fire_type;
   const chronicFireKey = chronicFireLabel ? Object.entries(FIRE_NAMES).find(([, v]) => v === chronicFireLabel)?.[0] : null;
+  const showChronicSeparately = chronicFireKey && chronicFireKey !== primaryFireKey;
 
   const scovilleTriggered = data.scoville_gate_triggered;
   const gateItems: number[] = [];
@@ -261,6 +277,14 @@ export default function ResultsPage() {
   const highInsight = CONDITION_INSIGHTS[highestC];
   const lowInsight = CONDITION_INSIGHTS[lowestC];
 
+  const CONDITION_HIGH_LABELS: Record<number, string> = {
+    1: "Validation",
+    2: "Agency",
+    3: "Community",
+    4: "Capacity",
+    5: "Generativity",
+  };
+
   return (
     <>
       <Navbar />
@@ -276,6 +300,111 @@ export default function ResultsPage() {
               <p className="mx-auto max-w-[540px] text-[0.88rem] leading-[1.65] text-text-light">
                 Your profile shows broad patterns — not a personalized clinical assessment. Think of it as reading the label on your jar: you can see what's inside, but the full recipe is richer than any label can capture.
               </p>
+            </div>
+
+            {/* ═══════════════════════════════════════════
+                SECTION 1: FIRE TYPE
+            ═══════════════════════════════════════════ */}
+            <div className="mb-12 overflow-hidden rounded-2xl bg-dark shadow-[0_8px_40px_rgba(0,0,0,0.25)]">
+              <div className="relative px-8 py-10" style={{ background: 'linear-gradient(135deg, hsl(var(--dark)) 0%, hsl(var(--dark-warm)) 50%, hsl(43 33% 12%) 100%)' }}>
+                <div className="mb-6 text-center">
+                  <div className="mb-4 text-[3rem] leading-none">🌶️</div>
+                  <span className="mb-2 block font-body text-[0.7rem] font-semibold uppercase tracking-[0.25em] text-gold-muted">Your Primary Fire</span>
+                </div>
+
+                <FireTypeBlock fireKey={primaryFireKey} />
+
+                {showChronicSeparately && chronicFireKey && (
+                  <>
+                    <div className="my-8 text-center">
+                      <p className="font-display italic text-gold" style={{ fontSize: 'clamp(1rem, 2vw, 1.15rem)' }}>
+                        {CHRONIC_BRIDGE_INTRO}
+                      </p>
+                      <p className="mx-auto mt-3 max-w-[520px] font-body text-[0.9rem] leading-[1.7] text-cream-mid">
+                        {CHRONIC_BRIDGE_BODY}
+                      </p>
+                    </div>
+
+                    <div className="mb-4">
+                      <span className="mb-3 block font-body text-[0.7rem] font-semibold uppercase tracking-[0.25em] text-cream-mid/70 pl-6">Your Chronic Fire</span>
+                      <FireTypeBlock fireKey={chronicFireKey} />
+                    </div>
+
+                    <p className="mx-auto mt-6 max-w-[540px] border-t border-gold/15 pt-5 text-center font-body text-[0.88rem] leading-[1.7] text-cream-mid/80 italic">
+                      {CHRONIC_BRIDGE_OUTRO}
+                    </p>
+                  </>
+                )}
+
+                {chronicFireKey && !showChronicSeparately && (
+                  <p className="mx-auto mt-6 max-w-[520px] border-t border-gold/15 pt-5 text-center font-body text-[0.85rem] leading-[1.7] text-cream-mid/70">
+                    This is also the fire you've been carrying the longest — your chronic fire matches your primary fire. The same pepper is both today's burn and the one that's been simmering.
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {/* ═══════════════════════════════════════════
+                SECTION 2: CONDITIONS
+            ═══════════════════════════════════════════ */}
+
+            {/* Five Conditions Visualization */}
+            <div className="mb-10">
+              <h3 className="mb-2 text-center">Your Five Conditions</h3>
+              <p className="mx-auto mb-8 max-w-[480px] text-center text-[0.85rem] text-text-faint">How well-stocked each ingredient is in your recipe right now</p>
+              <div className="space-y-4">
+                {[1, 2, 3, 4, 5].map(c => {
+                  const score = scores[c];
+                  const pct = Math.max(2, ((score - 5) / 25 * 100));
+                  const interp = getInterpretation(score);
+                  const isStrong = score >= 21;
+                  const isThin = score <= 12;
+                  return (
+                    <div key={c} className={cn("rounded-xl border p-5 transition-all", isStrong ? "border-gold/25 bg-gold-pale/30" : isThin ? "border-ember/15 bg-ember/[0.04]" : "border-cream-mid/50 bg-cream/60")}>
+                      <div className="mb-2 flex items-baseline justify-between gap-3">
+                        <div>
+                          <span className="font-display text-[1.05rem] font-bold text-text-body">{CONDITION_NAMES[c]}</span>
+                          <span className="ml-2 text-[0.78rem] text-text-faint">({CONDITION_SUBTITLES[c]})</span>
+                        </div>
+                        <span className="whitespace-nowrap font-body text-[0.95rem] font-bold" style={{ color: CONDITION_COLORS[c] }}>
+                          {score}<span className="text-[0.78rem] font-normal text-text-faint">/30</span>
+                        </span>
+                      </div>
+                      <div className="mb-3 h-3 w-full overflow-hidden rounded-full bg-cream-mid/60">
+                        <div className="h-full rounded-full transition-all duration-1000 ease-out" style={{ width: `${pct}%`, background: `linear-gradient(90deg, ${CONDITION_COLORS[c]}, ${CONDITION_COLORS[c]}cc)` }} />
+                      </div>
+                      <p className="text-[0.85rem] leading-[1.55] text-text-light">{interp}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Signature Ingredient (Highest Condition) */}
+            <div className="mb-6 rounded-xl border-l-4 border-gold bg-cream/60 p-6 text-left">
+              <span className="mb-2 block font-body text-[0.68rem] font-semibold uppercase tracking-[0.25em] text-gold-muted">Your Signature Ingredient</span>
+              <h4 className="mb-1 font-display text-[1.1rem] font-bold text-text-body">
+                Your richest ingredient: {CONDITION_HIGH_LABELS[highestC]}
+              </h4>
+              <p className="mt-3 text-[0.92rem] leading-[1.7] text-text-light">{highInsight.signatureIngredient}</p>
+            </div>
+
+            {/* What Your Recipe Might Need (Lowest Condition) */}
+            <div className="mb-6 rounded-xl border-l-4 border-ember-soft bg-cream/60 p-6 text-left">
+              <span className="mb-2 block font-body text-[0.68rem] font-semibold uppercase tracking-[0.25em] text-ember-soft">What Your Recipe Might Need</span>
+              <h4 className="mb-1 font-display text-[1.1rem] font-bold text-text-body">
+                Where your sauce is thinnest: {CONDITION_HIGH_LABELS[lowestC]}
+              </h4>
+              <p className="mt-3 text-[0.92rem] leading-[1.7] text-text-light">{lowInsight.whatYouMightNeed}</p>
+              <div className="mt-5 rounded-lg border-t border-ember/15 bg-ember/[0.04] px-5 py-4">
+                <span className="mb-2 block font-body text-[0.68rem] font-semibold uppercase tracking-[0.25em] text-ember-soft">🌶️ Try This Week</span>
+                <p className="text-[0.9rem] leading-[1.65] text-text-light italic">{lowInsight.actionableInsight}</p>
+              </div>
+            </div>
+
+            {/* Framework Reminder */}
+            <div className="mb-10 border-t border-cream-mid/40 pt-5 text-center">
+              <p className="mx-auto max-w-[540px] text-[0.85rem] italic leading-[1.65] text-text-faint">{FRAMEWORK_REMINDER}</p>
             </div>
 
             {/* Scoville Gate */}
@@ -327,101 +456,16 @@ export default function ResultsPage() {
               </div>
             )}
 
-            {/* Primary Fire Hero Card */}
-            <div className="mb-10 overflow-hidden rounded-2xl bg-dark shadow-[0_8px_40px_rgba(0,0,0,0.25)]">
-              <div className="relative px-8 py-10 text-center" style={{ background: 'linear-gradient(135deg, hsl(var(--dark)) 0%, hsl(var(--dark-warm)) 50%, hsl(43 33% 12%) 100%)' }}>
-                <div className="mb-4 text-[3rem] leading-none">🌶️</div>
-                <span className="mb-2 block font-body text-[0.7rem] font-semibold uppercase tracking-[0.25em] text-gold-muted">Your Primary Fire</span>
-                <h3 className="mb-4 text-gold-light" style={{ fontSize: 'clamp(1.4rem, 3vw, 1.8rem)' }}>{primaryLabel}</h3>
-                <p className="mx-auto max-w-[520px] text-[0.95rem] leading-[1.7] text-cream-soft">{primaryDesc}</p>
-              </div>
-            </div>
-
-            {/* Five Conditions */}
-            <div className="mb-10">
-              <h3 className="mb-2 text-center">Your Five Conditions</h3>
-              <p className="mx-auto mb-8 max-w-[480px] text-center text-[0.85rem] text-text-faint">How well-stocked each ingredient is in your recipe right now</p>
-              <div className="space-y-4">
-                {[1, 2, 3, 4, 5].map(c => {
-                  const score = scores[c];
-                  const pct = Math.max(2, ((score - 5) / 25 * 100));
-                  const interp = getInterpretation(score);
-                  const isStrong = score >= 21;
-                  const isThin = score <= 12;
-                  return (
-                    <div key={c} className={cn("rounded-xl border p-5 transition-all", isStrong ? "border-gold/25 bg-gold-pale/30" : isThin ? "border-ember/15 bg-ember/[0.04]" : "border-cream-mid/50 bg-cream/60")}>
-                      <div className="mb-2 flex items-baseline justify-between gap-3">
-                        <div>
-                          <span className="font-display text-[1.05rem] font-bold text-text-body">{CONDITION_NAMES[c]}</span>
-                          <span className="ml-2 text-[0.78rem] text-text-faint">({CONDITION_SUBTITLES[c]})</span>
-                        </div>
-                        <span className="whitespace-nowrap font-body text-[0.95rem] font-bold" style={{ color: CONDITION_COLORS[c] }}>
-                          {score}<span className="text-[0.78rem] font-normal text-text-faint">/30</span>
-                        </span>
-                      </div>
-                      <div className="mb-3 h-3 w-full overflow-hidden rounded-full bg-cream-mid/60">
-                        <div className="h-full rounded-full transition-all duration-1000 ease-out" style={{ width: `${pct}%`, background: `linear-gradient(90deg, ${CONDITION_COLORS[c]}, ${CONDITION_COLORS[c]}cc)` }} />
-                      </div>
-                      <p className="text-[0.85rem] leading-[1.55] text-text-light">{interp}</p>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Signature Ingredient */}
-            <div className="mb-6 rounded-xl border-l-4 border-gold bg-cream/60 p-6 text-left">
-              <span className="mb-2 block font-body text-[0.68rem] font-semibold uppercase tracking-[0.25em] text-gold-muted">Your Signature Ingredient</span>
-              <h4 className="mb-1 font-display text-[1.1rem] font-bold text-text-body">
-                {CONDITION_NAMES[highestC]}
-                <span className="ml-2 text-[0.82rem] font-normal text-text-faint">— {CONDITION_SUBTITLES[highestC]}</span>
-              </h4>
-              <p className="mt-3 text-[0.92rem] leading-[1.7] text-text-light">{highInsight.signatureIngredient}</p>
-            </div>
-
-            {/* What Your Recipe Might Need */}
-            <div className="mb-6 rounded-xl border-l-4 border-ember-soft bg-cream/60 p-6 text-left">
-              <span className="mb-2 block font-body text-[0.68rem] font-semibold uppercase tracking-[0.25em] text-ember-soft">What Your Recipe Might Need</span>
-              <h4 className="mb-1 font-display text-[1.1rem] font-bold text-text-body">
-                {CONDITION_NAMES[lowestC]}
-                <span className="ml-2 text-[0.82rem] font-normal text-text-faint">— {CONDITION_SUBTITLES[lowestC]}</span>
-              </h4>
-              <p className="mt-3 text-[0.92rem] leading-[1.7] text-text-light">{lowInsight.whatYouMightNeed}</p>
-              <div className="mt-5 rounded-lg border-t border-ember/15 bg-ember/[0.04] px-5 py-4">
-                <span className="mb-2 block font-body text-[0.68rem] font-semibold uppercase tracking-[0.25em] text-ember-soft">🌶️ Try This Week</span>
-                <p className="text-[0.9rem] leading-[1.65] text-text-light italic">{lowInsight.actionableInsight}</p>
-              </div>
-            </div>
-
-            {/* Framework Reminder */}
-            <div className="mb-10 border-t border-cream-mid/40 pt-5 text-center">
-              <p className="mx-auto max-w-[540px] text-[0.85rem] italic leading-[1.65] text-text-faint">{FRAMEWORK_REMINDER}</p>
-            </div>
-
-            {/* Chronic Fire */}
-            {chronicFireKey && chronicFireLabel && (
-              <div className="my-8 overflow-hidden rounded-2xl shadow-[0_6px_30px_rgba(0,0,0,0.2)]" style={{ background: 'linear-gradient(145deg, hsl(var(--dark-mid)), hsl(var(--dark-warm)))' }}>
-                <div className="p-8 text-center">
-                  <span className="mb-2 block font-body text-[0.68rem] font-semibold uppercase tracking-[0.25em] text-cream-mid">The fire you've been carrying longest</span>
-                  <h3 className="mb-3 text-gold-light">Your Chronic Fire: {chronicFireLabel}</h3>
-                  <p className="mx-auto max-w-[520px] text-[0.95rem] leading-[1.7] text-cream-soft">{FIRE_DESC[chronicFireKey]}</p>
-                  {chronicFireKey !== primaryFireKey && (
-                    <p className="mx-auto mt-5 max-w-[520px] border-t border-gold/15 pt-5 text-[0.9rem] leading-[1.7] text-cream-mid">
-                      Right now, you're carrying {FIRE_NAMES[primaryFireKey]} — that's the pepper on the counter today. But the one that's been sitting in the jar the longest is {chronicFireLabel}. These are two different peppers, and they may need different ingredients.
-                    </p>
-                  )}
-                </div>
-              </div>
-            )}
+            {/* ═══════════════════════════════════════════
+                SECTION 3: EXTENDED REPORT UPSELL
+            ═══════════════════════════════════════════ */}
+            <ExtendedProfileUpsell email={data.email} name={data.name} />
 
             {/* Post-results disclaimer */}
             <p className="mt-8 text-center text-[0.82rem] leading-[1.6] text-text-faint">{POST_RESULTS_DISCLAIMER}</p>
 
             {/* Share */}
             <ShareActions shareText={shareText} shareUrl={shareUrl} />
-
-            {/* Upsell */}
-            <ExtendedProfileUpsell email={data.email} name={data.name} />
 
             {/* Legal */}
             <p className="mt-10 text-center text-[0.78rem] leading-[1.6] text-text-faint">
