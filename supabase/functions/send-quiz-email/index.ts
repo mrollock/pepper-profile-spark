@@ -142,7 +142,9 @@ serve(async (req) => {
       lowestCondition: CONDITION_NAMES[lowestCond] || "",
       lowestScore,
       scovilleTriggered: !!scoville_gate_triggered,
-      resultsUrl: "https://pepper-profile-spark.lovable.app/#quiz",
+      resultsUrl: resultId
+        ? `https://peppersauceprinciple.com/results/${resultId}`
+        : "https://peppersauceprinciple.com/#quiz",
     });
 
     // Send via Resend

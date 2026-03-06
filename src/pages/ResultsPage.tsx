@@ -13,7 +13,7 @@ import { CONDITION_INSIGHTS, FRAMEWORK_REMINDER } from '@/data/conditionInsights
 import { POST_RESULTS_DISCLAIMER } from '@/data/legalCopy';
 import { cn } from '@/lib/utils';
 import { Share2, Copy, Check, Printer, Twitter, Facebook, Linkedin } from 'lucide-react';
-import Navbar from '@/components/Navbar';
+import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/sections/Footer';
 
 type ResultsData = {
