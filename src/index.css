@@ -151,6 +151,56 @@
 }
 
 /* ================================================
+   STIR THE SAUCE — Hero micro-animation
+   ================================================ */
+
+/* Bobbing for pepper and sauce drop */
+@keyframes stirBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.stir-bob-1 { animation: stirBob 2.2s ease-in-out infinite; }
+.stir-bob-2 { animation: stirBob 2.6s ease-in-out infinite 0.4s; }
+
+/* Steam rising */
+@keyframes stirSteam {
+  0%   { opacity: 0; transform: translateY(0) scaleY(0.8); }
+  40%  { opacity: 0.35; }
+  100% { opacity: 0; transform: translateY(-10px) scaleY(1.2); }
+}
+
+.stir-steam-idle .stir-steam {
+  animation: stirSteam 3s ease-in-out infinite;
+}
+.stir-steam-idle .stir-steam-1 { animation-delay: 0s; }
+.stir-steam-idle .stir-steam-2 { animation-delay: 1s; }
+.stir-steam-idle .stir-steam-3 { animation-delay: 2s; }
+
+.stir-steam-active .stir-steam {
+  animation: stirSteam 1.8s ease-in-out infinite;
+}
+.stir-steam-active .stir-steam-1 { animation-delay: 0s; }
+.stir-steam-active .stir-steam-2 { animation-delay: 0.5s; }
+.stir-steam-active .stir-steam-3 { animation-delay: 1s; }
+
+/* Spoon stirring */
+@keyframes stirSpoon {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.stir-spoon-stirring {
+  animation: stirSpoon 2.5s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stir-bob-1, .stir-bob-2, .stir-steam, .stir-spoon-stirring {
+    animation: none !important;
+  }
+}
+
+/* ================================================
    ROOTS & RESEARCH SECTION
    ================================================ */
 

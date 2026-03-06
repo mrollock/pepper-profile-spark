@@ -41,12 +41,18 @@ export function HeroSection() {
         </RevealSection>
 
         <RevealSection delay={325}>
-          <p className="mb-10 font-accent text-[clamp(1.3rem,3vw,1.8rem)] italic text-gold-light">
+          <p className="mb-6 font-accent text-[clamp(1.3rem,3vw,1.8rem)] italic text-gold-light">
             Life is painful. Make it delicious.
           </p>
         </RevealSection>
 
-        <RevealSection delay={425}>
+        <RevealSection delay={400}>
+          <div className="mb-8">
+            <StirTheSauce />
+          </div>
+        </RevealSection>
+
+        <RevealSection delay={500}>
           <div className="flex flex-wrap justify-center gap-4">
             <a
               href="#framework"
