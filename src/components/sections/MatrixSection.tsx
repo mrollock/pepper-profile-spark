@@ -570,14 +570,59 @@ export function MatrixSection() {
           from { opacity: 0; transform: translateY(8px); }
           to { opacity: 1; transform: translateY(0); }
         }
+        .matrix-section {
+          padding: 5rem 1.5rem 4rem;
+        }
+        .matrix-header {
+          margin-bottom: 2.5rem;
+        }
         @media (max-width: 480px) {
-          #matrix { padding-top: 3rem !important; padding-bottom: 2.5rem !important; }
+          .matrix-section { padding-top: 3rem !important; padding-bottom: 2.5rem !important; }
           .matrix-description-full { display: none !important; }
           .matrix-description-short { display: block !important; }
         }
         @media (min-width: 481px) {
           .matrix-description-full { display: block !important; }
           .matrix-description-short { display: none !important; }
+        }
+        /* Laptop viewport optimization: fit entire matrix in one screen */
+        @media (min-width: 768px) and (max-height: 920px) {
+          .matrix-section {
+            padding-top: 2.5rem !important;
+            padding-bottom: 2rem !important;
+          }
+          .matrix-header {
+            margin-bottom: 1.25rem !important;
+          }
+          .matrix-header h2 {
+            margin-bottom: 0.375rem !important;
+          }
+          .matrix-intro-text {
+            font-size: 0.85rem !important;
+            line-height: 1.55 !important;
+          }
+          .matrix-container {
+            max-width: min(520px, 52vh) !important;
+          }
+        }
+        @media (min-width: 768px) and (max-height: 800px) {
+          .matrix-section {
+            padding-top: 1.75rem !important;
+            padding-bottom: 1.5rem !important;
+          }
+          .matrix-header {
+            margin-bottom: 0.75rem !important;
+          }
+          .matrix-header p:first-child {
+            margin-bottom: 0.25rem !important;
+          }
+          .matrix-intro-text {
+            font-size: 0.8rem !important;
+            line-height: 1.5 !important;
+          }
+          .matrix-container {
+            max-width: min(480px, 48vh) !important;
+          }
         }
       `}</style>
     </section>
