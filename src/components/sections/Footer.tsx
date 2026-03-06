@@ -15,7 +15,11 @@ export function Footer() {
         © 2026 Dr. Michael J.D. Rollock. All rights reserved. The Pepper Sauce Principle™
       </p>
       <p className="mt-2 text-[0.78rem] text-text-faint">
-        {IFCC_ATTRIBUTION}
+        The Pepper Sauce Principle™ is a framework of{' '}
+        <a href="https://ifwall.com" target="_blank" rel="noopener noreferrer" className="text-text-faint hover:text-gold-light">
+          Imaginative Feedback Coaching &amp; Consulting, LLC
+        </a>
+        , the consulting practice of Dr.&nbsp;Michael&nbsp;J.D.&nbsp;Rollock.
       </p>
       <p className="mt-2 max-w-[680px] mx-auto text-[0.78rem] leading-[1.6] text-text-faint">
         {AFFILIATION_DISCLAIMER}
