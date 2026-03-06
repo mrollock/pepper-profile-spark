@@ -419,7 +419,7 @@ export function MatrixSection() {
         </div>
 
         {/* Matrix container */}
-        <div className="mx-auto" style={{ maxWidth: 520 }}>
+        <div className="mx-auto matrix-container" style={{ maxWidth: 520 }}>
           <div style={{ display: "flex", gap: 16 }}>
             {/* Vertical slider (Sauce) */}
             <div style={{ display: "flex", alignItems: "center", width: 40 }}>
