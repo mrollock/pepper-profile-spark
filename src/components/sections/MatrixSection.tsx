@@ -385,8 +385,7 @@ export function MatrixSection() {
   return (
     <section
       id="matrix"
-      className="sec-dark relative overflow-hidden bg-dark"
-      style={{ padding: "5rem 1.5rem 4rem" }}
+      className="sec-dark relative overflow-hidden bg-dark matrix-section"
     >
       {/* Noise texture */}
       <div
