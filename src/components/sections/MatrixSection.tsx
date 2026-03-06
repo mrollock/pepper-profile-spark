@@ -385,8 +385,7 @@ export function MatrixSection() {
   return (
     <section
       id="matrix"
-      className="sec-dark relative overflow-hidden bg-dark"
-      style={{ padding: "5rem 1.5rem 4rem" }}
+      className="sec-dark relative overflow-hidden bg-dark matrix-section"
     >
       {/* Noise texture */}
       <div
@@ -405,14 +404,14 @@ export function MatrixSection() {
 
       <div className="relative z-[1]">
         {/* Header */}
-        <div className="mx-auto mb-10 max-w-[520px] text-center">
-          <p className="mb-3 font-body text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-gold-muted">
+        <div className="mx-auto matrix-header max-w-[520px] text-center">
+          <p className="mb-2 font-body text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-gold-muted">
             The Pepper-Sauce Matrix
           </p>
-          <h2 className="mb-4 font-display text-[clamp(1.6rem,4vw,2.2rem)] font-bold leading-[1.2] text-cream">
+          <h2 className="mb-2 font-display text-[clamp(1.6rem,4vw,2.2rem)] font-bold leading-[1.2] text-cream">
             Where Are You Right Now?
           </h2>
-          <p className="font-body text-[0.95rem] leading-[1.7] text-cream-mid">
+          <p className="font-body text-[0.95rem] leading-[1.7] text-cream-mid matrix-intro-text">
             Use the sliders to map where you are right now. Sliding right toward{" "}
             <em className="font-accent italic text-gold">spicy</em> means you're carrying more pain in your life at this moment. Sliding up toward{" "}
             <em className="font-accent italic text-gold">rich</em> means you have more of the supportive, positive, nourishing things in your life — people, meaning, joy, agency — that surround the pain.
@@ -420,7 +419,7 @@ export function MatrixSection() {
         </div>
 
         {/* Matrix container */}
-        <div className="mx-auto" style={{ maxWidth: 520 }}>
+        <div className="mx-auto matrix-container" style={{ maxWidth: 520 }}>
           <div style={{ display: "flex", gap: 16 }}>
             {/* Vertical slider (Sauce) */}
             <div style={{ display: "flex", alignItems: "center", width: 40 }}>
@@ -435,7 +434,7 @@ export function MatrixSection() {
               >
                 Sauce
               </div>
-              <div style={{ height: "100%", minHeight: 300 }}>
+              <div className="matrix-sauce-slider" style={{ height: "100%", minHeight: 300 }}>
                 <AxisSlider
                   value={sauce}
                   onChange={handleSauceChange}
@@ -477,7 +476,7 @@ export function MatrixSection() {
               </div>
 
               {/* Horizontal slider (Pepper) */}
-              <div style={{ marginTop: 16 }}>
+              <div className="matrix-h-slider" style={{ marginTop: 16 }}>
                 <AxisSlider
                   value={pepper}
                   onChange={handlePepperChange}
@@ -496,7 +495,7 @@ export function MatrixSection() {
         </div>
 
         {/* Insight line below matrix */}
-        <div className="mx-auto mt-8" style={{ maxWidth: 520 }}>
+        <div className="mx-auto matrix-insight" style={{ maxWidth: 520 }}>
           <div
             key={quadrant}
             style={{
@@ -571,14 +570,80 @@ export function MatrixSection() {
           from { opacity: 0; transform: translateY(8px); }
           to { opacity: 1; transform: translateY(0); }
         }
+        .matrix-section {
+          padding: 5rem 1.5rem 4rem;
+        }
+        .matrix-header {
+          margin-bottom: 2.5rem;
+        }
         @media (max-width: 480px) {
-          #matrix { padding-top: 3rem !important; padding-bottom: 2.5rem !important; }
+          .matrix-section { padding-top: 3rem !important; padding-bottom: 2.5rem !important; }
           .matrix-description-full { display: none !important; }
           .matrix-description-short { display: block !important; }
         }
         @media (min-width: 481px) {
           .matrix-description-full { display: block !important; }
           .matrix-description-short { display: none !important; }
+        }
+        /* Laptop viewport optimization: fit entire matrix in one screen */
+        @media (min-width: 768px) and (max-height: 920px) {
+          .matrix-section {
+            padding-top: 1.5rem !important;
+            padding-bottom: 1rem !important;
+          }
+          .matrix-header {
+            margin-bottom: 0.75rem !important;
+          }
+          .matrix-header h2 {
+            margin-bottom: 0.125rem !important;
+            font-size: 1.6rem !important;
+          }
+          .matrix-intro-text {
+            font-size: 0.8rem !important;
+            line-height: 1.45 !important;
+          }
+          .matrix-container {
+            max-width: min(520px, 48vh) !important;
+          }
+          .matrix-sauce-slider {
+            min-height: unset !important;
+          }
+          .matrix-h-slider {
+            margin-top: 8px !important;
+          }
+          .matrix-insight {
+            margin-top: 1rem !important;
+          }
+        }
+        @media (min-width: 768px) and (max-height: 800px) {
+          .matrix-section {
+            padding-top: 1rem !important;
+            padding-bottom: 0.75rem !important;
+          }
+          .matrix-header {
+            margin-bottom: 0.5rem !important;
+          }
+          .matrix-header p:first-child {
+            margin-bottom: 0 !important;
+            font-size: 0.55rem !important;
+          }
+          .matrix-header h2 {
+            font-size: 1.4rem !important;
+            margin-bottom: 0 !important;
+          }
+          .matrix-intro-text {
+            font-size: 0.75rem !important;
+            line-height: 1.4 !important;
+          }
+          .matrix-container {
+            max-width: min(440px, 42vh) !important;
+          }
+          .matrix-h-slider {
+            margin-top: 6px !important;
+          }
+          .matrix-insight {
+            margin-top: 0.5rem !important;
+          }
         }
       `}</style>
     </section>
