@@ -351,8 +351,12 @@ export function QuizSection() {
       gate_burdensomeness: scovilleItems.includes(24),
       gate_numbing: scovilleItems.includes(29),
     };
-    supabase.from('quiz_submissions').insert(profileRow as any).then(null, () => {});
-    toast.success("Profile submitted!", { description: "Your Pepper Sauce Profile results are ready below." });
+    supabase.from('quiz_submissions').insert(profileRow as any).select('id').single().then(({ data: row }) => {
+      if (row?.id) {
+        navigate(`/results/${row.id}`, { replace: true });
+      }
+    }, () => {});
+    toast.success("Profile submitted!", { description: "Your Pepper Sauce Profile results are ready." });
 
     // Analytics: completion event
     const gateNames: string[] = [];
