@@ -1,134 +1,222 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 
+type IngredientState = 'floating' | 'dropping' | 'in';
+
 export function StirTheSauce() {
-  const [stirred, setStirred] = useState(false);
+  const [pepperState, setPepperState] = useState<IngredientState>('floating');
+  const [sauceState, setSauceState] = useState<IngredientState>('floating');
+  const [stirring, setStirring] = useState(false);
+  const [blended, setBlended] = useState(false);
   const [showCta, setShowCta] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
   const autoTriggered = useRef(false);
 
-  const triggerStir = useCallback(() => {
-    if (stirred) return;
-    setStirred(true);
-    setTimeout(() => setShowCta(true), 600);
-  }, [stirred]);
+  const bothIn = pepperState === 'in' && sauceState === 'in';
 
-  // Auto-trigger after delay
+  // Fade in on mount
+  useEffect(() => {
+    const t = setTimeout(() => setVisible(true), 500);
+    return () => clearTimeout(t);
+  }, []);
+
+  // Once both ingredients are in, start stirring
+  useEffect(() => {
+    if (!bothIn || stirring) return;
+    const t = setTimeout(() => {
+      setStirring(true);
+      setTimeout(() => {
+        setBlended(true);
+        setTimeout(() => setShowCta(true), 800);
+      }, 2000);
+    }, 300);
+    return () => clearTimeout(t);
+  }, [bothIn, stirring]);
+
+  const dropPepper = useCallback(() => {
+    if (pepperState !== 'floating') return;
+    setPepperState('dropping');
+    setTimeout(() => setPepperState('in'), 350);
+  }, [pepperState]);
+
+  const dropSauce = useCallback(() => {
+    if (sauceState !== 'floating') return;
+    setSauceState('dropping');
+    setTimeout(() => setSauceState('in'), 350);
+  }, [sauceState]);
+
+  // Auto-trigger fallback
   useEffect(() => {
     if (autoTriggered.current) return;
-    const isMobile = window.innerWidth < 768;
-    const delay = isMobile ? 2500 : 3500;
+    const delay = window.innerWidth < 768 ? 3000 : 4000;
     const timer = setTimeout(() => {
       autoTriggered.current = true;
-      triggerStir();
+      dropPepper();
+      setTimeout(() => dropSauce(), 500);
     }, delay);
     return () => clearTimeout(timer);
-  }, [triggerStir]);
+  }, [dropPepper, dropSauce]);
 
   const scrollToMatrix = () => {
     const el = document.getElementById('matrix');
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // Bowl fill color based on state
+  const getBowlFill = () => {
+    if (blended) return 'hsl(30, 55%, 36%)';
+    if (pepperState === 'in' && sauceState === 'in') return 'hsl(28, 50%, 38%)';
+    if (pepperState === 'in') return 'hsl(16, 60%, 38%)';
+    if (sauceState === 'in') return 'hsl(38, 60%, 42%)';
+    return 'hsl(39, 70%, 95%)';
+  };
+
+  const getContentsFill = () => {
+    if (blended) return 'hsl(30, 58%, 34%)';
+    if (pepperState === 'in' && sauceState === 'in') return 'hsl(25, 52%, 36%)';
+    if (pepperState === 'in') return 'hsl(16, 55%, 35%)';
+    if (sauceState === 'in') return 'hsl(38, 55%, 40%)';
+    return 'hsl(35, 42%, 89%)';
+  };
+
+  const instructionText = !bothIn
+    ? 'Tap the pepper and sauce to blend'
+    : null;
+
   return (
     <div
-      ref={containerRef}
-      className="relative flex flex-col items-center gap-3 cursor-pointer"
-      onMouseEnter={triggerStir}
-      onClick={scrollToMatrix}
-      onTouchStart={triggerStir}
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => e.key === 'Enter' && scrollToMatrix()}
-      aria-label="See your Pepper Sauce blend — scroll to the matrix"
+      className="relative flex flex-col items-center gap-2 transition-all duration-700"
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? 'scale(1) translateY(0)' : 'scale(0.9) translateY(8px)',
+      }}
     >
       {/* Glow behind bowl */}
       <div
         className="absolute inset-0 rounded-full blur-2xl transition-opacity duration-[1.5s]"
         style={{
           background: 'radial-gradient(circle, hsla(41,66%,48%,0.15), transparent 70%)',
-          opacity: stirred ? 1 : 0.4,
+          opacity: stirring ? 1 : 0.3,
         }}
       />
 
       {/* SVG Scene */}
       <svg
-        viewBox="0 0 120 100"
+        viewBox="0 0 140 100"
         className="relative z-[1] w-[80px] sm:w-[100px]"
         aria-hidden="true"
       >
-        {/* Steam lines */}
-        <g className={stirred ? 'stir-steam-active' : 'stir-steam-idle'}>
-          <line x1="45" y1="38" x2="45" y2="22" stroke="hsl(41,66%,48%)" strokeWidth="1.2" strokeLinecap="round" opacity="0.25" className="stir-steam stir-steam-1" />
-          <line x1="60" y1="35" x2="60" y2="18" stroke="hsl(41,66%,48%)" strokeWidth="1.2" strokeLinecap="round" opacity="0.3" className="stir-steam stir-steam-2" />
-          <line x1="75" y1="38" x2="75" y2="24" stroke="hsl(41,66%,48%)" strokeWidth="1.2" strokeLinecap="round" opacity="0.2" className="stir-steam stir-steam-3" />
+        {/* Steam lines — only when stirring */}
+        <g className={stirring ? 'stir-steam-active' : bothIn ? 'stir-steam-idle' : ''}>
+          <line x1="50" y1="38" x2="50" y2="22" stroke="hsl(41,66%,48%)" strokeWidth="1.2" strokeLinecap="round" opacity="0.25" className="stir-steam stir-steam-1" />
+          <line x1="65" y1="35" x2="65" y2="18" stroke="hsl(41,66%,48%)" strokeWidth="1.2" strokeLinecap="round" opacity="0.3" className="stir-steam stir-steam-2" />
+          <line x1="80" y1="38" x2="80" y2="24" stroke="hsl(41,66%,48%)" strokeWidth="1.2" strokeLinecap="round" opacity="0.2" className="stir-steam stir-steam-3" />
         </g>
 
-        {/* Pepper icon — falls into bowl when stirred */}
+        {/* Pepper icon — tappable, floating above-left */}
         <g
-          className="transition-all duration-[400ms] ease-in"
+          className={`cursor-pointer transition-all duration-[350ms] ease-in ${pepperState === 'floating' ? 'stir-bob-1 hover:scale-110' : ''}`}
           style={{
-            transform: stirred ? 'translate(0px, 18px) scale(0.6)' : 'translate(0px, 0px) scale(1)',
-            opacity: stirred ? 0 : 1,
-            transformOrigin: '42px 20px',
+            transform:
+              pepperState === 'dropping'
+                ? 'translate(12px, 24px) scale(0.4)'
+                : pepperState === 'in'
+                  ? 'translate(12px, 24px) scale(0)'
+                  : 'translate(0,0) scale(1)',
+            opacity: pepperState === 'in' ? 0 : 1,
+            transformOrigin: '38px 18px',
           }}
+          onClick={(e) => { e.stopPropagation(); dropPepper(); }}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => e.key === 'Enter' && dropPepper()}
+          aria-label="Add pepper to the bowl"
         >
-          {/* Small pepper shape */}
-          <ellipse cx="42" cy="16" rx="5" ry="3.5" fill="hsl(16,75%,41%)" className={stirred ? '' : 'stir-bob-1'} />
-          <path d="M42 12.5 L42 10 L44 9" stroke="hsl(103,24%,34%)" strokeWidth="1" fill="none" strokeLinecap="round" />
+          <ellipse cx="38" cy="16" rx="6" ry="4" fill="hsl(16,75%,41%)" />
+          <path d="M38 12 L38 9.5 L40.5 8" stroke="hsl(103,24%,34%)" strokeWidth="1.2" fill="none" strokeLinecap="round" />
         </g>
 
-        {/* Sauce drop — falls into bowl when stirred */}
+        {/* Sauce drop — tappable, floating above-right */}
         <g
-          className="transition-all duration-[400ms] ease-in"
+          className={`cursor-pointer transition-all duration-[350ms] ease-in ${sauceState === 'floating' ? 'stir-bob-2 hover:scale-110' : ''}`}
           style={{
-            transform: stirred ? 'translate(0px, 20px) scale(0.5)' : 'translate(0px, 0px) scale(1)',
-            opacity: stirred ? 0 : 1,
-            transformOrigin: '78px 20px',
+            transform:
+              sauceState === 'dropping'
+                ? 'translate(-12px, 22px) scale(0.4)'
+                : sauceState === 'in'
+                  ? 'translate(-12px, 22px) scale(0)'
+                  : 'translate(0,0) scale(1)',
+            opacity: sauceState === 'in' ? 0 : 1,
+            transformOrigin: '92px 18px',
           }}
+          onClick={(e) => { e.stopPropagation(); dropSauce(); }}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => e.key === 'Enter' && dropSauce()}
+          aria-label="Add sauce to the bowl"
         >
-          <path d="M78 20 Q75 14 78 10 Q81 14 78 20Z" fill="hsl(41,66%,48%)" className={stirred ? '' : 'stir-bob-2'} />
+          <path d="M92 22 Q89 15 92 10 Q95 15 92 22Z" fill="hsl(41,66%,48%)" />
         </g>
+
+        {/* Ripple when ingredient drops */}
+        {(pepperState === 'in' || sauceState === 'in') && !blended && (
+          <ellipse cx="65" cy="50" rx="18" ry="4" fill="none" stroke="hsl(41,66%,48%)" strokeWidth="0.5" opacity="0.3" className="stir-ripple" />
+        )}
 
         {/* Bowl */}
         <path
-          d="M30 48 Q30 75 60 78 Q90 75 90 48 Z"
-          fill={stirred ? 'hsl(36,38%,35%)' : 'hsl(39,70%,95%)'}
+          d="M35 48 Q35 76 65 79 Q95 76 95 48 Z"
+          fill={getBowlFill()}
           stroke="hsl(35,27%,80%)"
           strokeWidth="1.5"
           className="transition-[fill] duration-700 ease-in-out"
         />
         {/* Bowl contents */}
         <ellipse
-          cx="60"
+          cx="65"
           cy="50"
           rx="28"
           ry="6"
           className="transition-[fill] duration-700 ease-in-out"
-          fill={stirred ? 'hsl(30,60%,38%)' : 'hsl(35,42%,89%)'}
+          fill={getContentsFill()}
         />
         {/* Bowl rim */}
-        <ellipse cx="60" cy="48" rx="30" ry="7" fill="none" stroke="hsl(35,27%,80%)" strokeWidth="1.5" />
+        <ellipse cx="65" cy="48" rx="30" ry="7" fill="none" stroke="hsl(35,27%,80%)" strokeWidth="1.5" />
 
-        {/* Spoon */}
+        {/* Spoon — gentle oscillation, not 360 rotation */}
         <g
-          className={stirred ? 'stir-spoon-stirring' : ''}
-          style={{ transformOrigin: '60px 50px' }}
+          className={stirring ? 'stir-spoon-gentle' : ''}
+          style={{ transformOrigin: '88px 30px' }}
         >
-          <line x1="85" y1="28" x2="62" y2="52" stroke="hsl(25,35%,40%)" strokeWidth="2.5" strokeLinecap="round" />
-          <ellipse cx="62" cy="54" rx="4" ry="2.5" fill="hsl(25,35%,35%)" transform="rotate(-15,62,54)" />
+          <line x1="88" y1="30" x2="67" y2="52" stroke="hsl(25,35%,40%)" strokeWidth="2.5" strokeLinecap="round" />
+          <ellipse cx="67" cy="54" rx="4" ry="2.5" fill="hsl(25,35%,35%)" transform="rotate(-15,67,54)" />
         </g>
       </svg>
 
-      {/* CTA text */}
-      <p
-        className="relative z-[1] font-body text-[12px] font-semibold tracking-wide text-gold-light transition-all duration-500"
-        style={{
-          opacity: showCta ? 1 : 0,
-          transform: showCta ? 'translateY(0)' : 'translateY(6px)',
-        }}
+      {/* Instruction text or CTA */}
+      <div
+        className="relative z-[1] h-5 flex items-center justify-center cursor-pointer"
+        onClick={showCta ? scrollToMatrix : undefined}
+        role={showCta ? 'button' : undefined}
+        tabIndex={showCta ? 0 : undefined}
+        onKeyDown={showCta ? (e) => e.key === 'Enter' && scrollToMatrix() : undefined}
       >
-        See YOUR Pepper Sauce blend →
-      </p>
+        {instructionText && !showCta && (
+          <p className="font-body text-[11px] tracking-wide text-gold-muted transition-opacity duration-500">
+            {instructionText}
+          </p>
+        )}
+        {showCta && (
+          <p
+            className="font-body text-[13px] font-semibold tracking-wide text-gold-light transition-all duration-500 hover:text-gold"
+            style={{
+              opacity: showCta ? 1 : 0,
+              transform: showCta ? 'translateY(0)' : 'translateY(6px)',
+            }}
+          >
+            See YOUR Pepper Sauce blend →
+          </p>
+        )}
+      </div>
     </div>
   );
 }

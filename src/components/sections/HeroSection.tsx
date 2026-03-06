@@ -46,11 +46,8 @@ export function HeroSection() {
           </p>
         </RevealSection>
 
-        <RevealSection delay={400}>
-          <div className="mb-8">
-            <StirTheSauce />
-          </div>
-        </RevealSection>
+
+
 
         <RevealSection delay={500}>
           <div className="flex flex-wrap justify-center gap-4">

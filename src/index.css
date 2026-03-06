@@ -184,14 +184,27 @@
 .stir-steam-active .stir-steam-2 { animation-delay: 0.5s; }
 .stir-steam-active .stir-steam-3 { animation-delay: 1s; }
 
-/* Spoon stirring */
-@keyframes stirSpoon {
-  0%   { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+/* Spoon gentle oscillation — NOT 360 rotation */
+@keyframes stirSpoonGentle {
+  0%   { transform: rotate(0deg) translateX(0); }
+  25%  { transform: rotate(8deg) translateX(1.5px); }
+  50%  { transform: rotate(0deg) translateX(0); }
+  75%  { transform: rotate(-8deg) translateX(-1.5px); }
+  100% { transform: rotate(0deg) translateX(0); }
 }
 
-.stir-spoon-stirring {
-  animation: stirSpoon 2.5s linear infinite;
+.stir-spoon-gentle {
+  animation: stirSpoonGentle 2.5s ease-in-out infinite;
+}
+
+/* Ripple effect */
+@keyframes stirRipple {
+  0%   { rx: 14; ry: 3; opacity: 0.4; }
+  100% { rx: 26; ry: 5; opacity: 0; }
+}
+
+.stir-ripple {
+  animation: stirRipple 0.8s ease-out forwards;
 }
 
 @media (prefers-reduced-motion: reduce) {
