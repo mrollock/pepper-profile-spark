@@ -1,41 +1,49 @@
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useRef, useEffect, useMemo } from "react";
 
 const QUADRANTS = {
   topRight: {
     name: "Delicious",
     subtitle: "Spicy & Delicious",
     color: "hsl(var(--gold))",
-    bgGradient: `radial-gradient(ellipse at 75% 25%, hsl(var(--gold) / 0.1), transparent 70%)`,
+    bgGradient: `radial-gradient(ellipse at 75% 25%, hsl(var(--gold) / 0.15), transparent 70%)`,
     description:
       "High heat. Rich sauce. This is the framework's central claim: that a life carrying real pain can also carry pleasure, meaning, connection, and joy. Not because the pain decreased. Because everything around it got richer.",
-    insight: "This is where the Pepper Sauce Principle lives.",
+    shortDescription:
+      "High heat. Rich sauce. A life carrying real pain can also carry pleasure, meaning, connection, and joy.",
+    insight: "This is where the Pepper Sauce Principle lives. You built this.",
   },
   topLeft: {
     name: "Mild & Flavor-full",
     subtitle: "Gentle",
     color: "hsl(var(--sage))",
-    bgGradient: `radial-gradient(ellipse at 25% 25%, hsl(var(--sage) / 0.08), transparent 70%)`,
+    bgGradient: `radial-gradient(ellipse at 25% 25%, hsl(var(--sage) / 0.12), transparent 70%)`,
     description:
       "Manageable heat. Rich conditions. You have the ingredients and the heat isn't overwhelming. This is the quadrant where you taste everything. Worth protecting, because pain can arrive without warning — and when it does, the sauce you've built travels with you.",
-    insight: "Enjoy what's here. And know the recipe travels with you if the heat rises.",
+    shortDescription:
+      "Manageable heat. Rich conditions. You have the ingredients and the heat isn't overwhelming.",
+    insight: "This is a life worth savoring. And the recipe you've built travels with you if the heat ever rises.",
   },
   bottomRight: {
     name: "Scorching",
     subtitle: "Suffering",
     color: "hsl(var(--ember))",
-    bgGradient: `radial-gradient(ellipse at 75% 75%, hsl(var(--ember) / 0.08), transparent 70%)`,
+    bgGradient: `radial-gradient(ellipse at 75% 75%, hsl(var(--ember) / 0.15), transparent 70%)`,
     description:
       "All heat. No recipe. This is where pain becomes suffering — not because the pain is too much, but because the conditions are missing. No validation. No agency. No table. The world gets smaller. The sauce gets thinner.",
-    insight: "Upward exists. That's what nobody told you.",
+    shortDescription:
+      "All heat. No recipe. Pain becomes suffering — not because the pain is too much, but because the conditions are missing.",
+    insight: "Upward exists. A Spicy and Delicious life is possible — even from here.",
   },
   bottomLeft: {
     name: "Bland",
     subtitle: "Languishing",
     color: "hsl(var(--text-faint))",
-    bgGradient: `radial-gradient(ellipse at 25% 75%, hsl(var(--text-faint) / 0.06), transparent 70%)`,
+    bgGradient: `radial-gradient(ellipse at 25% 75%, hsl(var(--text-faint) / 0.08), transparent 70%)`,
     description:
       "Low heat. Thin sauce. Not much hurting, but not much happening either. Going through the motions. Surviving successfully without remembering to start living.",
-    insight: "The absence of pain is not the presence of life.",
+    shortDescription:
+      "Low heat. Thin sauce. Not much hurting, but not much happening either.",
+    insight: "A richer life doesn't require more pain. It requires more sauce. Upward exists for you too.",
   },
 };
 
@@ -59,7 +67,7 @@ function MatrixDot({ x, y, quadrant }: { x: number; y: number; quadrant: Quadran
         left: `${x}%`,
         top: `${100 - y}%`,
         transform: "translate(-50%, -50%)",
-        zIndex: 10,
+        zIndex: 20,
         pointerEvents: "none",
         transition: "left 0.15s ease-out, top 0.15s ease-out",
       }}
@@ -84,7 +92,8 @@ function MatrixDot({ x, y, quadrant }: { x: number; y: number; quadrant: Quadran
           borderRadius: "50%",
           background: data.color,
           border: "2px solid hsl(var(--cream))",
-          boxShadow: `0 0 20px ${data.color}, 0 0 40px hsl(var(--gold) / 0.2)`,
+          boxShadow: `0 0 24px ${data.color}, 0 0 48px color-mix(in srgb, ${data.color} 27%, transparent)`,
+          transition: "box-shadow 0.4s ease",
         }}
       />
     </div>
@@ -105,7 +114,7 @@ function DirectionArrow({ quadrant }: { quadrant: QuadrantKey }) {
         alignItems: "center",
         gap: 4,
         animation: "matrix-float-up 2s ease-in-out infinite",
-        zIndex: 5,
+        zIndex: 15,
         pointerEvents: "none",
       }}
     >
@@ -115,6 +124,119 @@ function DirectionArrow({ quadrant }: { quadrant: QuadrantKey }) {
       <span className="font-body text-[0.6rem] font-semibold uppercase tracking-[0.2em] text-gold">
         upward
       </span>
+    </div>
+  );
+}
+
+function QuadrantOverlay({ quadrant, activeQuadrant }: { quadrant: QuadrantKey; activeQuadrant: QuadrantKey }) {
+  const isActive = quadrant === activeQuadrant;
+  const data = QUADRANTS[quadrant];
+
+  const positionMap: Record<QuadrantKey, React.CSSProperties> = {
+    topLeft: { top: 0, left: 0 },
+    topRight: { top: 0, right: 0 },
+    bottomLeft: { bottom: 0, left: 0 },
+    bottomRight: { bottom: 0, right: 0 },
+  };
+
+  return (
+    <div
+      style={{
+        position: "absolute",
+        width: "50%",
+        height: "50%",
+        ...positionMap[quadrant],
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "clamp(8px, 3vw, 20px)",
+        overflow: "hidden",
+        zIndex: 5,
+        pointerEvents: "none",
+      }}
+    >
+      {isActive ? (
+        <div
+          key={quadrant}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            textAlign: "center",
+            gap: "clamp(2px, 1vw, 6px)",
+            animation: "matrix-fade-in 0.3s ease",
+            maxWidth: "90%",
+          }}
+        >
+          <span
+            className="font-display font-bold"
+            style={{
+              fontSize: "clamp(0.85rem, 2.5vw, 1.2rem)",
+              color: data.color,
+              lineHeight: 1.2,
+            }}
+          >
+            {data.name}
+          </span>
+          <span
+            className="font-body"
+            style={{
+              fontSize: "clamp(9px, 1.8vw, 11px)",
+              color: data.color,
+              opacity: 0.7,
+              letterSpacing: "0.04em",
+            }}
+          >
+            {data.subtitle}
+          </span>
+          <p
+            className="font-body text-cream-mid matrix-description-full"
+            style={{
+              fontSize: "clamp(10px, 1.8vw, 12.5px)",
+              lineHeight: 1.5,
+              marginTop: "clamp(2px, 0.5vw, 6px)",
+              opacity: 0.85,
+            }}
+          >
+            {data.description}
+          </p>
+          {/* Short version for small screens */}
+          <p
+            className="font-body text-cream-mid matrix-description-short"
+            style={{
+              fontSize: "clamp(10px, 1.8vw, 12.5px)",
+              lineHeight: 1.5,
+              marginTop: "clamp(2px, 0.5vw, 6px)",
+              opacity: 0.85,
+              display: "none",
+            }}
+          >
+            {data.shortDescription}
+          </p>
+        </div>
+      ) : (
+        <div
+          className="font-display font-bold"
+          style={{
+            fontSize: quadrant === "topRight" ? 13 : 11,
+            color: data.color,
+            opacity: quadrant === "topRight" ? 0.8 : 0.65,
+            lineHeight: 1.3,
+            textAlign: quadrant === "topRight" || quadrant === "bottomRight" ? "right" : "left",
+            position: "absolute",
+            ...(quadrant === "topLeft" ? { top: "12%", left: "12%" } : {}),
+            ...(quadrant === "topRight" ? { top: "12%", right: "12%" } : {}),
+            ...(quadrant === "bottomLeft" ? { bottom: "12%", left: "12%" } : {}),
+            ...(quadrant === "bottomRight" ? { bottom: "12%", right: "12%" } : {}),
+          }}
+        >
+          {quadrant === "topLeft" && <>Mild &<br />Flavor-full</>}
+          {quadrant === "topRight" && <>Spicy &<br />Delicious</>}
+          {quadrant === "bottomLeft" && "Bland"}
+          {quadrant === "bottomRight" && "Scorching"}
+        </div>
+      )}
     </div>
   );
 }
@@ -185,7 +307,6 @@ function AxisSlider({
     zIndex: 2,
   };
 
-  // Larger invisible touch target
   const touchTargetStyle: React.CSSProperties = {
     position: "absolute",
     width: 44,
@@ -284,7 +405,7 @@ export function MatrixSection() {
 
       <div className="relative z-[1]">
         {/* Header */}
-        <div className="mx-auto mb-10 max-w-[440px] text-center">
+        <div className="mx-auto mb-10 max-w-[520px] text-center">
           <p className="mb-3 font-body text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-gold-muted">
             The Pepper-Sauce Matrix
           </p>
@@ -292,7 +413,9 @@ export function MatrixSection() {
             Where Are You Right Now?
           </h2>
           <p className="font-body text-[0.95rem] leading-[1.7] text-cream-mid">
-            Move the sliders to map your experience. The pepper is what life handed you. The sauce is what surrounds it.
+            Use the sliders to map where you are right now. Sliding right toward{" "}
+            <em className="font-accent italic text-gold">spicy</em> means you're carrying more pain in your life at this moment. Sliding up toward{" "}
+            <em className="font-accent italic text-gold">rich</em> means you have more of the supportive, positive, nourishing things in your life — people, meaning, joy, agency — that surround the pain.
           </p>
         </div>
 
@@ -301,7 +424,6 @@ export function MatrixSection() {
           <div style={{ display: "flex", gap: 16 }}>
             {/* Vertical slider (Sauce) */}
             <div style={{ display: "flex", alignItems: "center", width: 40 }}>
-              {/* Rotated SAUCE label */}
               <div
                 className="font-body text-[10px] font-semibold uppercase tracking-[0.15em] text-text-faint"
                 style={{
@@ -338,25 +460,17 @@ export function MatrixSection() {
                   background: "hsl(var(--dark-warm))",
                 }}
               >
-                {/* Quadrant backgrounds */}
-                <div style={{ position: "absolute", top: 0, left: 0, width: "50%", height: "50%", background: "rgba(90,107,66,0.08)", borderRight: "1px solid rgba(168,137,62,0.08)", borderBottom: "1px solid rgba(168,137,62,0.08)" }} />
-                <div style={{ position: "absolute", top: 0, right: 0, width: "50%", height: "50%", background: "rgba(200,150,46,0.1)", borderBottom: "1px solid rgba(168,137,62,0.08)" }} />
-                <div style={{ position: "absolute", bottom: 0, left: 0, width: "50%", height: "50%", background: "rgba(154,142,120,0.06)", borderRight: "1px solid rgba(168,137,62,0.08)" }} />
-                <div style={{ position: "absolute", bottom: 0, right: 0, width: "50%", height: "50%", background: "rgba(184,69,26,0.08)" }} />
+                {/* Quadrant backgrounds — vibrant washes */}
+                <div style={{ position: "absolute", top: 0, left: 0, width: "50%", height: "50%", background: "rgba(90,140,66,0.14)", borderRight: "1px solid rgba(168,137,62,0.08)", borderBottom: "1px solid rgba(168,137,62,0.08)" }} />
+                <div style={{ position: "absolute", top: 0, right: 0, width: "50%", height: "50%", background: "rgba(218,170,50,0.18)", borderBottom: "1px solid rgba(168,137,62,0.08)" }} />
+                <div style={{ position: "absolute", bottom: 0, left: 0, width: "50%", height: "50%", background: "rgba(140,135,120,0.10)", borderRight: "1px solid rgba(168,137,62,0.08)" }} />
+                <div style={{ position: "absolute", bottom: 0, right: 0, width: "50%", height: "50%", background: "rgba(200,75,30,0.16)" }} />
 
-                {/* Quadrant labels */}
-                <div className="absolute font-display font-bold" style={{ top: "12%", left: "12%", fontSize: 11, color: "hsl(var(--sage))", opacity: 0.53, lineHeight: 1.3 }}>
-                  Mild &<br />Flavor-full
-                </div>
-                <div className="absolute font-display font-bold text-right" style={{ top: "12%", right: "12%", fontSize: 13, color: "hsl(var(--gold))", opacity: 0.67, lineHeight: 1.3 }}>
-                  Spicy &<br />Delicious
-                </div>
-                <div className="absolute font-display font-bold" style={{ bottom: "12%", left: "12%", fontSize: 11, color: "hsl(var(--text-faint))", opacity: 0.47 }}>
-                  Bland
-                </div>
-                <div className="absolute font-display font-bold text-right" style={{ bottom: "12%", right: "12%", fontSize: 11, color: "hsl(var(--ember))", opacity: 0.53 }}>
-                  Scorching
-                </div>
+                {/* Quadrant overlays with text */}
+                <QuadrantOverlay quadrant="topLeft" activeQuadrant={quadrant} />
+                <QuadrantOverlay quadrant="topRight" activeQuadrant={quadrant} />
+                <QuadrantOverlay quadrant="bottomLeft" activeQuadrant={quadrant} />
+                <QuadrantOverlay quadrant="bottomRight" activeQuadrant={quadrant} />
 
                 <DirectionArrow quadrant={quadrant} />
                 <MatrixDot x={pepper} y={sauce} quadrant={quadrant} />
@@ -381,40 +495,20 @@ export function MatrixSection() {
           </div>
         </div>
 
-        {/* Result panel */}
+        {/* Insight line below matrix */}
         <div className="mx-auto mt-8" style={{ maxWidth: 520 }}>
           <div
+            key={quadrant}
             style={{
-              padding: "24px 28px",
-              background: "hsl(var(--dark-mid) / 0.8)",
-              backdropFilter: "blur(10px)",
-              borderRadius: 8,
-              border: `1px solid ${data.color}`,
-              borderColor: `color-mix(in srgb, ${data.color} 20%, transparent)`,
-              transition: "border-color 0.4s ease",
+              paddingTop: "0.75rem",
+              borderTop: `1px solid color-mix(in srgb, ${data.color} 13%, transparent)`,
+              animation: "matrix-fade-in 0.4s ease",
+              textAlign: "center",
             }}
           >
-            <div className="mb-4">
-              <span
-                className="font-display font-bold transition-colors duration-300"
-                style={{ fontSize: "clamp(1.3rem, 3vw, 1.6rem)", color: data.color }}
-              >
-                {data.name}
-              </span>
-              <span className="ml-3 font-body text-xs tracking-[0.05em] text-text-faint">
-                {data.subtitle}
-              </span>
-            </div>
-
-            <p className="mb-4 font-body text-sm leading-[1.7] text-cream-mid">
-              {data.description}
+            <p className="font-accent text-[13px] italic" style={{ color: data.color, opacity: 0.85 }}>
+              {data.insight}
             </p>
-
-            <div style={{ paddingTop: "0.75rem", borderTop: `1px solid color-mix(in srgb, ${data.color} 13%, transparent)` }}>
-              <p className="font-accent text-[13px] italic" style={{ color: data.color, opacity: 0.85 }}>
-                {data.insight}
-              </p>
-            </div>
           </div>
 
           {/* Reveal text after first interaction */}
@@ -479,6 +573,12 @@ export function MatrixSection() {
         }
         @media (max-width: 480px) {
           #matrix { padding-top: 3rem !important; padding-bottom: 2.5rem !important; }
+          .matrix-description-full { display: none !important; }
+          .matrix-description-short { display: block !important; }
+        }
+        @media (min-width: 481px) {
+          .matrix-description-full { display: block !important; }
+          .matrix-description-short { display: none !important; }
         }
       `}</style>
     </section>
