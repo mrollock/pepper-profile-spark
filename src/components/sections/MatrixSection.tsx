@@ -404,14 +404,14 @@ export function MatrixSection() {
 
       <div className="relative z-[1]">
         {/* Header */}
-        <div className="mx-auto mb-10 max-w-[520px] text-center">
-          <p className="mb-3 font-body text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-gold-muted">
+        <div className="mx-auto matrix-header max-w-[520px] text-center">
+          <p className="mb-2 font-body text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-gold-muted">
             The Pepper-Sauce Matrix
           </p>
-          <h2 className="mb-4 font-display text-[clamp(1.6rem,4vw,2.2rem)] font-bold leading-[1.2] text-cream">
+          <h2 className="mb-2 font-display text-[clamp(1.6rem,4vw,2.2rem)] font-bold leading-[1.2] text-cream">
             Where Are You Right Now?
           </h2>
-          <p className="font-body text-[0.95rem] leading-[1.7] text-cream-mid">
+          <p className="font-body text-[0.95rem] leading-[1.7] text-cream-mid matrix-intro-text">
             Use the sliders to map where you are right now. Sliding right toward{" "}
             <em className="font-accent italic text-gold">spicy</em> means you're carrying more pain in your life at this moment. Sliding up toward{" "}
             <em className="font-accent italic text-gold">rich</em> means you have more of the supportive, positive, nourishing things in your life — people, meaning, joy, agency — that surround the pain.
