@@ -434,7 +434,7 @@ export function MatrixSection() {
               >
                 Sauce
               </div>
-              <div style={{ height: "100%", minHeight: 300 }}>
+              <div className="matrix-sauce-slider" style={{ height: "100%", minHeight: 300 }}>
                 <AxisSlider
                   value={sauce}
                   onChange={handleSauceChange}
