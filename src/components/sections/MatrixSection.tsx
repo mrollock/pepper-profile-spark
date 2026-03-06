@@ -476,7 +476,7 @@ export function MatrixSection() {
               </div>
 
               {/* Horizontal slider (Pepper) */}
-              <div style={{ marginTop: 16 }}>
+              <div className="matrix-h-slider" style={{ marginTop: 16 }}>
                 <AxisSlider
                   value={pepper}
                   onChange={handlePepperChange}
