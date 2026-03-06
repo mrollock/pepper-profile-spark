@@ -140,7 +140,7 @@ function ExtendedProfileUpsell({ email, name }: { email: string; name: string })
 
   if (purchased) {
     return (
-      <div className="mt-10 rounded-xl border border-gold/20 bg-dark p-8 text-center">
+      <div className="mt-10 rounded-xl border border-gold/20 bg-dark-mid p-8 text-center">
         <div className="mb-3 text-[2rem]">&#10003;</div>
         <h3 className="mb-3 text-gold-light">You&#8217;re In</h3>
         <p className="text-[0.95rem] leading-[1.7] text-cream-soft">
@@ -151,25 +151,73 @@ function ExtendedProfileUpsell({ email, name }: { email: string; name: string })
   }
 
   return (
-    <div className="mt-10 rounded-xl border border-gold/20 bg-dark p-8 text-center">
-      <h3 className="mb-3 font-display text-gold-light">Want to Go Deeper?</h3>
-      <p className="mx-auto mb-6 max-w-[560px] text-[0.92rem] leading-[1.7] text-cream-soft">
-        Your Pepper Sauce Profile gave you the broad strokes&nbsp;&#8212; your fire, your conditions, your signature blend. The Extended Pepper Sauce Profile takes it further: a personalized analysis of how your specific fire interacts with your specific recipe, along with concrete next steps tailored to where you are right now.
-      </p>
-      <p className="mb-2 font-display text-[1.5rem] text-gold-light">
-        {price}&nbsp;&#8212; one&#8209;time
-      </p>
-      {isIntro && (
-        <p className="mb-4 text-[0.78rem] text-cream-mid/70">
-          Introductory pricing&nbsp;&#8212; {50 - (purchaseCount ?? 0)} spots remaining at this rate
+    <div className="mt-10 rounded-xl border border-gold/[0.15] bg-dark-mid p-8 md:p-10">
+
+      {/* Section Header */}
+      <h3 className="mb-6 font-display text-[clamp(1.15rem,2.5vw,1.4rem)] leading-[1.35] text-gold-light text-center">
+        Your Profile read your recipe.<br className="hidden sm:inline" /> The Extended Report shows you what to cook next.
+      </h3>
+
+      {/* Opening */}
+      <div className="mx-auto max-w-[620px] space-y-5 text-[0.938rem] leading-[1.7] text-cream-mid">
+        <p>
+          You know your fire. You know where your sauce is richest and where it's thinnest. That's the map.
         </p>
-      )}
-      <p className="mb-4 text-[0.85rem] text-cream-mid">
-        Your email: <span className="font-semibold text-cream-soft">{email}</span>
-      </p>
-      <button onClick={handlePurchase} disabled={submitting} className="rounded-md bg-gold px-9 py-3.5 font-body text-[0.95rem] font-semibold text-dark transition-all hover:bg-gold-light hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(200,150,46,0.3)] disabled:opacity-50">
-        {submitting ? 'Processing\u2026' : 'Get My Extended Profile'}
-      </button>
+        <p>
+          But a map doesn't tell you where to start. It doesn't tell you which ingredient to reach for first given the specific fire you're carrying. It doesn't tell you what's quietly shaping your recipe in the three conditions you didn't see — the ones between your highest and lowest.
+        </p>
+        <p>The Extended Report does.</p>
+
+        {/* Three value propositions — prose paragraphs, not bullets */}
+        <p>
+          <strong className="text-cream-soft">All five conditions, not just two.</strong>{' '}
+          Your free results showed you the peaks and valleys. The Extended Report breaks down every condition — including the ones in the middle that are quietly determining whether your next move lands or stalls.
+        </p>
+        <p>
+          <strong className="text-cream-soft">Your fire meets your sauce.</strong>{' '}
+          The report maps your specific fire type against your specific condition pattern. A person carrying Relational Fire with thin validation needs a different recipe than someone carrying Communal Fire with strong community but scarce agency. Your report is built for your intersection, not a generic one.
+        </p>
+        <p>
+          <strong className="text-cream-soft">Where to start — and what to wait on.</strong>{' '}
+          Not every ingredient is ready to build right now. The report gives you an honest read on what's available to work with today and what needs groundwork first. A recipe, not a wish list.
+        </p>
+
+        {/* What it takes */}
+        <p>
+          <strong className="text-cream-soft">What it takes from you:</strong>{' '}
+          About 10 additional minutes to answer a set of deeper questions about your circumstances — not repeating what you already shared, but going further. How long you've carried this fire. What your life looks like around it. What you've already tried.
+        </p>
+        <p>
+          From there, the Pepper Sauce Principle's own framework generates a report written in the same language you just experienced — grounded in the same science, shaped by the same five conditions — but specific to you, your fire, and your recipe.
+        </p>
+      </div>
+
+      {/* CTA */}
+      <div className="mt-8 text-center">
+        <button
+          onClick={handlePurchase}
+          disabled={submitting}
+          className="rounded-md bg-gold px-10 py-3.5 font-body text-[1rem] font-semibold text-dark transition-all hover:bg-gold-light hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(200,150,46,0.3)] disabled:opacity-50"
+        >
+          {submitting ? 'Processing\u2026' : `Get Your Extended Report — ${price}`}
+        </button>
+
+        {isIntro && (
+          <p className="mt-3 text-[0.82rem] text-cream-mid/70">
+            Introductory price for the first 50 reports. Regular price: $29.
+          </p>
+        )}
+        {!isIntro && (
+          <p className="mt-3 text-[0.82rem] text-cream-mid/70">
+            One-time purchase.
+          </p>
+        )}
+
+        {/* Below-CTA disclaimer */}
+        <p className="mx-auto mt-4 max-w-[540px] text-[0.78rem] leading-[1.6] text-cream-mid/50">
+          Secure payment via Stripe. You'll complete the extended questions after payment, and your report will be delivered via email and available at your unique results link. The Extended Report is educational, not clinical — a recipe worth considering, not a prescription.
+        </p>
+      </div>
     </div>
   );
 }
