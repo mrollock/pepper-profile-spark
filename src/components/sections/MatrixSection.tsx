@@ -495,7 +495,7 @@ export function MatrixSection() {
         </div>
 
         {/* Insight line below matrix */}
-        <div className="mx-auto mt-8" style={{ maxWidth: 520 }}>
+        <div className="mx-auto matrix-insight" style={{ maxWidth: 520 }}>
           <div
             key={quadrant}
             style={{
