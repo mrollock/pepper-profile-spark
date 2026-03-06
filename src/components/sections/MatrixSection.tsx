@@ -588,44 +588,61 @@ export function MatrixSection() {
         /* Laptop viewport optimization: fit entire matrix in one screen */
         @media (min-width: 768px) and (max-height: 920px) {
           .matrix-section {
-            padding-top: 2rem !important;
-            padding-bottom: 1.5rem !important;
+            padding-top: 1.5rem !important;
+            padding-bottom: 1rem !important;
           }
           .matrix-header {
-            margin-bottom: 1rem !important;
+            margin-bottom: 0.75rem !important;
           }
           .matrix-header h2 {
-            margin-bottom: 0.25rem !important;
+            margin-bottom: 0.125rem !important;
+            font-size: 1.6rem !important;
           }
           .matrix-intro-text {
-            font-size: 0.85rem !important;
-            line-height: 1.5 !important;
+            font-size: 0.8rem !important;
+            line-height: 1.45 !important;
           }
           .matrix-container {
-            max-width: min(520px, 50vh) !important;
+            max-width: min(520px, 48vh) !important;
           }
           .matrix-sauce-slider {
             min-height: unset !important;
           }
+          .matrix-h-slider {
+            margin-top: 8px !important;
+          }
+          .matrix-insight {
+            margin-top: 1rem !important;
+          }
         }
         @media (min-width: 768px) and (max-height: 800px) {
           .matrix-section {
-            padding-top: 1.5rem !important;
-            padding-bottom: 1rem !important;
+            padding-top: 1rem !important;
+            padding-bottom: 0.75rem !important;
           }
           .matrix-header {
             margin-bottom: 0.5rem !important;
           }
           .matrix-header p:first-child {
-            margin-bottom: 0.125rem !important;
-            font-size: 0.6rem !important;
+            margin-bottom: 0 !important;
+            font-size: 0.55rem !important;
+          }
+          .matrix-header h2 {
+            font-size: 1.4rem !important;
+            margin-bottom: 0 !important;
           }
           .matrix-intro-text {
-            font-size: 0.78rem !important;
-            line-height: 1.45 !important;
+            font-size: 0.75rem !important;
+            line-height: 1.4 !important;
           }
           .matrix-container {
-            max-width: min(460px, 46vh) !important;
+            max-width: min(440px, 42vh) !important;
+          }
+          .matrix-h-slider {
+            margin-top: 6px !important;
+          }
+          .matrix-insight {
+            margin-top: 0.5rem !important;
           }
         }
       `}</style>
