@@ -9,6 +9,7 @@ import AdminAnalytics from "./pages/AdminAnalytics";
 import PrivacyPage from "./pages/PrivacyPage";
 import TermsPage from "./pages/TermsPage";
 import DisclaimerPage from "./pages/DisclaimerPage";
+import ResultsPage from "./pages/ResultsPage";
 
 const queryClient = new QueryClient();
 

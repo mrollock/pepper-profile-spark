@@ -93,6 +93,7 @@ serve(async (req) => {
     const record = payload.record || payload;
 
     const {
+      id: resultId,
       email,
       name,
       primary_fire_type,
