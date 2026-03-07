@@ -34,11 +34,11 @@ export const DISCLAIMER_PAGE = {
 
 /* ── Section 3: Privacy Page placeholder ── */
 export const PRIVACY_PAGE_PLACEHOLDER =
-  'Our privacy policy is currently being finalized with legal counsel. If you have questions about how your data is collected, stored, or used on this site, please contact us at michael@ifwall.com.';
+  'Our privacy policy is currently being finalized with legal counsel. Please note: The Pepper Sauce Profile is designed for adults 18 and older, and we do not knowingly collect data from individuals under 18. If you have questions about how your data is collected, stored, or used on this site, please contact us at michael@ifwall.com.';
 
 /* ── Section 5: Pre-assessment disclaimer ── */
 export const PRE_ASSESSMENT_DISCLAIMER =
-  'The Pepper Sauce Profile is an educational self-reflection tool. It is not a psychological test, clinical assessment, or diagnostic instrument. It does not diagnose, evaluate, or treat any mental health condition, and no psychologist-client relationship is created by completing it. Your results are meant to support personal reflection\u00A0\u2014 not replace professional care. If you are experiencing a mental health crisis, please call 988 (Suicide and Crisis Lifeline) or contact a licensed provider in your area.';
+  'The Pepper Sauce Profile is designed for adults 18 and older. It is an educational self-reflection tool. It is not a psychological test, clinical assessment, or diagnostic instrument. It does not diagnose, evaluate, or treat any mental health condition, and no psychologist-client relationship is created by completing it. Your results are meant to support personal reflection\u00A0\u2014 not replace professional care. If you are experiencing a mental health crisis, please call 988 (Suicide and Crisis Lifeline) or contact a licensed provider in your area.';
 
 /* ── Section 6: Post-results disclaimer ── */
 export const POST_RESULTS_DISCLAIMER =
@@ -50,7 +50,7 @@ export const CREDENTIAL_CONTEXT =
 
 /* ── Section 8: Terms of Use placeholder ── */
 export const TERMS_PAGE_PLACEHOLDER =
-  'Our terms of use are currently being finalized with legal counsel. If you have questions about the terms governing your use of this site, please contact us at michael@ifwall.com.';
+  'Our terms of use are currently being finalized with legal counsel. Please note: The Pepper Sauce Profile is designed for adults 18 and older. By using this site and its tools, you confirm that you are at least 18 years of age. If you have questions about the terms governing your use of this site, please contact us at michael@ifwall.com.';
 
 /* ── Section 9: Email / newsletter disclaimer ── */
 export const EMAIL_SIGNUP_DISCLAIMER =
