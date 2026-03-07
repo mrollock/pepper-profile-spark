@@ -42,6 +42,7 @@ const Index = () => {
         <QuizSection />
         <FrameworkSection />
         <ConditionsSection />
+        <HowItWorksSection />
         <InterventionSection />
         <EvidenceSection />
         <AudienceSection />
