@@ -50,7 +50,7 @@ export const CREDENTIAL_CONTEXT =
 
 /* ── Section 8: Terms of Use placeholder ── */
 export const TERMS_PAGE_PLACEHOLDER =
-  'Our terms of use are currently being finalized with legal counsel. If you have questions about the terms governing your use of this site, please contact us at michael@ifwall.com.';
+  'Our terms of use are currently being finalized with legal counsel. Please note: The Pepper Sauce Profile is designed for adults 18 and older. By using this site and its tools, you confirm that you are at least 18 years of age. If you have questions about the terms governing your use of this site, please contact us at michael@ifwall.com.';
 
 /* ── Section 9: Email / newsletter disclaimer ── */
 export const EMAIL_SIGNUP_DISCLAIMER =
