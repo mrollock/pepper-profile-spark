@@ -104,7 +104,7 @@ function ShareActions({ shareText, shareUrl }: { shareText: string; shareUrl: st
 }
 
 /* ── Extended Profile Upsell ── */
-function ExtendedProfileUpsell({ email, name }: { email: string; name: string }) {
+function ExtendedProfileUpsell({ email, name, profileId }: { email: string; name: string; profileId: string }) {
   const [purchased, setPurchased] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [purchaseCount, setPurchaseCount] = useState<number | null>(null);
@@ -128,7 +128,7 @@ function ExtendedProfileUpsell({ email, name }: { email: string; name: string })
     setSubmitting(true);
     try {
       const { data, error } = await supabase.functions.invoke('create-checkout', {
-        body: { email, name },
+        body: { email, name, profileId },
       });
       if (error) throw error;
       if (data?.url) window.location.href = data.url;
