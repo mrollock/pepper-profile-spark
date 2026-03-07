@@ -268,6 +268,48 @@ export type Database = {
           },
         ]
       }
+      pre_profile_conversations: {
+        Row: {
+          completed_at: string | null
+          conversation_id: string
+          converted_to_profile: boolean | null
+          created_at: string | null
+          crisis_detected: boolean | null
+          id: string
+          ip_hash: string | null
+          message_count: number | null
+          messages: Json
+          quadrant_explored: string | null
+          started_at: string | null
+        }
+        Insert: {
+          completed_at?: string | null
+          conversation_id: string
+          converted_to_profile?: boolean | null
+          created_at?: string | null
+          crisis_detected?: boolean | null
+          id?: string
+          ip_hash?: string | null
+          message_count?: number | null
+          messages?: Json
+          quadrant_explored?: string | null
+          started_at?: string | null
+        }
+        Update: {
+          completed_at?: string | null
+          conversation_id?: string
+          converted_to_profile?: boolean | null
+          created_at?: string | null
+          crisis_detected?: boolean | null
+          id?: string
+          ip_hash?: string | null
+          message_count?: number | null
+          messages?: Json
+          quadrant_explored?: string | null
+          started_at?: string | null
+        }
+        Relationships: []
+      }
       quiz_analytics: {
         Row: {
           created_at: string
