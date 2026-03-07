@@ -43,12 +43,41 @@ export function SpeakingSection() {
             >
               Book Dr. Rollock
             </a>
-            <p className="mt-4 text-[0.88rem] text-text-light">
-              Imaginative Feedback Coaching & Consulting
-              <br />
-              michael@ifwall.com
-            </p>
           </div>
+
+          {/* Testimonials */}
+          <div className="mt-16 pt-12 border-t border-gold/20">
+            <span className="mb-6 block font-body text-xs font-semibold uppercase tracking-[0.18em] text-gold-muted">
+              What Organizers Are Saying
+            </span>
+
+            <div className="space-y-10">
+              <div>
+                <blockquote className="border-l-[3px] border-gold pl-6">
+                  <p className="font-accent text-[clamp(1.05rem,2vw,1.2rem)] italic leading-[1.7] text-text-body">
+                    "Your presentation was not only extremely informative, but it was also engaging, thought-provoking, and delivered with a wonderful sense of humor that resonated deeply with attendees. You were truly an asset to the conference.
+                  </p>
+                  <p className="mt-4 font-accent text-[clamp(1.05rem,2vw,1.2rem)] italic leading-[1.7] text-text-body">
+                    For many — particularly clinicians of color — seeing you in your position of leadership opened their eyes to additional pathways and possibilities within the field. You demonstrated, through your dedication, passion, compassion, and strong work ethic, that the sky is not the limit.
+                  </p>
+                  <p className="mt-4 font-accent text-[clamp(1.05rem,2vw,1.2rem)] font-bold italic leading-[1.7] text-text-body">
+                    Representation matters. Excellence matters. And your contribution mattered."
+                  </p>
+                </blockquote>
+                <div className="mt-5 pl-6">
+                  <p className="text-[0.9rem] font-semibold text-text-body">— Sandra V. Phillips, LPC, NCC, CADCII, ICADC</p>
+                  <p className="text-[0.84rem] text-text-light">Founder &amp; Director of Operations, Transformation Training Institute</p>
+                  <p className="text-[0.84rem] text-text-faint italic">7th Annual Black History Month Mental Health Conference</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p className="mt-10 text-center text-[0.88rem] text-text-light">
+            Imaginative Feedback Coaching & Consulting
+            <br />
+            michael@ifwall.com
+          </p>
         </RevealSection>
       </div>
     </section>
