@@ -10,6 +10,7 @@ const corsHeaders = {
 
 const INTRO_PRICE_ID = "price_1T612lITXsdAwaMVvOGXnP5j";
 const REGULAR_PRICE_ID = "price_1T613LITXsdAwaMVDsacKyBf";
+const EXTENDED_REPORT_PRICE_ID = "price_1T89zxIAXzQ93zV8QPX7VtCA";
 const INTRO_LIMIT = 50;
 
 serve(async (req) => {
