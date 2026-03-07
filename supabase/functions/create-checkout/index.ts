@@ -10,6 +10,7 @@ const corsHeaders = {
 
 const INTRO_PRICE_ID = "price_1T612lITXsdAwaMVvOGXnP5j";
 const REGULAR_PRICE_ID = "price_1T613LITXsdAwaMVDsacKyBf";
+const EXTENDED_REPORT_PRICE_ID = "price_1T89zxIAXzQ93zV8QPX7VtCA";
 const INTRO_LIMIT = 50;
 
 serve(async (req) => {
@@ -27,20 +28,32 @@ serve(async (req) => {
       Deno.env.get("SUPABASE_ANON_KEY") ?? ""
     );
 
-    // Parse request body for email and name
-    const { email, name } = await req.json();
+    // Parse request body for email, name, and optional profileId
+    const { email, name, profileId } = await req.json();
     if (!email) throw new Error("Email is required");
 
-    // Count existing purchases to determine pricing
-    const { count, error: countError } = await supabase
-      .from("extended_profile_purchases")
-      .select("*", { count: "exact", head: true });
+    // Determine if this is an extended report checkout or legacy flow
+    const isExtendedReport = !!profileId;
 
-    if (countError) throw new Error(`Count error: ${countError.message}`);
+    let priceId: string;
+    let priceType: string;
 
-    const purchaseCount = count ?? 0;
-    const isIntro = purchaseCount < INTRO_LIMIT;
-    const priceId = isIntro ? INTRO_PRICE_ID : REGULAR_PRICE_ID;
+    if (isExtendedReport) {
+      priceId = EXTENDED_REPORT_PRICE_ID;
+      priceType = "extended_report";
+    } else {
+      // Legacy tiered pricing for old flow
+      const { count, error: countError } = await supabase
+        .from("extended_profile_purchases")
+        .select("*", { count: "exact", head: true });
+
+      if (countError) throw new Error(`Count error: ${countError.message}`);
+
+      const purchaseCount = count ?? 0;
+      const isIntro = purchaseCount < INTRO_LIMIT;
+      priceId = isIntro ? INTRO_PRICE_ID : REGULAR_PRICE_ID;
+      priceType = isIntro ? "introductory" : "regular";
+    }
 
     // Check for existing Stripe customer
     const customers = await stripe.customers.list({ email, limit: 1 });
@@ -49,19 +62,28 @@ serve(async (req) => {
       customerId = customers.data[0].id;
     }
 
-    const origin = req.headers.get("origin") || "https://pepper-profile-spark.lovable.app";
+    const origin = req.headers.get("origin") || "https://peppersauceprinciple.com";
+
+    const successUrl = isExtendedReport
+      ? `${origin}/conversation/${profileId}?session_id={CHECKOUT_SESSION_ID}`
+      : `${origin}/results/${profileId || ""}?session_id={CHECKOUT_SESSION_ID}`;
+
+    const cancelUrl = isExtendedReport
+      ? `${origin}/results/${profileId}`
+      : `${origin}/#quiz`;
 
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       customer_email: customerId ? undefined : email,
       line_items: [{ price: priceId, quantity: 1 }],
       mode: "payment",
-      success_url: `${origin}/?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/#quiz`,
+      success_url: successUrl,
+      cancel_url: cancelUrl,
       metadata: {
         buyer_name: name || "",
         buyer_email: email,
-        price_type: isIntro ? "introductory" : "regular",
+        price_type: priceType,
+        ...(profileId ? { profile_id: profileId } : {}),
       },
     });
 
