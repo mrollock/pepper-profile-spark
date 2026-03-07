@@ -38,6 +38,7 @@ const Index = () => {
         <ResourcesSection />
         <AboutSection />
         <LineageSection />
+        <TestimonialSection />
         <ConnectSection />
       </main>
       <Footer />
