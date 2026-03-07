@@ -24,10 +24,10 @@ export function ConversationalHookSection({ matrixQuadrant, matrixInteracted }: 
 
   return (
     <>
-      <section className="sec-dark relative py-[var(--section-pad)] px-[clamp(1.25rem,5vw,3rem)]">
+      <section className="sec-dark relative bg-dark py-[var(--section-pad)] px-[clamp(1.25rem,5vw,3rem)]">
         <div className="mx-auto max-w-[600px] text-center">
           <RevealSection>
-            <span className="mb-4 block font-body text-xs font-semibold uppercase tracking-[0.18em] text-gold-muted">
+            <span className="mb-2 block font-body text-xs font-semibold uppercase tracking-[0.18em] text-gold-muted">
               WHERE → WHAT → HOW
             </span>
           </RevealSection>
@@ -39,7 +39,7 @@ export function ConversationalHookSection({ matrixQuadrant, matrixInteracted }: 
           </RevealSection>
 
           <RevealSection delay={200}>
-            <div className="mx-auto max-w-[600px] space-y-5 text-[clamp(0.92rem,2vw,1rem)] leading-[1.75] text-cream-mid">
+            <div className="mx-auto max-w-[600px] space-y-5 text-[clamp(0.92rem,2vw,1rem)] leading-[1.75] text-cream">
               <p>
                 The Matrix showed you the map. Where the heat lives, where the sauce is thin or rich. That's orientation. It's a starting point, not the whole picture.
               </p>
