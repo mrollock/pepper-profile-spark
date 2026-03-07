@@ -517,12 +517,33 @@ export default function ConversationPage() {
   }, [inputValue, sending, messages, profileId]);
 
   const handleCompletion = async (finalMessages: Message[]) => {
+    // Get conversation ID for reference
+    const { data: convRow } = await supabase
+      .from('extended_report_conversations')
+      .select('id')
+      .eq('profile_id', profileId)
+      .maybeSingle();
+
     await supabase.from('extended_report_conversations').update({
       messages: finalMessages,
       conversation_status: 'completed',
       completed_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     }).eq('profile_id', profileId);
+
+    // Send completion emails (non-blocking)
+    if (profile) {
+      supabase.functions.invoke('send-conversation-complete', {
+        body: {
+          profile,
+          messages: finalMessages,
+          conversationId: convRow?.id || null,
+        },
+      }).then(({ error }) => {
+        if (error) console.error('Completion email error:', error);
+        else console.log('Completion emails sent');
+      });
+    }
 
     setPhase('completed');
   };
