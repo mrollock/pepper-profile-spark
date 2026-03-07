@@ -61,7 +61,7 @@ export function ConversationalHookSection({ matrixQuadrant, matrixInteracted }: 
                 Have a seat at the table
               </button>
               <p className="mt-3 font-body text-[0.75rem] text-cream/50">
-                A two-minute conversation. No signup. No diagnosis. Just a taste of how the framework sees you.
+                A two-minute AI conversation with the framework. No signup. No diagnosis. Just a taste of how the Pepper Sauce Principle sees your recipe.
               </p>
             </div>
           </RevealSection>
