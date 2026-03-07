@@ -371,13 +371,20 @@ function AxisSlider({
   );
 }
 
-export function MatrixSection() {
+export function MatrixSection({ onQuadrantChange }: { onQuadrantChange?: (quadrant: QuadrantKey, hasInteracted: boolean) => void } = {}) {
   const [pepper, setPepper] = useState(50);
   const [sauce, setSauce] = useState(50);
   const [hasInteracted, setHasInteracted] = useState(false);
 
   const quadrant = getQuadrant(pepper, sauce);
   const data = QUADRANTS[quadrant];
+
+  // Notify parent of quadrant changes
+  useEffect(() => {
+    if (hasInteracted && onQuadrantChange) {
+      onQuadrantChange(quadrant, hasInteracted);
+    }
+  }, [quadrant, hasInteracted, onQuadrantChange]);
 
   const handlePepperChange = (v: number) => { setPepper(v); if (!hasInteracted) setHasInteracted(true); };
   const handleSauceChange = (v: number) => { setSauce(v); if (!hasInteracted) setHasInteracted(true); };
