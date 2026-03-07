@@ -209,6 +209,65 @@ export type Database = {
         }
         Relationships: []
       }
+      extended_report_conversations: {
+        Row: {
+          abandonment_email_sent: boolean | null
+          completed_at: string | null
+          conversation_status: string
+          created_at: string | null
+          id: string
+          messages: Json
+          profile_id: string
+          report_generated: boolean | null
+          scoville_gate_triggered: boolean | null
+          scoville_items: Json | null
+          started_at: string | null
+          updated_at: string | null
+          user_email: string
+          user_first_name: string | null
+        }
+        Insert: {
+          abandonment_email_sent?: boolean | null
+          completed_at?: string | null
+          conversation_status?: string
+          created_at?: string | null
+          id?: string
+          messages?: Json
+          profile_id: string
+          report_generated?: boolean | null
+          scoville_gate_triggered?: boolean | null
+          scoville_items?: Json | null
+          started_at?: string | null
+          updated_at?: string | null
+          user_email: string
+          user_first_name?: string | null
+        }
+        Update: {
+          abandonment_email_sent?: boolean | null
+          completed_at?: string | null
+          conversation_status?: string
+          created_at?: string | null
+          id?: string
+          messages?: Json
+          profile_id?: string
+          report_generated?: boolean | null
+          scoville_gate_triggered?: boolean | null
+          scoville_items?: Json | null
+          started_at?: string | null
+          updated_at?: string | null
+          user_email?: string
+          user_first_name?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "extended_report_conversations_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: true
+            referencedRelation: "quiz_submissions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       quiz_analytics: {
         Row: {
           created_at: string
@@ -238,12 +297,14 @@ export type Database = {
           chronic_fire_type: string | null
           created_at: string
           email: string
+          extended_report_paid: boolean | null
           gate_burdensomeness: boolean | null
           gate_numbing: boolean | null
           gate_overwhelm: boolean | null
           gate_safety: boolean | null
           id: string
           name: string
+          paid_at: string | null
           primary_fire_type: string | null
           score_agency: number | null
           score_capacity: number | null
@@ -257,12 +318,14 @@ export type Database = {
           chronic_fire_type?: string | null
           created_at?: string
           email: string
+          extended_report_paid?: boolean | null
           gate_burdensomeness?: boolean | null
           gate_numbing?: boolean | null
           gate_overwhelm?: boolean | null
           gate_safety?: boolean | null
           id?: string
           name: string
+          paid_at?: string | null
           primary_fire_type?: string | null
           score_agency?: number | null
           score_capacity?: number | null
@@ -276,12 +339,14 @@ export type Database = {
           chronic_fire_type?: string | null
           created_at?: string
           email?: string
+          extended_report_paid?: boolean | null
           gate_burdensomeness?: boolean | null
           gate_numbing?: boolean | null
           gate_overwhelm?: boolean | null
           gate_safety?: boolean | null
           id?: string
           name?: string
+          paid_at?: string | null
           primary_fire_type?: string | null
           score_agency?: number | null
           score_capacity?: number | null
