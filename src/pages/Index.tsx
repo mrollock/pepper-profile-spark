@@ -14,6 +14,7 @@ import { ResourcesSection } from '@/components/sections/ResourcesSection';
 import { RootsResearchSection } from '@/components/sections/RootsResearchSection';
 import { AboutSection } from '@/components/sections/AboutSection';
 import { LineageSection } from '@/components/sections/LineageSection';
+import { TestimonialSection } from '@/components/sections/TestimonialSection';
 import { ConnectSection } from '@/components/sections/ConnectSection';
 import { Footer } from '@/components/sections/Footer';
 
