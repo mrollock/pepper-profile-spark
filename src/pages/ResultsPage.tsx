@@ -507,7 +507,7 @@ export default function ResultsPage() {
             {/* ═══════════════════════════════════════════
                 SECTION 3: EXTENDED REPORT UPSELL
             ═══════════════════════════════════════════ */}
-            <ExtendedProfileUpsell email={data.email} name={data.name} />
+            <ExtendedProfileUpsell email={data.email} name={data.name} profileId={data.id} />
 
             {/* Post-results disclaimer */}
             <p className="mt-8 text-center text-[0.82rem] leading-[1.6] text-text-faint">{POST_RESULTS_DISCLAIMER}</p>
