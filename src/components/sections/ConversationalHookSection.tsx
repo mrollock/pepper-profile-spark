@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef } from 'react';
 import PreProfileChat from '@/components/PreProfileChat';
-import RevealSection from '@/components/RevealSection';
+import { RevealSection } from '@/components/RevealSection';
 
 type QuadrantKey = 'topRight' | 'topLeft' | 'bottomRight' | 'bottomLeft';
 
