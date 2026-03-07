@@ -505,6 +505,18 @@ export default function ResultsPage() {
             )}
 
             {/* ═══════════════════════════════════════════
+                BRIDGE TO EXTENDED REPORT
+            ═══════════════════════════════════════════ */}
+            <div className="mx-auto my-10 max-w-[560px] text-center space-y-4">
+              <p className="text-[0.875rem] leading-[1.7] text-text-light">
+                Your Profile read your recipe. The five conditions, the fire type, where your sauce is richest and thinnest. That's the map.
+              </p>
+              <p className="text-[0.875rem] leading-[1.7] text-text-light">
+                The Extended Report goes further. It includes a conversation with the framework about your life, your fire, and what you've already tried. From there, you receive a personalized report with creative, specific pathways toward the life you'd actually call worth living. Not coping strategies. Ingredients.
+              </p>
+            </div>
+
+            {/* ═══════════════════════════════════════════
                 SECTION 3: EXTENDED REPORT UPSELL
             ═══════════════════════════════════════════ */}
             <ExtendedProfileUpsell email={data.email} name={data.name} profileId={data.id} />

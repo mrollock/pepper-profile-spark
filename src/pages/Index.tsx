@@ -6,6 +6,7 @@ import { ConversationalHookSection } from '@/components/sections/ConversationalH
 import { QuizSection } from '@/components/sections/QuizSection';
 import { FrameworkSection } from '@/components/sections/FrameworkSection';
 import { ConditionsSection } from '@/components/sections/ConditionsSection';
+import { HowItWorksSection } from '@/components/sections/HowItWorksSection';
 import { InterventionSection } from '@/components/sections/InterventionSection';
 import { EvidenceSection } from '@/components/sections/EvidenceSection';
 import { AudienceSection } from '@/components/sections/AudienceSection';
@@ -41,6 +42,7 @@ const Index = () => {
         <QuizSection />
         <FrameworkSection />
         <ConditionsSection />
+        <HowItWorksSection />
         <InterventionSection />
         <EvidenceSection />
         <AudienceSection />
