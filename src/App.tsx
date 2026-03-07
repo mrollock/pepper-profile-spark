@@ -10,6 +10,7 @@ import PrivacyPage from "./pages/PrivacyPage";
 import TermsPage from "./pages/TermsPage";
 import DisclaimerPage from "./pages/DisclaimerPage";
 import ResultsPage from "./pages/ResultsPage";
+import ConversationPage from "./pages/ConversationPage";
 
 const queryClient = new QueryClient();
 
