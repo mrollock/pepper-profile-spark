@@ -50,6 +50,11 @@ export function HeroSection() {
           </p>
         </RevealSection>
 
+        <RevealSection delay={425}>
+          <p className="mx-auto mb-8 max-w-[480px] font-accent text-[clamp(0.85rem,1.5vw,0.95rem)] italic font-medium text-gold-muted">
+            This is an interactive framework. Your pepper sauce is unlike anyone else's, and this framework was built to read every ingredient.
+          </p>
+        </RevealSection>
 
         <RevealSection delay={500}>
           <div className="flex flex-wrap justify-center gap-4">
