@@ -38,7 +38,7 @@ export const PRIVACY_PAGE_PLACEHOLDER =
 
 /* ── Section 5: Pre-assessment disclaimer ── */
 export const PRE_ASSESSMENT_DISCLAIMER =
-  'The Pepper Sauce Profile is an educational self-reflection tool. It is not a psychological test, clinical assessment, or diagnostic instrument. It does not diagnose, evaluate, or treat any mental health condition, and no psychologist-client relationship is created by completing it. Your results are meant to support personal reflection\u00A0\u2014 not replace professional care. If you are experiencing a mental health crisis, please call 988 (Suicide and Crisis Lifeline) or contact a licensed provider in your area.';
+  'The Pepper Sauce Profile is designed for adults 18 and older. It is an educational self-reflection tool. It is not a psychological test, clinical assessment, or diagnostic instrument. It does not diagnose, evaluate, or treat any mental health condition, and no psychologist-client relationship is created by completing it. Your results are meant to support personal reflection\u00A0\u2014 not replace professional care. If you are experiencing a mental health crisis, please call 988 (Suicide and Crisis Lifeline) or contact a licensed provider in your area.';
 
 /* ── Section 6: Post-results disclaimer ── */
 export const POST_RESULTS_DISCLAIMER =
