@@ -58,7 +58,7 @@ function getQuadrant(pepper: number, sauce: number): QuadrantKey {
   return "bottomLeft";
 }
 
-function MatrixDot({ x, y, quadrant }: { x: number; y: number; quadrant: QuadrantKey }) {
+function MatrixDot({ x, y, quadrant, isDragging = false }: { x: number; y: number; quadrant: QuadrantKey; isDragging?: boolean }) {
   const data = QUADRANTS[quadrant];
   return (
     <div
@@ -67,33 +67,22 @@ function MatrixDot({ x, y, quadrant }: { x: number; y: number; quadrant: Quadran
         left: `${x}%`,
         top: `${100 - y}%`,
         transform: "translate(-50%, -50%)",
-        zIndex: 20,
+        zIndex: 10,
         pointerEvents: "none",
         transition: "left 0.15s ease-out, top 0.15s ease-out",
       }}
     >
       <div
         style={{
-          position: "absolute",
-          width: 40,
-          height: 40,
-          borderRadius: "50%",
-          border: `2px solid ${data.color}`,
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          animation: "matrix-pulse-ring 2s ease-in-out infinite",
-        }}
-      />
-      <div
-        style={{
-          width: 16,
-          height: 16,
+          width: 12,
+          height: 12,
           borderRadius: "50%",
           background: data.color,
           border: "2px solid hsl(var(--cream))",
-          boxShadow: `0 0 24px ${data.color}, 0 0 48px color-mix(in srgb, ${data.color} 27%, transparent)`,
-          transition: "box-shadow 0.4s ease",
+          boxShadow: isDragging
+            ? `0 0 10px 4px rgba(200, 150, 46, 0.7), 0 0 24px 12px rgba(200, 150, 46, 0.3), 0 0 48px 20px rgba(200, 150, 46, 0.1)`
+            : `0 0 8px 3px rgba(200, 150, 46, 0.6), 0 0 20px 8px rgba(200, 150, 46, 0.25), 0 0 40px 16px rgba(200, 150, 46, 0.08)`,
+          transition: "box-shadow 0.3s ease",
         }}
       />
     </div>
@@ -152,7 +141,7 @@ function QuadrantOverlay({ quadrant, activeQuadrant }: { quadrant: QuadrantKey; 
         alignItems: "center",
         padding: "clamp(8px, 3vw, 20px)",
         overflow: "hidden",
-        zIndex: 5,
+        zIndex: 15,
         pointerEvents: "none",
       }}
     >
@@ -375,6 +364,8 @@ export function MatrixSection({ onQuadrantChange }: { onQuadrantChange?: (quadra
   const [pepper, setPepper] = useState(50);
   const [sauce, setSauce] = useState(50);
   const [hasInteracted, setHasInteracted] = useState(false);
+  const [isDraggingMatrix, setIsDraggingMatrix] = useState(false);
+  const matrixRef = useRef<HTMLDivElement>(null);
 
   const quadrant = getQuadrant(pepper, sauce);
   const data = QUADRANTS[quadrant];
@@ -388,6 +379,37 @@ export function MatrixSection({ onQuadrantChange }: { onQuadrantChange?: (quadra
 
   const handlePepperChange = (v: number) => { setPepper(v); if (!hasInteracted) setHasInteracted(true); };
   const handleSauceChange = (v: number) => { setSauce(v); if (!hasInteracted) setHasInteracted(true); };
+
+  const updateFromPointer = useCallback((clientX: number, clientY: number) => {
+    if (!matrixRef.current) return;
+    const rect = matrixRef.current.getBoundingClientRect();
+    let x = ((clientX - rect.left) / rect.width) * 100;
+    let y = (1 - (clientY - rect.top) / rect.height) * 100;
+    x = Math.max(0, Math.min(100, Math.round(x)));
+    y = Math.max(0, Math.min(100, Math.round(y)));
+    setPepper(x);
+    setSauce(y);
+    if (!hasInteracted) setHasInteracted(true);
+  }, [hasInteracted]);
+
+  // Global mouse/touch up to end drag
+  useEffect(() => {
+    if (!isDraggingMatrix) return;
+    const onMouseMove = (e: MouseEvent) => { e.preventDefault(); updateFromPointer(e.clientX, e.clientY); };
+    const onMouseUp = () => setIsDraggingMatrix(false);
+    const onTouchMove = (e: TouchEvent) => { e.preventDefault(); updateFromPointer(e.touches[0].clientX, e.touches[0].clientY); };
+    const onTouchEnd = () => setIsDraggingMatrix(false);
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("touchend", onTouchEnd);
+    return () => {
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
+    };
+  }, [isDraggingMatrix, updateFromPointer]);
 
   return (
     <section
@@ -457,6 +479,10 @@ export function MatrixSection({ onQuadrantChange }: { onQuadrantChange?: (quadra
             <div style={{ flex: 1 }}>
               {/* The 2×2 matrix */}
               <div
+                ref={matrixRef}
+                onMouseDown={(e) => { setIsDraggingMatrix(true); updateFromPointer(e.clientX, e.clientY); }}
+                onMouseLeave={() => { if (isDraggingMatrix) setIsDraggingMatrix(false); }}
+                onTouchStart={(e) => { setIsDraggingMatrix(true); updateFromPointer(e.touches[0].clientX, e.touches[0].clientY); }}
                 style={{
                   position: "relative",
                   aspectRatio: "1 / 1",
@@ -464,6 +490,8 @@ export function MatrixSection({ onQuadrantChange }: { onQuadrantChange?: (quadra
                   overflow: "hidden",
                   border: "1px solid rgba(168,137,62,0.13)",
                   background: "hsl(var(--dark-warm))",
+                  cursor: isDraggingMatrix ? 'grabbing' : 'grab',
+                  touchAction: 'none',
                 }}
               >
                 {/* Quadrant backgrounds — vibrant washes */}
@@ -479,7 +507,7 @@ export function MatrixSection({ onQuadrantChange }: { onQuadrantChange?: (quadra
                 <QuadrantOverlay quadrant="bottomRight" activeQuadrant={quadrant} />
 
                 <DirectionArrow quadrant={quadrant} />
-                <MatrixDot x={pepper} y={sauce} quadrant={quadrant} />
+                <MatrixDot x={pepper} y={sauce} quadrant={quadrant} isDragging={isDraggingMatrix} />
               </div>
 
               {/* Horizontal slider (Pepper) */}
@@ -565,10 +593,7 @@ export function MatrixSection({ onQuadrantChange }: { onQuadrantChange?: (quadra
       </div>
 
       <style>{`
-        @keyframes matrix-pulse-ring {
-          0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
-          50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
-        }
+        /* pulse ring removed — dot now uses glow aura */
         @keyframes matrix-float-up {
           0%, 100% { transform: translateY(0); opacity: 0.4; }
           50% { transform: translateY(-6px); opacity: 0.7; }
