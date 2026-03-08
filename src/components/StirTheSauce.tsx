@@ -207,13 +207,13 @@ export function StirTheSauce() {
         )}
         {showCta && (
           <p
-            className="font-body text-[13px] font-semibold tracking-wide text-gold-light transition-all duration-500 hover:text-gold"
+            className="font-body text-[11px] tracking-wide text-gold-muted transition-all duration-500"
             style={{
               opacity: showCta ? 1 : 0,
               transform: showCta ? 'translateY(0)' : 'translateY(6px)',
             }}
           >
-            See YOUR Pepper Sauce blend →
+            Blended.
           </p>
         )}
       </div>
