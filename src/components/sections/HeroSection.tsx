@@ -89,7 +89,7 @@ export function HeroSection() {
         </RevealSection>
 
         {/* 5. Gold rule (replaced bowl animation) */}
-        <RevealSection delay={1200}>
+        <RevealSection delay={1250}>
           <div
             style={{
               width: 48,
