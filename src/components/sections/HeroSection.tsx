@@ -17,49 +17,16 @@ export function HeroSection() {
       />
 
       <div className="relative z-[1] max-w-[800px]">
-        {/* 1. Recognition text (NEW — first element) */}
+        {/* 1. Headline */}
         <RevealSection delay={300}>
-          <p
-            className="mx-auto mb-8 max-w-[560px] font-accent italic text-cream-mid"
-            style={{
-              fontSize: 'clamp(1.05rem, 2.8vw, 1.28rem)',
-              lineHeight: 1.7,
-            }}
-          >
-            You've been carrying pain longer than anyone around you knows.
-            <br />
-            And you're still here, still showing up, still holding it all together.
-          </p>
-        </RevealSection>
-
-        {/* 2. Bridge text (NEW — between recognition and headline) */}
-        <RevealSection delay={550}>
-          <div
-            className="mx-auto mb-[2.6rem] max-w-[480px]"
-            style={{
-              fontSize: 'clamp(0.9rem, 2.1vw, 1rem)',
-              lineHeight: 1.75,
-            }}
-          >
-            <p className="font-body text-text-faint">
-              Your pain can feel like a judgment, a sentence, a punishment.
-            </p>
-            <p className="font-body italic text-cream-mid">
-              That makes sense.
-            </p>
-          </div>
-        </RevealSection>
-
-        {/* 3. Headline (EXISTING, unchanged) */}
-        <RevealSection delay={850}>
           <h1 className="mb-6 text-cream">
             Pain is real.{' '}
             <span className="text-gold">Joy is possible.</span>
           </h1>
         </RevealSection>
 
-        {/* 4. Framework name (NEW) */}
-        <RevealSection delay={950}>
+        {/* 2. Framework name */}
+        <RevealSection delay={450}>
           <p
             className="text-center font-display"
             style={{
@@ -75,8 +42,8 @@ export function HeroSection() {
           </p>
         </RevealSection>
 
-        {/* 5. Eyebrow byline */}
-        <RevealSection delay={1100}>
+        {/* 3. Eyebrow byline */}
+        <RevealSection delay={600}>
           <p
             className="font-body text-xs font-semibold uppercase tracking-[0.18em] text-gold-muted"
             style={{ margin: '1.8rem auto 2.2rem' }}
@@ -87,8 +54,8 @@ export function HeroSection() {
           </p>
         </RevealSection>
 
-        {/* 5. Gold rule (replaced bowl animation) */}
-        <RevealSection delay={1250}>
+        {/* 4. Gold rule */}
+        <RevealSection delay={750}>
           <div
             style={{
               width: 48,
@@ -100,8 +67,8 @@ export function HeroSection() {
           />
         </RevealSection>
 
-        {/* 6. CTA button (CHANGED from text link to button) */}
-        <RevealSection delay={1400}>
+        {/* 5. CTA button */}
+        <RevealSection delay={900}>
           <div className="flex flex-col items-center gap-[0.7rem]">
             <a
               href="#matrix"
@@ -118,8 +85,8 @@ export function HeroSection() {
           </div>
         </RevealSection>
 
-        {/* 7. Framework description (EXISTING, one word added: "only") */}
-        <RevealSection delay={1600}>
+        {/* 6. Framework description */}
+        <RevealSection delay={1100}>
           <p className="mx-auto mt-8 mb-6 max-w-[620px] text-[clamp(1rem,2.2vw,1.15rem)] leading-[1.75] text-cream-mid">
             You've carried it in your body, your family, your history. And somewhere along the way, you learned that joy had to wait until the pain was gone. That visible pleasure was evidence against you. That being believed meant shrinking to fit the expectation.{' '}
             <span className="font-semibold text-gold-pale">The Pepper Sauce Principle&#8482;</span>{' '}
@@ -127,22 +94,22 @@ export function HeroSection() {
           </p>
         </RevealSection>
 
-        {/* 8. Tagline (EXISTING, unchanged) */}
-        <RevealSection delay={1800}>
+        {/* 7. Tagline */}
+        <RevealSection delay={1300}>
           <p className="mb-6 font-accent text-[clamp(1.3rem,3vw,1.8rem)] italic text-gold-light">
             Life is painful. Make it delicious.
           </p>
         </RevealSection>
 
-        {/* 9. Interactive teaser (EXISTING, unchanged) */}
-        <RevealSection delay={2000}>
+        {/* 8. Interactive teaser */}
+        <RevealSection delay={1500}>
           <p className="mx-auto mb-8 max-w-[480px] font-accent text-[clamp(0.85rem,1.5vw,0.95rem)] italic font-medium text-gold-muted">
             This is an interactive framework. Your pepper sauce is unlike anyone else's, and this framework was built to read every ingredient.
           </p>
         </RevealSection>
 
-        {/* Bottom pain types divider (EXISTING, unchanged) */}
-        <RevealSection delay={2150}>
+        {/* Bottom pain types divider */}
+        <RevealSection delay={1650}>
           <div className="mx-auto mt-14 max-w-[600px] border-t border-cream-mid/15 pt-6">
             <p className="text-[clamp(0.82rem,1.8vw,0.9rem)] leading-[1.7] text-cream-mid/70">
               <span className="text-gold-pale/90 font-medium">Physical pain.</span>{' '}
