@@ -593,10 +593,7 @@ export function MatrixSection({ onQuadrantChange }: { onQuadrantChange?: (quadra
       </div>
 
       <style>{`
-        @keyframes matrix-pulse-ring {
-          0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
-          50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
-        }
+        /* pulse ring removed — dot now uses glow aura */
         @keyframes matrix-float-up {
           0%, 100% { transform: translateY(0); opacity: 0.4; }
           50% { transform: translateY(-6px); opacity: 0.7; }
