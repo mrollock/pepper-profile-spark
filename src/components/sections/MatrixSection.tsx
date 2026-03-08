@@ -436,20 +436,21 @@ export function MatrixSection({ onQuadrantChange }: { onQuadrantChange?: (quadra
         {/* Matrix container */}
         <div className="mx-auto matrix-container" style={{ maxWidth: 520 }}>
           <div style={{ display: "flex", gap: 16 }}>
-            {/* Vertical slider (Sauce) */}
-            <div style={{ display: "flex", alignItems: "center", width: 40 }}>
+            {/* Vertical slider (Sauce) — height matches matrix only */}
+            <div style={{ display: "flex", alignItems: "stretch", width: 40 }}>
               <div
                 className="font-body text-[10px] font-semibold uppercase tracking-[0.15em] text-text-faint"
                 style={{
                   writingMode: "vertical-rl",
                   transform: "rotate(180deg)",
                   textAlign: "center",
-                  alignSelf: "center",
+                  display: "flex",
+                  alignItems: "center",
                 }}
               >
                 Sauce
               </div>
-              <div className="matrix-sauce-slider" style={{ height: "100%", minHeight: 300 }}>
+              <div className="matrix-sauce-slider" style={{ height: "auto" }}>
                 <AxisSlider
                   value={sauce}
                   onChange={handleSauceChange}
@@ -462,7 +463,7 @@ export function MatrixSection({ onQuadrantChange }: { onQuadrantChange?: (quadra
             </div>
 
             {/* Matrix grid area */}
-            <div style={{ flex: 1 }}>
+            <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
               {/* The 2×2 matrix */}
               <div
                 ref={matrixRef}
@@ -495,27 +496,25 @@ export function MatrixSection({ onQuadrantChange }: { onQuadrantChange?: (quadra
                 <DirectionArrow quadrant={quadrant} />
                 <MatrixDot x={pepper} y={sauce} quadrant={quadrant} isDragging={isDraggingMatrix} />
               </div>
-
-              {/* Active quadrant description below matrix */}
-              <ActiveDescription quadrant={quadrant} />
-
-              {/* Horizontal slider (Pepper) */}
-              <div className="matrix-h-slider" style={{ marginTop: 16 }}>
-                <AxisSlider
-                  value={pepper}
-                  onChange={handlePepperChange}
-                  leftLabel="Mild"
-                  rightLabel="Spicy"
-                  color="hsl(var(--ember))"
-                />
-              </div>
-
-              {/* X-axis label */}
-              <div className="mt-2 text-center font-body text-[10px] font-semibold uppercase tracking-[0.15em] text-text-faint">
-                Pepper
-              </div>
             </div>
           </div>
+
+          {/* Horizontal slider (Pepper) — immediately below matrix */}
+          <div className="matrix-h-slider" style={{ marginTop: 12, marginLeft: 56 }}>
+            <AxisSlider
+              value={pepper}
+              onChange={handlePepperChange}
+              leftLabel="Mild"
+              rightLabel="Spicy"
+              color="hsl(var(--ember))"
+            />
+          </div>
+          <div className="mt-1 text-center font-body text-[10px] font-semibold uppercase tracking-[0.15em] text-text-faint" style={{ marginLeft: 56 }}>
+            Pepper
+          </div>
+
+          {/* Active quadrant description below sliders */}
+          <ActiveDescription quadrant={quadrant} />
         </div>
 
         {/* Insight line below matrix */}
