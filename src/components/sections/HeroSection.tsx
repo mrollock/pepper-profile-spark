@@ -129,7 +129,7 @@ export function HeroSection() {
         </RevealSection>
 
         {/* 8. Tagline (EXISTING, unchanged) */}
-        <RevealSection delay={1750}>
+        <RevealSection delay={1800}>
           <p className="mb-6 font-accent text-[clamp(1.3rem,3vw,1.8rem)] italic text-gold-light">
             Life is painful. Make it delicious.
           </p>
