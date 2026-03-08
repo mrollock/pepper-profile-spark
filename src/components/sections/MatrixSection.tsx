@@ -2,8 +2,8 @@ import { useState, useCallback, useRef, useEffect, useMemo } from "react";
 
 const QUADRANTS = {
   topRight: {
-    name: "Delicious",
-    subtitle: "Spicy & Delicious",
+    name: "Spicy & Flavor-full",
+    subtitle: "Delicious",
     color: "hsl(var(--gold))",
     bgGradient: `radial-gradient(ellipse at 75% 25%, hsl(var(--gold) / 0.15), transparent 70%)`,
     description:
