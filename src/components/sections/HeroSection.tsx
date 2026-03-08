@@ -59,8 +59,25 @@ export function HeroSection() {
           </h1>
         </RevealSection>
 
-        {/* 4. Eyebrow (MOVED from above headline to below it) */}
-        <RevealSection delay={1050}>
+        {/* 4. Framework name (NEW) */}
+        <RevealSection delay={950}>
+          <p
+            className="text-center font-display"
+            style={{
+              fontSize: 'clamp(1.1rem, 3.2vw, 1.5rem)',
+              fontWeight: 500,
+              color: '#C8962E',
+              letterSpacing: '0.08em',
+              margin: '1.4rem auto 0.6rem',
+            }}
+          >
+            The Pepper Sauce Principle
+            <span style={{ fontSize: '65%', verticalAlign: 'super', opacity: 0.6 }}>™</span>
+          </p>
+        </RevealSection>
+
+        {/* 5. Eyebrow byline */}
+        <RevealSection delay={1100}>
           <p
             className="font-body text-xs font-semibold uppercase tracking-[0.18em] text-gold-muted"
             style={{ margin: '1.8rem auto 2.2rem' }}
