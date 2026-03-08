@@ -121,9 +121,9 @@ export function HeroSection() {
         {/* 7. Framework description (EXISTING, one word added: "only") */}
         <RevealSection delay={1600}>
           <p className="mx-auto mt-8 mb-6 max-w-[620px] text-[clamp(1rem,2.2vw,1.15rem)] leading-[1.75] text-cream-mid">
-            You've carried it in your body, your family, your history&nbsp;— and everything you've been told about it treats pain as the only problem to solve. It's not.{' '}
+            You've carried it in your body, your family, your history. And somewhere along the way, you learned that joy had to wait until the pain was gone. That visible pleasure was evidence against you. That being believed meant shrinking to fit the expectation.{' '}
             <span className="font-semibold text-gold-pale">The Pepper Sauce Principle&#8482;</span>{' '}
-            names five conditions that determine whether pain becomes suffering&nbsp;— grounded in neuroscience, positive psychology, and the cultural wisdom that was practicing them generations before the research caught up.
+            names five conditions that make joy possible alongside pain, not after it. Grounded in neuroscience, positive psychology, and the cultural wisdom that was practicing them generations before the research caught up.
           </p>
         </RevealSection>
 
