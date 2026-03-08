@@ -364,6 +364,8 @@ export function MatrixSection({ onQuadrantChange }: { onQuadrantChange?: (quadra
   const [pepper, setPepper] = useState(50);
   const [sauce, setSauce] = useState(50);
   const [hasInteracted, setHasInteracted] = useState(false);
+  const [isDraggingMatrix, setIsDraggingMatrix] = useState(false);
+  const matrixRef = useRef<HTMLDivElement>(null);
 
   const quadrant = getQuadrant(pepper, sauce);
   const data = QUADRANTS[quadrant];
@@ -377,6 +379,37 @@ export function MatrixSection({ onQuadrantChange }: { onQuadrantChange?: (quadra
 
   const handlePepperChange = (v: number) => { setPepper(v); if (!hasInteracted) setHasInteracted(true); };
   const handleSauceChange = (v: number) => { setSauce(v); if (!hasInteracted) setHasInteracted(true); };
+
+  const updateFromPointer = useCallback((clientX: number, clientY: number) => {
+    if (!matrixRef.current) return;
+    const rect = matrixRef.current.getBoundingClientRect();
+    let x = ((clientX - rect.left) / rect.width) * 100;
+    let y = (1 - (clientY - rect.top) / rect.height) * 100;
+    x = Math.max(0, Math.min(100, Math.round(x)));
+    y = Math.max(0, Math.min(100, Math.round(y)));
+    setPepper(x);
+    setSauce(y);
+    if (!hasInteracted) setHasInteracted(true);
+  }, [hasInteracted]);
+
+  // Global mouse/touch up to end drag
+  useEffect(() => {
+    if (!isDraggingMatrix) return;
+    const onMouseMove = (e: MouseEvent) => { e.preventDefault(); updateFromPointer(e.clientX, e.clientY); };
+    const onMouseUp = () => setIsDraggingMatrix(false);
+    const onTouchMove = (e: TouchEvent) => { e.preventDefault(); updateFromPointer(e.touches[0].clientX, e.touches[0].clientY); };
+    const onTouchEnd = () => setIsDraggingMatrix(false);
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("touchend", onTouchEnd);
+    return () => {
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
+    };
+  }, [isDraggingMatrix, updateFromPointer]);
 
   return (
     <section
