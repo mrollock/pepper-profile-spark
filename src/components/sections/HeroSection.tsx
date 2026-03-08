@@ -102,7 +102,7 @@ export function HeroSection() {
         </RevealSection>
 
         {/* 6. CTA button (CHANGED from text link to button) */}
-        <RevealSection delay={1350}>
+        <RevealSection delay={1400}>
           <div className="flex flex-col items-center gap-[0.7rem]">
             <a
               href="#matrix"
