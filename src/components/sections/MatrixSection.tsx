@@ -58,7 +58,7 @@ function getQuadrant(pepper: number, sauce: number): QuadrantKey {
   return "bottomLeft";
 }
 
-function MatrixDot({ x, y, quadrant }: { x: number; y: number; quadrant: QuadrantKey }) {
+function MatrixDot({ x, y, quadrant, isDragging = false }: { x: number; y: number; quadrant: QuadrantKey; isDragging?: boolean }) {
   const data = QUADRANTS[quadrant];
   return (
     <div
@@ -67,33 +67,22 @@ function MatrixDot({ x, y, quadrant }: { x: number; y: number; quadrant: Quadran
         left: `${x}%`,
         top: `${100 - y}%`,
         transform: "translate(-50%, -50%)",
-        zIndex: 20,
+        zIndex: 10,
         pointerEvents: "none",
         transition: "left 0.15s ease-out, top 0.15s ease-out",
       }}
     >
       <div
         style={{
-          position: "absolute",
-          width: 40,
-          height: 40,
-          borderRadius: "50%",
-          border: `2px solid ${data.color}`,
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          animation: "matrix-pulse-ring 2s ease-in-out infinite",
-        }}
-      />
-      <div
-        style={{
-          width: 16,
-          height: 16,
+          width: 12,
+          height: 12,
           borderRadius: "50%",
           background: data.color,
           border: "2px solid hsl(var(--cream))",
-          boxShadow: `0 0 24px ${data.color}, 0 0 48px color-mix(in srgb, ${data.color} 27%, transparent)`,
-          transition: "box-shadow 0.4s ease",
+          boxShadow: isDragging
+            ? `0 0 10px 4px rgba(200, 150, 46, 0.7), 0 0 24px 12px rgba(200, 150, 46, 0.3), 0 0 48px 20px rgba(200, 150, 46, 0.1)`
+            : `0 0 8px 3px rgba(200, 150, 46, 0.6), 0 0 20px 8px rgba(200, 150, 46, 0.25), 0 0 40px 16px rgba(200, 150, 46, 0.08)`,
+          transition: "box-shadow 0.3s ease",
         }}
       />
     </div>
