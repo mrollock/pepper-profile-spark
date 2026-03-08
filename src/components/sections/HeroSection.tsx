@@ -71,11 +71,17 @@ export function HeroSection() {
           </p>
         </RevealSection>
 
-        {/* 5. Bowl animation (EXISTING, unchanged) */}
+        {/* 5. Gold rule (replaced bowl animation) */}
         <RevealSection delay={1200}>
-          <div className="my-4">
-            <StirTheSauce />
-          </div>
+          <div
+            style={{
+              width: 48,
+              height: 1.5,
+              background: 'linear-gradient(90deg, transparent, #C8962E, transparent)',
+              borderRadius: 1,
+              margin: '1.5rem auto',
+            }}
+          />
         </RevealSection>
 
         {/* 6. CTA button (CHANGED from text link to button) */}
