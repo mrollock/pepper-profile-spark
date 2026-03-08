@@ -67,21 +67,21 @@ function MatrixDot({ x, y, quadrant, isDragging = false }: { x: number; y: numbe
         left: `${x}%`,
         top: `${100 - y}%`,
         transform: "translate(-50%, -50%)",
-        zIndex: 10,
+        zIndex: 5,
         pointerEvents: "none",
         transition: "left 0.15s ease-out, top 0.15s ease-out",
       }}
     >
       <div
         style={{
-          width: 12,
-          height: 12,
+          width: 8,
+          height: 8,
           borderRadius: "50%",
-          background: data.color,
-          border: "2px solid hsl(var(--cream))",
+          background: "hsl(var(--cream))",
+          border: `1.5px solid ${data.color}`,
           boxShadow: isDragging
-            ? `0 0 10px 4px rgba(200, 150, 46, 0.7), 0 0 24px 12px rgba(200, 150, 46, 0.3), 0 0 48px 20px rgba(200, 150, 46, 0.1)`
-            : `0 0 8px 3px rgba(200, 150, 46, 0.6), 0 0 20px 8px rgba(200, 150, 46, 0.25), 0 0 40px 16px rgba(200, 150, 46, 0.08)`,
+            ? `0 0 6px 3px rgba(200, 150, 46, 0.7), 0 0 18px 8px rgba(200, 150, 46, 0.35), 0 0 36px 14px rgba(200, 150, 46, 0.12)`
+            : `0 0 5px 2px rgba(200, 150, 46, 0.5), 0 0 14px 6px rgba(200, 150, 46, 0.2), 0 0 30px 12px rgba(200, 150, 46, 0.06)`,
           transition: "box-shadow 0.3s ease",
         }}
       />
@@ -128,6 +128,15 @@ function QuadrantOverlay({ quadrant, activeQuadrant }: { quadrant: QuadrantKey; 
     bottomRight: { bottom: 0, right: 0 },
   };
 
+  const alignMap: Record<QuadrantKey, React.CSSProperties> = {
+    topLeft: { top: "14%", left: "10%" },
+    topRight: { top: "14%", right: "10%" },
+    bottomLeft: { bottom: "14%", left: "10%" },
+    bottomRight: { bottom: "14%", right: "10%" },
+  };
+
+  const textAlign = quadrant === "topRight" || quadrant === "bottomRight" ? "right" : "left";
+
   return (
     <div
       style={{
@@ -135,97 +144,74 @@ function QuadrantOverlay({ quadrant, activeQuadrant }: { quadrant: QuadrantKey; 
         width: "50%",
         height: "50%",
         ...positionMap[quadrant],
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        padding: "clamp(8px, 3vw, 20px)",
-        overflow: "hidden",
-        zIndex: 15,
+        zIndex: 10,
         pointerEvents: "none",
       }}
     >
-      {isActive ? (
-        <div
-          key={quadrant}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            textAlign: "center",
-            gap: "clamp(2px, 1vw, 6px)",
-            animation: "matrix-fade-in 0.3s ease",
-            maxWidth: "90%",
-          }}
-        >
-          <span
-            className="font-display font-bold"
-            style={{
-              fontSize: "clamp(0.85rem, 2.5vw, 1.2rem)",
-              color: data.color,
-              lineHeight: 1.2,
-            }}
-          >
-            {data.name}
-          </span>
-          <span
-            className="font-body"
-            style={{
-              fontSize: "clamp(9px, 1.8vw, 11px)",
-              color: data.color,
-              opacity: 0.7,
-              letterSpacing: "0.04em",
-            }}
-          >
-            {data.subtitle}
-          </span>
-          <p
-            className="font-body text-cream-mid matrix-description-full"
-            style={{
-              fontSize: "clamp(10px, 1.8vw, 12.5px)",
-              lineHeight: 1.5,
-              marginTop: "clamp(2px, 0.5vw, 6px)",
-              opacity: 0.85,
-            }}
-          >
-            {data.description}
-          </p>
-          {/* Short version for small screens */}
-          <p
-            className="font-body text-cream-mid matrix-description-short"
-            style={{
-              fontSize: "clamp(10px, 1.8vw, 12.5px)",
-              lineHeight: 1.5,
-              marginTop: "clamp(2px, 0.5vw, 6px)",
-              opacity: 0.85,
-              display: "none",
-            }}
-          >
-            {data.shortDescription}
-          </p>
-        </div>
-      ) : (
+      <div
+        style={{
+          position: "absolute",
+          ...alignMap[quadrant],
+          textAlign,
+          transition: "opacity 0.3s ease, transform 0.3s ease",
+          opacity: isActive ? 1 : 0.5,
+          transform: isActive ? "scale(1)" : "scale(0.92)",
+        }}
+      >
         <div
           className="font-display font-bold"
           style={{
-            fontSize: quadrant === "topRight" ? 13 : 11,
+            fontSize: isActive ? "clamp(0.9rem, 2.5vw, 1.25rem)" : "clamp(0.7rem, 1.8vw, 0.9rem)",
             color: data.color,
-            opacity: quadrant === "topRight" ? 0.8 : 0.65,
-            lineHeight: 1.3,
-            textAlign: quadrant === "topRight" || quadrant === "bottomRight" ? "right" : "left",
-            position: "absolute",
-            ...(quadrant === "topLeft" ? { top: "12%", left: "12%" } : {}),
-            ...(quadrant === "topRight" ? { top: "12%", right: "12%" } : {}),
-            ...(quadrant === "bottomLeft" ? { bottom: "12%", left: "12%" } : {}),
-            ...(quadrant === "bottomRight" ? { bottom: "12%", right: "12%" } : {}),
+            lineHeight: 1.25,
+            transition: "font-size 0.3s ease",
           }}
         >
-          {quadrant === "topLeft" && <>Mild &<br />Flavor-full</>}
-          {quadrant === "topRight" && <>Spicy &<br />Delicious</>}
-          {quadrant === "bottomLeft" && "Bland"}
-          {quadrant === "bottomRight" && "Scorching"}
+          {data.name}
         </div>
-      )}
+        {isActive && (
+          <div
+            className="font-body"
+            style={{
+              fontSize: "clamp(8px, 1.5vw, 10px)",
+              color: data.color,
+              opacity: 0.65,
+              letterSpacing: "0.04em",
+              marginTop: 2,
+              animation: "matrix-fade-in 0.3s ease",
+            }}
+          >
+            {data.subtitle}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function ActiveDescription({ quadrant }: { quadrant: QuadrantKey }) {
+  const data = QUADRANTS[quadrant];
+  return (
+    <div
+      key={quadrant}
+      style={{
+        padding: "0.75rem 0 0",
+        animation: "matrix-fade-in 0.3s ease",
+        textAlign: "center",
+      }}
+    >
+      <p
+        className="font-body text-cream-mid"
+        style={{
+          fontSize: "clamp(11px, 2vw, 13px)",
+          lineHeight: 1.6,
+          maxWidth: 480,
+          margin: "0 auto",
+          opacity: 0.85,
+        }}
+      >
+        {data.description}
+      </p>
     </div>
   );
 }
@@ -510,6 +496,9 @@ export function MatrixSection({ onQuadrantChange }: { onQuadrantChange?: (quadra
                 <MatrixDot x={pepper} y={sauce} quadrant={quadrant} isDragging={isDraggingMatrix} />
               </div>
 
+              {/* Active quadrant description below matrix */}
+              <ActiveDescription quadrant={quadrant} />
+
               {/* Horizontal slider (Pepper) */}
               <div className="matrix-h-slider" style={{ marginTop: 16 }}>
                 <AxisSlider
@@ -610,12 +599,6 @@ export function MatrixSection({ onQuadrantChange }: { onQuadrantChange?: (quadra
         }
         @media (max-width: 480px) {
           .matrix-section { padding-top: 3rem !important; padding-bottom: 2.5rem !important; }
-          .matrix-description-full { display: none !important; }
-          .matrix-description-short { display: block !important; }
-        }
-        @media (min-width: 481px) {
-          .matrix-description-full { display: block !important; }
-          .matrix-description-short { display: none !important; }
         }
         /* Laptop viewport optimization: fit entire matrix in one screen */
         @media (min-width: 768px) and (max-height: 920px) {
