@@ -143,7 +143,7 @@ export function HeroSection() {
         </RevealSection>
 
         {/* Bottom pain types divider (EXISTING, unchanged) */}
-        <RevealSection delay={2100}>
+        <RevealSection delay={2150}>
           <div className="mx-auto mt-14 max-w-[600px] border-t border-cream-mid/15 pt-6">
             <p className="text-[clamp(0.82rem,1.8vw,0.9rem)] leading-[1.7] text-cream-mid/70">
               <span className="text-gold-pale/90 font-medium">Physical pain.</span>{' '}
