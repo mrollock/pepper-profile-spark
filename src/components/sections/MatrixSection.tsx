@@ -67,21 +67,21 @@ function MatrixDot({ x, y, quadrant, isDragging = false }: { x: number; y: numbe
         left: `${x}%`,
         top: `${100 - y}%`,
         transform: "translate(-50%, -50%)",
-        zIndex: 10,
+        zIndex: 5,
         pointerEvents: "none",
         transition: "left 0.15s ease-out, top 0.15s ease-out",
       }}
     >
       <div
         style={{
-          width: 12,
-          height: 12,
+          width: 8,
+          height: 8,
           borderRadius: "50%",
-          background: data.color,
-          border: "2px solid hsl(var(--cream))",
+          background: "hsl(var(--cream))",
+          border: `1.5px solid ${data.color}`,
           boxShadow: isDragging
-            ? `0 0 10px 4px rgba(200, 150, 46, 0.7), 0 0 24px 12px rgba(200, 150, 46, 0.3), 0 0 48px 20px rgba(200, 150, 46, 0.1)`
-            : `0 0 8px 3px rgba(200, 150, 46, 0.6), 0 0 20px 8px rgba(200, 150, 46, 0.25), 0 0 40px 16px rgba(200, 150, 46, 0.08)`,
+            ? `0 0 6px 3px rgba(200, 150, 46, 0.7), 0 0 18px 8px rgba(200, 150, 46, 0.35), 0 0 36px 14px rgba(200, 150, 46, 0.12)`
+            : `0 0 5px 2px rgba(200, 150, 46, 0.5), 0 0 14px 6px rgba(200, 150, 46, 0.2), 0 0 30px 12px rgba(200, 150, 46, 0.06)`,
           transition: "box-shadow 0.3s ease",
         }}
       />
