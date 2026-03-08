@@ -496,6 +496,9 @@ export function MatrixSection({ onQuadrantChange }: { onQuadrantChange?: (quadra
                 <MatrixDot x={pepper} y={sauce} quadrant={quadrant} isDragging={isDraggingMatrix} />
               </div>
 
+              {/* Active quadrant description below matrix */}
+              <ActiveDescription quadrant={quadrant} />
+
               {/* Horizontal slider (Pepper) */}
               <div className="matrix-h-slider" style={{ marginTop: 16 }}>
                 <AxisSlider
