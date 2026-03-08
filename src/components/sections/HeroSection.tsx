@@ -53,9 +53,8 @@ export function HeroSection() {
         {/* 3. Headline (EXISTING, unchanged) */}
         <RevealSection delay={850}>
           <h1 className="mb-6 text-cream">
-            Pain is not a <span className="text-gold-light">punishment.</span>
-            <br />
-            It's an ingredient.
+            Pain is real.{' '}
+            <span className="text-gold">Joy is possible.</span>
           </h1>
         </RevealSection>
 
