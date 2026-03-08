@@ -599,12 +599,6 @@ export function MatrixSection({ onQuadrantChange }: { onQuadrantChange?: (quadra
         }
         @media (max-width: 480px) {
           .matrix-section { padding-top: 3rem !important; padding-bottom: 2.5rem !important; }
-          .matrix-description-full { display: none !important; }
-          .matrix-description-short { display: block !important; }
-        }
-        @media (min-width: 481px) {
-          .matrix-description-full { display: block !important; }
-          .matrix-description-short { display: none !important; }
         }
         /* Laptop viewport optimization: fit entire matrix in one screen */
         @media (min-width: 768px) and (max-height: 920px) {
