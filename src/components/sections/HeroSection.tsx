@@ -59,8 +59,25 @@ export function HeroSection() {
           </h1>
         </RevealSection>
 
-        {/* 4. Eyebrow (MOVED from above headline to below it) */}
-        <RevealSection delay={1050}>
+        {/* 4. Framework name (NEW) */}
+        <RevealSection delay={950}>
+          <p
+            className="text-center font-display"
+            style={{
+              fontSize: 'clamp(1.1rem, 3.2vw, 1.5rem)',
+              fontWeight: 500,
+              color: '#C8962E',
+              letterSpacing: '0.08em',
+              margin: '1.4rem auto 0.6rem',
+            }}
+          >
+            The Pepper Sauce Principle
+            <span style={{ fontSize: '65%', verticalAlign: 'super', opacity: 0.6 }}>™</span>
+          </p>
+        </RevealSection>
+
+        {/* 5. Eyebrow byline */}
+        <RevealSection delay={1100}>
           <p
             className="font-body text-xs font-semibold uppercase tracking-[0.18em] text-gold-muted"
             style={{ margin: '1.8rem auto 2.2rem' }}
@@ -72,7 +89,7 @@ export function HeroSection() {
         </RevealSection>
 
         {/* 5. Gold rule (replaced bowl animation) */}
-        <RevealSection delay={1200}>
+        <RevealSection delay={1250}>
           <div
             style={{
               width: 48,
@@ -85,7 +102,7 @@ export function HeroSection() {
         </RevealSection>
 
         {/* 6. CTA button (CHANGED from text link to button) */}
-        <RevealSection delay={1350}>
+        <RevealSection delay={1400}>
           <div className="flex flex-col items-center gap-[0.7rem]">
             <a
               href="#matrix"
@@ -103,7 +120,7 @@ export function HeroSection() {
         </RevealSection>
 
         {/* 7. Framework description (EXISTING, one word added: "only") */}
-        <RevealSection delay={1550}>
+        <RevealSection delay={1600}>
           <p className="mx-auto mt-8 mb-6 max-w-[620px] text-[clamp(1rem,2.2vw,1.15rem)] leading-[1.75] text-cream-mid">
             You've carried it in your body, your family, your history&nbsp;— and everything you've been told about it treats pain as the only problem to solve. It's not.{' '}
             <span className="font-semibold text-gold-pale">The Pepper Sauce Principle&#8482;</span>{' '}
@@ -112,21 +129,21 @@ export function HeroSection() {
         </RevealSection>
 
         {/* 8. Tagline (EXISTING, unchanged) */}
-        <RevealSection delay={1750}>
+        <RevealSection delay={1800}>
           <p className="mb-6 font-accent text-[clamp(1.3rem,3vw,1.8rem)] italic text-gold-light">
             Life is painful. Make it delicious.
           </p>
         </RevealSection>
 
         {/* 9. Interactive teaser (EXISTING, unchanged) */}
-        <RevealSection delay={1950}>
+        <RevealSection delay={2000}>
           <p className="mx-auto mb-8 max-w-[480px] font-accent text-[clamp(0.85rem,1.5vw,0.95rem)] italic font-medium text-gold-muted">
             This is an interactive framework. Your pepper sauce is unlike anyone else's, and this framework was built to read every ingredient.
           </p>
         </RevealSection>
 
         {/* Bottom pain types divider (EXISTING, unchanged) */}
-        <RevealSection delay={2100}>
+        <RevealSection delay={2150}>
           <div className="mx-auto mt-14 max-w-[600px] border-t border-cream-mid/15 pt-6">
             <p className="text-[clamp(0.82rem,1.8vw,0.9rem)] leading-[1.7] text-cream-mid/70">
               <span className="text-gold-pale/90 font-medium">Physical pain.</span>{' '}
