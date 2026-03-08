@@ -120,7 +120,7 @@ export function HeroSection() {
         </RevealSection>
 
         {/* 7. Framework description (EXISTING, one word added: "only") */}
-        <RevealSection delay={1550}>
+        <RevealSection delay={1600}>
           <p className="mx-auto mt-8 mb-6 max-w-[620px] text-[clamp(1rem,2.2vw,1.15rem)] leading-[1.75] text-cream-mid">
             You've carried it in your body, your family, your history&nbsp;— and everything you've been told about it treats pain as the only problem to solve. It's not.{' '}
             <span className="font-semibold text-gold-pale">The Pepper Sauce Principle&#8482;</span>{' '}
