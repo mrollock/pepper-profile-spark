@@ -479,6 +479,10 @@ export function MatrixSection({ onQuadrantChange }: { onQuadrantChange?: (quadra
             <div style={{ flex: 1 }}>
               {/* The 2×2 matrix */}
               <div
+                ref={matrixRef}
+                onMouseDown={(e) => { setIsDraggingMatrix(true); updateFromPointer(e.clientX, e.clientY); }}
+                onMouseLeave={() => { if (isDraggingMatrix) setIsDraggingMatrix(false); }}
+                onTouchStart={(e) => { setIsDraggingMatrix(true); updateFromPointer(e.touches[0].clientX, e.touches[0].clientY); }}
                 style={{
                   position: "relative",
                   aspectRatio: "1 / 1",
@@ -486,6 +490,8 @@ export function MatrixSection({ onQuadrantChange }: { onQuadrantChange?: (quadra
                   overflow: "hidden",
                   border: "1px solid rgba(168,137,62,0.13)",
                   background: "hsl(var(--dark-warm))",
+                  cursor: isDraggingMatrix ? 'grabbing' : 'grab',
+                  touchAction: 'none',
                 }}
               >
                 {/* Quadrant backgrounds — vibrant washes */}
@@ -501,7 +507,7 @@ export function MatrixSection({ onQuadrantChange }: { onQuadrantChange?: (quadra
                 <QuadrantOverlay quadrant="bottomRight" activeQuadrant={quadrant} />
 
                 <DirectionArrow quadrant={quadrant} />
-                <MatrixDot x={pepper} y={sauce} quadrant={quadrant} />
+                <MatrixDot x={pepper} y={sauce} quadrant={quadrant} isDragging={isDraggingMatrix} />
               </div>
 
               {/* Horizontal slider (Pepper) */}
