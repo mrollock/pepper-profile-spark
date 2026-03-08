@@ -141,7 +141,7 @@ function QuadrantOverlay({ quadrant, activeQuadrant }: { quadrant: QuadrantKey; 
         alignItems: "center",
         padding: "clamp(8px, 3vw, 20px)",
         overflow: "hidden",
-        zIndex: 5,
+        zIndex: 15,
         pointerEvents: "none",
       }}
     >
