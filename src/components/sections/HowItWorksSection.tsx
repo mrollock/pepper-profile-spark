@@ -33,7 +33,7 @@ export function HowItWorksSection() {
                 <h3 className="mb-2 font-display text-[clamp(1.1rem,2.5vw,1.35rem)] font-bold text-gold">
                   {step.opener}
                 </h3>
-                <p className="text-[0.95rem] leading-[1.75] text-cream-mid">
+                <p className="text-[0.95rem] leading-[1.75] text-cream-soft/90">
                   {step.body}
                 </p>
               </div>
