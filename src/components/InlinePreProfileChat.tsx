@@ -446,7 +446,7 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
       {!conversationDone && messages.length > 0 && (
         <div className="mt-4 text-center">
           <button
-            onClick={onComplete}
+            onClick={handleSkip}
             className="font-body text-[0.8rem] text-text-faint underline-offset-2 hover:underline"
           >
             Skip to the Profile
