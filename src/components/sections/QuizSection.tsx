@@ -22,7 +22,7 @@ import {
 import { CONDITION_INSIGHTS, FRAMEWORK_REMINDER } from '@/data/conditionInsights';
 import { PRE_ASSESSMENT_DISCLAIMER, POST_RESULTS_DISCLAIMER } from '@/data/legalCopy';
 
-type Phase = 'chat' | 'landing' | 'nameForm' | 'quiz' | 'fireIntro' | 'fire' | 'results';
+type Phase = 'chat' | 'nameForm' | 'quiz' | 'fireIntro' | 'fire' | 'results';
 
 /* ── Fire-to-thin-condition copy mapping ── */
 const FIRE_CONDITION_MAP: Record<string, Record<number, string>> = {
@@ -430,40 +430,7 @@ export function QuizSection() {
     }, 350);
   };
 
-  // LANDING (homepage CTA — no form, just the invitation)
-  if (phase === 'landing') {
-    return (
-      <section className="bg-cream-soft py-[var(--section-pad)] px-[clamp(1.25rem,5vw,3rem)]" id="quiz">
-        <div className="mx-auto max-w-[var(--wide-max)]">
-          <div className="mx-auto max-w-[680px] text-center" role="region" aria-label="Pepper Sauce Profile Assessment">
-            <span className="mb-4 block font-body text-xs font-semibold uppercase tracking-[0.18em] text-gold-muted">
-              The Pepper Sauce Profile
-            </span>
-            <h2>What's Your Recipe?</h2>
-            <div className="mx-auto my-6 h-[3px] w-[60px] rounded-sm bg-gold" />
-            <p className="mx-auto mb-4 max-w-[560px]">
-              Everyone's carrying something. This profile reads what you're making with it — which ingredients you have in place, which ones are missing, and what kind of fire you're carrying right now.
-            </p>
-            <p className="mx-auto mb-6 max-w-[560px] text-[0.92rem] text-text-light">
-              This is not a diagnosis. There are no wrong answers. Think of it as an honest look at your kitchen.
-            </p>
-            <button
-              onClick={() => {
-                setPhase('chat');
-                setTimeout(scrollToQuiz, 100);
-              }}
-              className="rounded-md bg-gold px-9 py-3.5 font-body text-[0.95rem] font-semibold text-dark transition-all hover:bg-gold-light hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(200,150,46,0.3)]"
-            >
-              Take the Pepper Sauce Profile
-            </button>
-            <p className="mt-3 text-[0.85rem] text-text-faint">
-              5–7 minutes · 34 items · Free · Not a diagnostic instrument
-            </p>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  // CHAT (pre-profile appetizer — shown directly, before name/email)
 
   // CHAT (pre-profile appetizer — shown after clicking CTA, before name/email)
   if (phase === 'chat') {
