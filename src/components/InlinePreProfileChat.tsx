@@ -27,6 +27,23 @@ function isDeclineMessage(content: string): boolean {
   return lower.includes('no problem') && lower.includes('whenever you\'re ready');
 }
 
+/* Analytics tracking helper */
+async function trackChatEvent(
+  sessionId: string,
+  eventType: string,
+  eventData?: Record<string, unknown>
+) {
+  try {
+    await supabase.from('quiz_analytics').insert({
+      session_id: sessionId,
+      event_type: eventType,
+      event_data: eventData || {},
+    });
+  } catch {
+    // Non-critical - don't block chat flow
+  }
+}
+
 export default function InlinePreProfileChat({ onComplete }: InlinePreProfileChatProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
@@ -37,6 +54,8 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
   const [error, setError] = useState('');
 
   const conversationIdRef = useRef(crypto.randomUUID());
+  const analyticsSessionRef = useRef(crypto.randomUUID());
+  const chatStartTimeRef = useRef(Date.now());
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const isNearBottomRef = useRef(true);
