@@ -87,15 +87,30 @@ Deno.serve(async (req) => {
     );
 
     // Fetch all analytics events
-    const { data, error } = await supabase
+    const { data: events, error: eventsError } = await supabase
       .from("quiz_analytics")
       .select("session_id, event_type, event_data, created_at")
       .order("created_at", { ascending: true })
       .limit(10000);
 
-    if (error) throw error;
+    if (eventsError) {
+      console.error("Error fetching quiz analytics:", eventsError);
+      throw eventsError;
+    }
 
-    return new Response(JSON.stringify({ events: data }), {
+    // Fetch pre-profile chat conversations
+    const { data: chatConversations, error: chatError } = await supabase
+      .from("pre_profile_conversations")
+      .select("started_at, completed_at, converted_to_profile, message_count")
+      .order("started_at", { ascending: true })
+      .limit(10000);
+
+    if (chatError) {
+      console.error("Error fetching chat conversations:", chatError);
+      throw chatError;
+    }
+
+    return new Response(JSON.stringify({ events, chatConversations }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (err) {

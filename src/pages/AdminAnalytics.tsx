@@ -12,12 +12,20 @@ interface AnalyticsEvent {
   created_at: string;
 }
 
+interface ChatConversation {
+  started_at: string | null;
+  completed_at: string | null;
+  converted_to_profile: boolean | null;
+  message_count: number | null;
+}
+
 const COLORS = ["#c8962e", "#a67825", "#8b5e1a", "#d4a843", "#e0bc5f", "#6b4513"];
 
 export default function AdminAnalytics() {
   const [password, setPassword] = useState("");
   const [authed, setAuthed] = useState(false);
   const [events, setEvents] = useState<AnalyticsEvent[]>([]);
+  const [chatConversations, setChatConversations] = useState<ChatConversation[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -32,12 +40,38 @@ export default function AdminAnalytics() {
       if (fnError) throw fnError;
       if (data?.error) throw new Error(data.error);
       setEvents(data.events || []);
+      setChatConversations(data.chatConversations || []);
       setAuthed(true);
     } catch (e: any) {
       setError(e.message || "Invalid password");
     }
     setLoading(false);
   };
+
+  const chatStats = useMemo(() => {
+    if (!chatConversations.length) return null;
+
+    const starts = chatConversations.length;
+    const completions = chatConversations.filter((c) => c.completed_at).length;
+    const conversions = chatConversations.filter((c) => c.converted_to_profile).length;
+    const completionRate = starts > 0 ? ((completions / starts) * 100).toFixed(1) : "0";
+    const conversionRate = starts > 0 ? ((conversions / starts) * 100).toFixed(1) : "0";
+
+    const funnelData = [
+      { step: "Started Chat", count: starts },
+      { step: "Completed", count: completions },
+      { step: "Converted", count: conversions },
+    ];
+
+    return {
+      starts,
+      completions,
+      conversions,
+      completionRate,
+      conversionRate,
+      funnelData,
+    };
+  }, [chatConversations]);
 
   const stats = useMemo(() => {
     if (!events.length) return null;
@@ -149,7 +183,40 @@ export default function AdminAnalytics() {
       <div className="mx-auto max-w-5xl">
         <h1 className="mb-8 font-display text-2xl text-text-body">Quiz Analytics Dashboard</h1>
 
+        {/* Pre-Profile Chat Stats */}
+        {chatStats && (
+          <div className="mb-10">
+            <h2 className="mb-4 font-display text-lg text-text-body">Pre-Profile Chat Funnel</h2>
+            <div className="mb-6 grid grid-cols-2 gap-4 md:grid-cols-5">
+              {[
+                { label: "Chat Starts", value: chatStats.starts },
+                { label: "Completions", value: chatStats.completions },
+                { label: "Completion Rate", value: `${chatStats.completionRate}%` },
+                { label: "Conversions", value: chatStats.conversions },
+                { label: "Conversion Rate", value: `${chatStats.conversionRate}%` },
+              ].map((kpi) => (
+                <div key={kpi.label} className="rounded-xl border border-cream-mid bg-cream p-5 text-center">
+                  <div className="font-display text-2xl text-gold">{kpi.value}</div>
+                  <div className="mt-1 text-xs text-text-faint">{kpi.label}</div>
+                </div>
+              ))}
+            </div>
+            <div className="rounded-xl border border-cream-mid bg-cream p-6">
+              <ResponsiveContainer width="100%" height={250}>
+                <BarChart data={chatStats.funnelData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(40 20% 85%)" />
+                  <XAxis dataKey="step" tick={{ fontSize: 13 }} />
+                  <YAxis allowDecimals={false} />
+                  <Tooltip />
+                  <Bar dataKey="count" fill="#8b5e1a" radius={[4, 4, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        )}
+
         {/* KPI Cards */}
+        <h2 className="mb-4 font-display text-lg text-text-body">Quiz Performance</h2>
         <div className="mb-10 grid grid-cols-2 gap-4 md:grid-cols-4">
           {[
             { label: "Total Sessions", value: stats.totalSessions },
