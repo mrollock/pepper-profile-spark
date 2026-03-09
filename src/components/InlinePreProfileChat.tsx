@@ -97,26 +97,39 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
           },
         });
 
-        // Handle rate limiting - supabase.functions.invoke treats 429 as an error
-        // so we need to check both the error context and the data
+        // Handle rate limiting or any function error gracefully
         if (fnError) {
-          // Try to parse the response body from the error context for rate limit info
-          const ctx = (fnError as any)?.context;
-          if (ctx && typeof ctx.json === 'function') {
-            try {
+          // Check multiple signals for rate limiting
+          const errStr = String(fnError?.message || fnError || '');
+          const isRateLimited = errStr.includes('429') || errStr.includes('rate_limit');
+          
+          // Also try parsing error context body
+          let contextRateLimited = false;
+          try {
+            const ctx = (fnError as any)?.context;
+            if (ctx && typeof ctx.json === 'function') {
               const errorBody = await ctx.json();
-              if (errorBody?.error === 'rate_limited') {
-                setShowCTA(true);
-                setConversationDone(true);
-                trackChatEvent(analyticsSessionRef.current, 'preprofile_chat_rate_limited');
-                setSending(false);
-                return;
-              }
-            } catch {
-              // Could not parse error body, fall through to generic error
+              contextRateLimited = errorBody?.error === 'rate_limited';
             }
+          } catch {
+            // ignore parse failures
           }
-          throw fnError;
+
+          if (isRateLimited || contextRateLimited) {
+            setShowCTA(true);
+            setConversationDone(true);
+            trackChatEvent(analyticsSessionRef.current, 'preprofile_chat_rate_limited');
+            setSending(false);
+            return;
+          }
+          
+          // For any other error, show CTA gracefully instead of crashing
+          console.error('Pre-profile chat function error:', fnError);
+          setShowCTA(true);
+          setConversationDone(true);
+          trackChatEvent(analyticsSessionRef.current, 'preprofile_chat_error', { phase: 'opening' });
+          setSending(false);
+          return;
         }
 
         if (data?.error === 'rate_limited') {
@@ -198,21 +211,35 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
 
         // Handle non-2xx responses (e.g. 429 rate limit)
         if (fnError) {
-          const ctx = (fnError as any)?.context;
-          if (ctx && typeof ctx.json === 'function') {
-            try {
+          const errStr = String(fnError?.message || fnError || '');
+          const isRateLimited = errStr.includes('429') || errStr.includes('rate_limit');
+          
+          let contextRateLimited = false;
+          let rateLimitContent = '';
+          try {
+            const ctx = (fnError as any)?.context;
+            if (ctx && typeof ctx.json === 'function') {
               const errorBody = await ctx.json();
-              if (errorBody?.error === 'rate_limited') {
-                const retryMsg: Message = { role: 'assistant', content: errorBody.content || "I need a brief pause. Try again in a few seconds." };
-                setMessages([...updated, retryMsg]);
-                setSending(false);
-                return;
-              }
-            } catch {
-              // Fall through
+              contextRateLimited = errorBody?.error === 'rate_limited';
+              rateLimitContent = errorBody?.content || '';
             }
+          } catch { /* ignore */ }
+
+          if (isRateLimited || contextRateLimited) {
+            const retryMsg: Message = { role: 'assistant', content: rateLimitContent || "I need a brief pause. Try again in a few seconds." };
+            setMessages([...updated, retryMsg]);
+            setSending(false);
+            return;
           }
-          throw fnError;
+          
+          // Any other error - show graceful message
+          console.error('Pre-profile chat send error:', fnError);
+          const errMsg: Message = { role: 'assistant', content: "Something flickered. The Profile is ready whenever you are." };
+          setMessages([...updated, errMsg]);
+          setShowCTA(true);
+          setConversationDone(true);
+          setSending(false);
+          return;
         }
 
       if (data?.error === 'rate_limited') {
