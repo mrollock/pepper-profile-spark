@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import InlinePreProfileChat from '@/components/InlinePreProfileChat';
 import { cn } from '@/lib/utils';
 import { Share2, Copy, Check, Printer, Twitter, Facebook, Linkedin } from 'lucide-react';
 import {
