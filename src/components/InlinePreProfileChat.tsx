@@ -74,7 +74,8 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
 
   useEffect(() => {
     if (!sending && !conversationDone) {
-      setTimeout(() => inputRef.current?.focus(), 300);
+      // Use preventScroll to avoid scrolling the page to the input
+      setTimeout(() => inputRef.current?.focus({ preventScroll: true }), 300);
     }
   }, [sending, conversationDone]);
 
