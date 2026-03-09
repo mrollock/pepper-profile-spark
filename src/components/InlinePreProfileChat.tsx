@@ -97,10 +97,29 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
           },
         });
 
-        if (fnError) throw fnError;
+        // Handle rate limiting - supabase.functions.invoke treats 429 as an error
+        // so we need to check both the error context and the data
+        if (fnError) {
+          // Try to parse the response body from the error context for rate limit info
+          const ctx = (fnError as any)?.context;
+          if (ctx && typeof ctx.json === 'function') {
+            try {
+              const errorBody = await ctx.json();
+              if (errorBody?.error === 'rate_limited') {
+                setShowCTA(true);
+                setConversationDone(true);
+                trackChatEvent(analyticsSessionRef.current, 'preprofile_chat_rate_limited');
+                setSending(false);
+                return;
+              }
+            } catch {
+              // Could not parse error body, fall through to generic error
+            }
+          }
+          throw fnError;
+        }
 
         if (data?.error === 'rate_limited') {
-          setError(data.content || "You've been exploring. The Profile is the best next step.");
           setShowCTA(true);
           setConversationDone(true);
           trackChatEvent(analyticsSessionRef.current, 'preprofile_chat_rate_limited');
@@ -177,7 +196,24 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
         },
       });
 
-      if (fnError) throw fnError;
+        // Handle non-2xx responses (e.g. 429 rate limit)
+        if (fnError) {
+          const ctx = (fnError as any)?.context;
+          if (ctx && typeof ctx.json === 'function') {
+            try {
+              const errorBody = await ctx.json();
+              if (errorBody?.error === 'rate_limited') {
+                const retryMsg: Message = { role: 'assistant', content: errorBody.content || "I need a brief pause. Try again in a few seconds." };
+                setMessages([...updated, retryMsg]);
+                setSending(false);
+                return;
+              }
+            } catch {
+              // Fall through
+            }
+          }
+          throw fnError;
+        }
 
       if (data?.error === 'rate_limited') {
         const retryMsg: Message = { role: 'assistant', content: data.content || "I need a brief pause. Try again in a few seconds." };
