@@ -196,6 +196,15 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
         setCrisisDetected(true);
         setConversationDone(true);
         updateConversationAnalytics(withResponse, false, true);
+        
+        // Track crisis detection
+        const durationSeconds = Math.round((Date.now() - chatStartTimeRef.current) / 1000);
+        trackChatEvent(analyticsSessionRef.current, 'preprofile_chat_complete', {
+          reason: 'crisis_detected',
+          message_count: withResponse.filter(m => m.role === 'user').length,
+          duration_seconds: durationSeconds,
+          conversation_id: conversationIdRef.current,
+        });
         setSending(false);
         return;
       }
@@ -204,6 +213,15 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
         setConversationDone(true);
         setTimeout(() => setShowCTA(true), 1000);
         updateConversationAnalytics(withResponse, true);
+        
+        // Track decline completion
+        const durationSeconds = Math.round((Date.now() - chatStartTimeRef.current) / 1000);
+        trackChatEvent(analyticsSessionRef.current, 'preprofile_chat_complete', {
+          reason: 'user_declined',
+          message_count: withResponse.filter(m => m.role === 'user').length,
+          duration_seconds: durationSeconds,
+          conversation_id: conversationIdRef.current,
+        });
         setSending(false);
         return;
       }
@@ -212,6 +230,15 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
         setConversationDone(true);
         setTimeout(() => setShowCTA(true), 1000);
         updateConversationAnalytics(withResponse, true);
+        
+        // Track natural completion
+        const durationSeconds = Math.round((Date.now() - chatStartTimeRef.current) / 1000);
+        trackChatEvent(analyticsSessionRef.current, 'preprofile_chat_complete', {
+          reason: 'natural_close',
+          message_count: withResponse.filter(m => m.role === 'user').length,
+          duration_seconds: durationSeconds,
+          conversation_id: conversationIdRef.current,
+        });
         setSending(false);
         return;
       }
@@ -220,6 +247,7 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
       setError("Something went sideways. Let's jump straight into the Profile.");
       setShowCTA(true);
       setConversationDone(true);
+      trackChatEvent(analyticsSessionRef.current, 'preprofile_chat_error', { phase: 'conversation' });
     }
 
     setSending(false);
