@@ -48,6 +48,31 @@ export default function AdminAnalytics() {
     setLoading(false);
   };
 
+  const chatStats = useMemo(() => {
+    if (!chatConversations.length) return null;
+
+    const starts = chatConversations.length;
+    const completions = chatConversations.filter((c) => c.completed_at).length;
+    const conversions = chatConversations.filter((c) => c.converted_to_profile).length;
+    const completionRate = starts > 0 ? ((completions / starts) * 100).toFixed(1) : "0";
+    const conversionRate = starts > 0 ? ((conversions / starts) * 100).toFixed(1) : "0";
+
+    const funnelData = [
+      { step: "Started Chat", count: starts },
+      { step: "Completed", count: completions },
+      { step: "Converted", count: conversions },
+    ];
+
+    return {
+      starts,
+      completions,
+      conversions,
+      completionRate,
+      conversionRate,
+      funnelData,
+    };
+  }, [chatConversations]);
+
   const stats = useMemo(() => {
     if (!events.length) return null;
 
