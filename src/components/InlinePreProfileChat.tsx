@@ -136,6 +136,13 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
     setMessages(updated);
 
     const userCount = updated.filter(m => m.role === 'user').length;
+    
+    // Track message sent
+    trackChatEvent(analyticsSessionRef.current, 'preprofile_chat_message', {
+      message_number: userCount,
+      conversation_id: conversationIdRef.current,
+    });
+    
     if (userCount >= 4) {
       const capMsg: Message = {
         role: 'assistant',
@@ -146,6 +153,15 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
       setTimeout(() => setShowCTA(true), 1000);
       setSending(false);
       updateConversationAnalytics([...updated, capMsg], true);
+      
+      // Track chat completion (cap reached)
+      const durationSeconds = Math.round((Date.now() - chatStartTimeRef.current) / 1000);
+      trackChatEvent(analyticsSessionRef.current, 'preprofile_chat_complete', {
+        reason: 'message_cap',
+        message_count: userCount,
+        duration_seconds: durationSeconds,
+        conversation_id: conversationIdRef.current,
+      });
       return;
     }
 
