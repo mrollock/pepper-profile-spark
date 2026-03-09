@@ -22,7 +22,7 @@ import {
 import { CONDITION_INSIGHTS, FRAMEWORK_REMINDER } from '@/data/conditionInsights';
 import { PRE_ASSESSMENT_DISCLAIMER, POST_RESULTS_DISCLAIMER } from '@/data/legalCopy';
 
-type Phase = 'landing' | 'quiz' | 'fireIntro' | 'fire' | 'results';
+type Phase = 'chat' | 'landing' | 'quiz' | 'fireIntro' | 'fire' | 'results';
 
 /* ── Fire-to-thin-condition copy mapping ── */
 const FIRE_CONDITION_MAP: Record<string, Record<number, string>> = {
