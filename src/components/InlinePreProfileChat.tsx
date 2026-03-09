@@ -196,7 +196,24 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
         },
       });
 
-      if (fnError) throw fnError;
+        // Handle non-2xx responses (e.g. 429 rate limit)
+        if (fnError) {
+          const ctx = (fnError as any)?.context;
+          if (ctx && typeof ctx.json === 'function') {
+            try {
+              const errorBody = await ctx.json();
+              if (errorBody?.error === 'rate_limited') {
+                const retryMsg: Message = { role: 'assistant', content: errorBody.content || "I need a brief pause. Try again in a few seconds." };
+                setMessages([...updated, retryMsg]);
+                setSending(false);
+                return;
+              }
+            } catch {
+              // Fall through
+            }
+          }
+          throw fnError;
+        }
 
       if (data?.error === 'rate_limited') {
         const retryMsg: Message = { role: 'assistant', content: data.content || "I need a brief pause. Try again in a few seconds." };
