@@ -447,6 +447,7 @@ export function QuizSection() {
   }
 
   // LANDING
+  if (phase === 'landing') {
     return (
       <section className="bg-cream-soft py-[var(--section-pad)] px-[clamp(1.25rem,5vw,3rem)]" id="quiz">
         <div className="mx-auto max-w-[var(--wide-max)]">
