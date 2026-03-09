@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import InlinePreProfileChat from '@/components/InlinePreProfileChat';
 import { cn } from '@/lib/utils';
 import { Share2, Copy, Check, Printer, Twitter, Facebook, Linkedin } from 'lucide-react';
 import {
@@ -21,7 +22,7 @@ import {
 import { CONDITION_INSIGHTS, FRAMEWORK_REMINDER } from '@/data/conditionInsights';
 import { PRE_ASSESSMENT_DISCLAIMER, POST_RESULTS_DISCLAIMER } from '@/data/legalCopy';
 
-type Phase = 'landing' | 'quiz' | 'fireIntro' | 'fire' | 'results';
+type Phase = 'chat' | 'landing' | 'quiz' | 'fireIntro' | 'fire' | 'results';
 
 /* ── Fire-to-thin-condition copy mapping ── */
 const FIRE_CONDITION_MAP: Record<string, Record<number, string>> = {
@@ -302,7 +303,7 @@ function ShareActions({ shareText, shareUrl }: { shareText: string; shareUrl: st
 
 export function QuizSection() {
   const navigate = useNavigate();
-  const [phase, setPhase] = useState<Phase>('landing');
+  const [phase, setPhase] = useState<Phase>('chat');
   const [currentItem, setCurrentItem] = useState(0);
   const [responses, setResponses] = useState<Record<number, number | string>>({});
   const [userName, setUserName] = useState('');
@@ -428,6 +429,22 @@ export function QuizSection() {
       scrollToQuiz();
     }, 350);
   };
+
+  // CHAT (pre-profile appetizer)
+  if (phase === 'chat') {
+    return (
+      <section className="bg-cream-soft py-[var(--section-pad)] px-[clamp(1.25rem,5vw,3rem)]" id="quiz">
+        <div className="mx-auto max-w-[var(--wide-max)]">
+          <InlinePreProfileChat
+            onComplete={() => {
+              setPhase('landing');
+              setTimeout(scrollToQuiz, 100);
+            }}
+          />
+        </div>
+      </section>
+    );
+  }
 
   // LANDING
   if (phase === 'landing') {
