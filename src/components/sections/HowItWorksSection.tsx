@@ -3,11 +3,11 @@ import { RevealSection } from '@/components/RevealSection';
 const STEPS = [
   {
     opener: 'See the map.',
-    body: 'The Pepper-Sauce Matrix shows you four ways a life can hold pain. Move the sliders. Find the territory that feels familiar. This takes thirty seconds and costs nothing but honesty.',
+    body: 'The Pepper-Sauce Matrix shows you four ways a life can hold pain. Touch the map. Find the territory that feels familiar. This takes thirty seconds and costs nothing but honesty.',
   },
   {
-    opener: 'Read your recipe.',
-    body: "The Pepper Sauce Profile is a free, five-minute instrument that maps the five conditions surrounding your pain. What's in your sauce, what's missing, and what kind of fire you're carrying. Before you take it, the framework sits with you briefly to understand what it's looking at.",
+    opener: 'Sit at the table.',
+    body: "When you start the Pepper Sauce Profile, the framework sits with you first. A brief conversation, just a few questions, where it asks what kind of fire you're carrying and starts to read what's in your sauce. Then thirty-four questions map your five conditions, identify your fire type, and show you what your recipe actually contains. Free. About seven minutes total.",
   },
   {
     opener: 'Go deeper.',

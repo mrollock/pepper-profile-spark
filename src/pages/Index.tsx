@@ -1,8 +1,6 @@
-import { useState, useCallback } from 'react';
 import { Navbar } from '@/components/Navbar';
 import { HeroSection } from '@/components/sections/HeroSection';
 import { MatrixSection } from '@/components/sections/MatrixSection';
-import { ConversationalHookSection } from '@/components/sections/ConversationalHookSection';
 import { QuizSection } from '@/components/sections/QuizSection';
 import { FrameworkSection } from '@/components/sections/FrameworkSection';
 import { ConditionsSection } from '@/components/sections/ConditionsSection';
@@ -21,24 +19,13 @@ import { TestimonialSection } from '@/components/sections/TestimonialSection';
 import { ConnectSection } from '@/components/sections/ConnectSection';
 import { Footer } from '@/components/sections/Footer';
 
-type QuadrantKey = 'topRight' | 'topLeft' | 'bottomRight' | 'bottomLeft';
-
 const Index = () => {
-  const [matrixQuadrant, setMatrixQuadrant] = useState<QuadrantKey | null>(null);
-  const [matrixInteracted, setMatrixInteracted] = useState(false);
-
-  const handleQuadrantChange = useCallback((quadrant: QuadrantKey, hasInteracted: boolean) => {
-    setMatrixQuadrant(quadrant);
-    setMatrixInteracted(hasInteracted);
-  }, []);
-
   return (
     <>
       <Navbar />
       <main id="main">
         <HeroSection />
-        <MatrixSection onQuadrantChange={handleQuadrantChange} />
-        <ConversationalHookSection matrixQuadrant={matrixQuadrant} matrixInteracted={matrixInteracted} />
+        <MatrixSection />
         <QuizSection />
         <FrameworkSection />
         <ConditionsSection />
