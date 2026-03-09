@@ -211,21 +211,35 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
 
         // Handle non-2xx responses (e.g. 429 rate limit)
         if (fnError) {
-          const ctx = (fnError as any)?.context;
-          if (ctx && typeof ctx.json === 'function') {
-            try {
+          const errStr = String(fnError?.message || fnError || '');
+          const isRateLimited = errStr.includes('429') || errStr.includes('rate_limit');
+          
+          let contextRateLimited = false;
+          let rateLimitContent = '';
+          try {
+            const ctx = (fnError as any)?.context;
+            if (ctx && typeof ctx.json === 'function') {
               const errorBody = await ctx.json();
-              if (errorBody?.error === 'rate_limited') {
-                const retryMsg: Message = { role: 'assistant', content: errorBody.content || "I need a brief pause. Try again in a few seconds." };
-                setMessages([...updated, retryMsg]);
-                setSending(false);
-                return;
-              }
-            } catch {
-              // Fall through
+              contextRateLimited = errorBody?.error === 'rate_limited';
+              rateLimitContent = errorBody?.content || '';
             }
+          } catch { /* ignore */ }
+
+          if (isRateLimited || contextRateLimited) {
+            const retryMsg: Message = { role: 'assistant', content: rateLimitContent || "I need a brief pause. Try again in a few seconds." };
+            setMessages([...updated, retryMsg]);
+            setSending(false);
+            return;
           }
-          throw fnError;
+          
+          // Any other error - show graceful message
+          console.error('Pre-profile chat send error:', fnError);
+          const errMsg: Message = { role: 'assistant', content: "Something flickered. The Profile is ready whenever you are." };
+          setMessages([...updated, errMsg]);
+          setShowCTA(true);
+          setConversationDone(true);
+          setSending(false);
+          return;
         }
 
       if (data?.error === 'rate_limited') {
