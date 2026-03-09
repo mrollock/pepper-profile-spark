@@ -17,7 +17,7 @@ const STEPS = [
 
 export function HowItWorksSection() {
   return (
-    <section className="sec-dark relative py-[var(--section-pad)] px-[clamp(1.25rem,5vw,3rem)]">
+    <section className="sec-dark relative bg-dark py-[var(--section-pad)] px-[clamp(1.25rem,5vw,3rem)]">
       <div className="mx-auto max-w-[600px]">
         <RevealSection>
           <span className="mb-4 block text-center font-body text-xs font-semibold uppercase tracking-[0.18em] text-gold-muted">
