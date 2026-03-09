@@ -427,7 +427,7 @@ export function MatrixSection({ onQuadrantChange }: { onQuadrantChange?: (quadra
             Where Are You Right Now?
           </h2>
           <p className="mx-auto max-w-[480px] font-body text-[0.95rem] leading-[1.7] text-cream-mid matrix-intro-text">
-            Pain isn't one thing. It's physical, emotional, inherited, relational. But from here on out, we're done talking about pain and joy. It's all pepper and sauce. The pepper is the heat you're carrying. The sauce is everything around it. Move the sliders. Find out what blend you're working with.
+            Pain isn't one thing. It's physical, emotional, inherited, relational. But from here on out, we're done talking about pain and joy. It's all pepper and sauce. The pepper is the heat you're carrying. The sauce is everything around it. Touch the map. Find out what blend you're working with.
           </p>
         </div>
 
