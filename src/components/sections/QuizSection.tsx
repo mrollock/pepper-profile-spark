@@ -430,8 +430,23 @@ export function QuizSection() {
     }, 350);
   };
 
+  // CHAT (pre-profile appetizer)
+  if (phase === 'chat') {
+    return (
+      <section className="bg-cream-soft py-[var(--section-pad)] px-[clamp(1.25rem,5vw,3rem)]" id="quiz">
+        <div className="mx-auto max-w-[var(--wide-max)]">
+          <InlinePreProfileChat
+            onComplete={() => {
+              setPhase('landing');
+              setTimeout(scrollToQuiz, 100);
+            }}
+          />
+        </div>
+      </section>
+    );
+  }
+
   // LANDING
-  if (phase === 'landing') {
     return (
       <section className="bg-cream-soft py-[var(--section-pad)] px-[clamp(1.25rem,5vw,3rem)]" id="quiz">
         <div className="mx-auto max-w-[var(--wide-max)]">
