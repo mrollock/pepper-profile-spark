@@ -271,6 +271,36 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
   };
 
   const handleProfileClick = async () => {
+    // Track conversion from chat to profile
+    const durationSeconds = Math.round((Date.now() - chatStartTimeRef.current) / 1000);
+    const userMessageCount = messages.filter(m => m.role === 'user').length;
+    trackChatEvent(analyticsSessionRef.current, 'preprofile_chat_convert', {
+      conversation_id: conversationIdRef.current,
+      message_count: userMessageCount,
+      duration_seconds: durationSeconds,
+      source: 'cta_button',
+    });
+    
+    try {
+      await supabase.from('pre_profile_conversations' as any).update({
+        converted_to_profile: true,
+      } as any).eq('conversation_id', conversationIdRef.current);
+    } catch {
+      // Non-critical
+    }
+    onComplete();
+  };
+
+  const handleSkip = async () => {
+    // Track skip action
+    const durationSeconds = Math.round((Date.now() - chatStartTimeRef.current) / 1000);
+    const userMessageCount = messages.filter(m => m.role === 'user').length;
+    trackChatEvent(analyticsSessionRef.current, 'preprofile_chat_skip', {
+      conversation_id: conversationIdRef.current,
+      message_count: userMessageCount,
+      duration_seconds: durationSeconds,
+    });
+    
     try {
       await supabase.from('pre_profile_conversations' as any).update({
         converted_to_profile: true,
