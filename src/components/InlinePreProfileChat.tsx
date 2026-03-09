@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Send, Loader2 } from 'lucide-react';
+import type { Json } from '@/integrations/supabase/types';
 
 type Message = { role: 'user' | 'assistant'; content: string };
 
@@ -27,6 +28,23 @@ function isDeclineMessage(content: string): boolean {
   return lower.includes('no problem') && lower.includes('whenever you\'re ready');
 }
 
+/* Analytics tracking helper */
+async function trackChatEvent(
+  sessionId: string,
+  eventType: string,
+  eventData?: Record<string, Json>
+) {
+  try {
+    await supabase.from('quiz_analytics').insert([{
+      session_id: sessionId,
+      event_type: eventType,
+      event_data: eventData || {},
+    }]);
+  } catch {
+    // Non-critical - don't block chat flow
+  }
+}
+
 export default function InlinePreProfileChat({ onComplete }: InlinePreProfileChatProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
@@ -37,6 +55,8 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
   const [error, setError] = useState('');
 
   const conversationIdRef = useRef(crypto.randomUUID());
+  const analyticsSessionRef = useRef(crypto.randomUUID());
+  const chatStartTimeRef = useRef(Date.now());
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const isNearBottomRef = useRef(true);
@@ -62,6 +82,11 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
   useEffect(() => {
     async function getOpening() {
       setSending(true);
+      // Track chat start
+      trackChatEvent(analyticsSessionRef.current, 'preprofile_chat_start', {
+        conversation_id: conversationIdRef.current,
+      });
+      
       try {
         const { data, error: fnError } = await supabase.functions.invoke('pre-profile-chat', {
           body: {
@@ -78,6 +103,7 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
           setError(data.content || "You've been exploring. The Profile is the best next step.");
           setShowCTA(true);
           setConversationDone(true);
+          trackChatEvent(analyticsSessionRef.current, 'preprofile_chat_rate_limited');
           setSending(false);
           return;
         }
@@ -89,6 +115,7 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
         setError("Something went sideways. Let's jump straight into the Profile.");
         setShowCTA(true);
         setConversationDone(true);
+        trackChatEvent(analyticsSessionRef.current, 'preprofile_chat_error', { phase: 'opening' });
       }
       setSending(false);
     }
@@ -109,6 +136,13 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
     setMessages(updated);
 
     const userCount = updated.filter(m => m.role === 'user').length;
+    
+    // Track message sent
+    trackChatEvent(analyticsSessionRef.current, 'preprofile_chat_message', {
+      message_number: userCount,
+      conversation_id: conversationIdRef.current,
+    });
+    
     if (userCount >= 4) {
       const capMsg: Message = {
         role: 'assistant',
@@ -119,6 +153,15 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
       setTimeout(() => setShowCTA(true), 1000);
       setSending(false);
       updateConversationAnalytics([...updated, capMsg], true);
+      
+      // Track chat completion (cap reached)
+      const durationSeconds = Math.round((Date.now() - chatStartTimeRef.current) / 1000);
+      trackChatEvent(analyticsSessionRef.current, 'preprofile_chat_complete', {
+        reason: 'message_cap',
+        message_count: userCount,
+        duration_seconds: durationSeconds,
+        conversation_id: conversationIdRef.current,
+      });
       return;
     }
 
@@ -153,6 +196,15 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
         setCrisisDetected(true);
         setConversationDone(true);
         updateConversationAnalytics(withResponse, false, true);
+        
+        // Track crisis detection
+        const durationSeconds = Math.round((Date.now() - chatStartTimeRef.current) / 1000);
+        trackChatEvent(analyticsSessionRef.current, 'preprofile_chat_complete', {
+          reason: 'crisis_detected',
+          message_count: withResponse.filter(m => m.role === 'user').length,
+          duration_seconds: durationSeconds,
+          conversation_id: conversationIdRef.current,
+        });
         setSending(false);
         return;
       }
@@ -161,6 +213,15 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
         setConversationDone(true);
         setTimeout(() => setShowCTA(true), 1000);
         updateConversationAnalytics(withResponse, true);
+        
+        // Track decline completion
+        const durationSeconds = Math.round((Date.now() - chatStartTimeRef.current) / 1000);
+        trackChatEvent(analyticsSessionRef.current, 'preprofile_chat_complete', {
+          reason: 'user_declined',
+          message_count: withResponse.filter(m => m.role === 'user').length,
+          duration_seconds: durationSeconds,
+          conversation_id: conversationIdRef.current,
+        });
         setSending(false);
         return;
       }
@@ -169,6 +230,15 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
         setConversationDone(true);
         setTimeout(() => setShowCTA(true), 1000);
         updateConversationAnalytics(withResponse, true);
+        
+        // Track natural completion
+        const durationSeconds = Math.round((Date.now() - chatStartTimeRef.current) / 1000);
+        trackChatEvent(analyticsSessionRef.current, 'preprofile_chat_complete', {
+          reason: 'natural_close',
+          message_count: withResponse.filter(m => m.role === 'user').length,
+          duration_seconds: durationSeconds,
+          conversation_id: conversationIdRef.current,
+        });
         setSending(false);
         return;
       }
@@ -177,6 +247,7 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
       setError("Something went sideways. Let's jump straight into the Profile.");
       setShowCTA(true);
       setConversationDone(true);
+      trackChatEvent(analyticsSessionRef.current, 'preprofile_chat_error', { phase: 'conversation' });
     }
 
     setSending(false);
@@ -200,6 +271,36 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
   };
 
   const handleProfileClick = async () => {
+    // Track conversion from chat to profile
+    const durationSeconds = Math.round((Date.now() - chatStartTimeRef.current) / 1000);
+    const userMessageCount = messages.filter(m => m.role === 'user').length;
+    trackChatEvent(analyticsSessionRef.current, 'preprofile_chat_convert', {
+      conversation_id: conversationIdRef.current,
+      message_count: userMessageCount,
+      duration_seconds: durationSeconds,
+      source: 'cta_button',
+    });
+    
+    try {
+      await supabase.from('pre_profile_conversations' as any).update({
+        converted_to_profile: true,
+      } as any).eq('conversation_id', conversationIdRef.current);
+    } catch {
+      // Non-critical
+    }
+    onComplete();
+  };
+
+  const handleSkip = async () => {
+    // Track skip action
+    const durationSeconds = Math.round((Date.now() - chatStartTimeRef.current) / 1000);
+    const userMessageCount = messages.filter(m => m.role === 'user').length;
+    trackChatEvent(analyticsSessionRef.current, 'preprofile_chat_skip', {
+      conversation_id: conversationIdRef.current,
+      message_count: userMessageCount,
+      duration_seconds: durationSeconds,
+    });
+    
     try {
       await supabase.from('pre_profile_conversations' as any).update({
         converted_to_profile: true,
@@ -345,7 +446,7 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
       {!conversationDone && messages.length > 0 && (
         <div className="mt-4 text-center">
           <button
-            onClick={onComplete}
+            onClick={handleSkip}
             className="font-body text-[0.8rem] text-text-faint underline-offset-2 hover:underline"
           >
             Skip to the Profile
