@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Send, Loader2 } from 'lucide-react';
+import type { Json } from '@/integrations/supabase/types';
 
 type Message = { role: 'user' | 'assistant'; content: string };
 
@@ -31,7 +32,7 @@ function isDeclineMessage(content: string): boolean {
 async function trackChatEvent(
   sessionId: string,
   eventType: string,
-  eventData?: Record<string, unknown>
+  eventData?: Record<string, Json>
 ) {
   try {
     await supabase.from('quiz_analytics').insert([{
