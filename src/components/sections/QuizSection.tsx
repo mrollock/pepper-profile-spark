@@ -303,7 +303,7 @@ function ShareActions({ shareText, shareUrl }: { shareText: string; shareUrl: st
 
 export function QuizSection() {
   const navigate = useNavigate();
-  const [phase, setPhase] = useState<Phase>('landing');
+  const [phase, setPhase] = useState<Phase>('chat');
   const [currentItem, setCurrentItem] = useState(0);
   const [responses, setResponses] = useState<Record<number, number | string>>({});
   const [userName, setUserName] = useState('');
