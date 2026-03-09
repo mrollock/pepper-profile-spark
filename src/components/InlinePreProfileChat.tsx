@@ -402,7 +402,7 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
         className="rounded-2xl border border-gold/15 bg-dark overflow-hidden"
       >
         {/* Messages */}
-        <div className="max-h-[400px] overflow-y-auto px-5 py-5" onScroll={handleScroll}>
+        <div ref={scrollContainerRef} className="max-h-[400px] overflow-y-auto px-5 py-5" onScroll={handleScroll}>
           <div className="space-y-5">
             {messages.map((msg, i) => (
               <div
