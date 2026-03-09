@@ -12,12 +12,20 @@ interface AnalyticsEvent {
   created_at: string;
 }
 
+interface ChatConversation {
+  started_at: string | null;
+  completed_at: string | null;
+  converted_to_profile: boolean | null;
+  message_count: number | null;
+}
+
 const COLORS = ["#c8962e", "#a67825", "#8b5e1a", "#d4a843", "#e0bc5f", "#6b4513"];
 
 export default function AdminAnalytics() {
   const [password, setPassword] = useState("");
   const [authed, setAuthed] = useState(false);
   const [events, setEvents] = useState<AnalyticsEvent[]>([]);
+  const [chatConversations, setChatConversations] = useState<ChatConversation[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -32,6 +40,7 @@ export default function AdminAnalytics() {
       if (fnError) throw fnError;
       if (data?.error) throw new Error(data.error);
       setEvents(data.events || []);
+      setChatConversations(data.chatConversations || []);
       setAuthed(true);
     } catch (e: any) {
       setError(e.message || "Invalid password");
