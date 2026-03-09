@@ -58,6 +58,7 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
   const analyticsSessionRef = useRef(crypto.randomUUID());
   const chatStartTimeRef = useRef(Date.now());
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const isNearBottomRef = useRef(true);
 
@@ -66,9 +67,10 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
     isNearBottomRef.current = el.scrollHeight - el.scrollTop - el.clientHeight < 80;
   }, []);
 
+  // Scroll within the chat container only, not the whole page
   useEffect(() => {
-    if (isNearBottomRef.current) {
-      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (isNearBottomRef.current && scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = scrollContainerRef.current.scrollHeight;
     }
   }, [messages, showCTA]);
 
