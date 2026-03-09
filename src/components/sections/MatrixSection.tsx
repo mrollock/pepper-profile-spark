@@ -426,10 +426,8 @@ export function MatrixSection({ onQuadrantChange }: { onQuadrantChange?: (quadra
           <h2 className="mb-2 font-display text-[clamp(1.6rem,4vw,2.2rem)] font-bold leading-[1.2] text-cream">
             Where Are You Right Now?
           </h2>
-          <p className="font-body text-[0.95rem] leading-[1.7] text-cream-mid matrix-intro-text">
-            Use the sliders to map where you are right now. Sliding right toward{" "}
-            <em className="font-accent italic text-gold">spicy</em> means you're carrying more pain in your life at this moment. Sliding up toward{" "}
-            <em className="font-accent italic text-gold">rich</em> means you have more of the supportive, positive, nourishing things in your life — people, meaning, joy, agency — that surround the pain.
+          <p className="mx-auto max-w-[480px] font-body text-[0.95rem] leading-[1.7] text-cream-mid matrix-intro-text">
+            Pain isn't one thing. It's physical, emotional, inherited, relational. But from here on out, we're done talking about pain and joy. It's all pepper and sauce. The pepper is the heat you're carrying. The sauce is everything around it. Move the sliders. Find out what blend you're working with.
           </p>
         </div>
 
