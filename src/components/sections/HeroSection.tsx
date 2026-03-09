@@ -85,31 +85,44 @@ export function HeroSection() {
           </div>
         </RevealSection>
 
-        {/* 6. Framework description */}
+        {/* 6. The Mirror */}
         <RevealSection delay={1100}>
-          <p className="mx-auto mt-8 mb-6 max-w-[620px] text-[clamp(1rem,2.2vw,1.15rem)] leading-[1.75] text-cream-mid">
-            You've carried it in your body, your family, your history. And somewhere along the way, you learned that joy had to wait until the pain was gone. That visible pleasure was evidence against you. That being believed meant shrinking to fit the expectation.{' '}
-            <span className="font-semibold text-gold-pale">The Pepper Sauce Principle&#8482;</span>{' '}
-            names five conditions that make joy possible alongside pain, not after it. Grounded in neuroscience, positive psychology, and the cultural wisdom that was practicing them generations before the research caught up.
+          <p className="mx-auto mt-8 mb-8 max-w-[540px] text-[clamp(0.92rem,2.1vw,1.05rem)] leading-[1.8] text-cream-mid">
+            You've carried it in your body, your family, your history. And somewhere along the way, you were taught that joy had to wait until the pain was gone. That when you did feel pleasure, or laughed too freely, or danced, or simply lived well for a moment, it became evidence that your pain must not be that bad. So you learned to shrink. To dim what was bright in you so that what hurt in you would be believed.
           </p>
         </RevealSection>
 
-        {/* 7. Tagline */}
-        <RevealSection delay={1300}>
+        {/* 7. The Promise */}
+        <RevealSection delay={1250}>
+          <p className="mx-auto mb-8 max-w-[540px] text-[clamp(0.92rem,2.1vw,1.05rem)] leading-[1.8] text-cream-mid">
+            <span className="font-semibold text-cream">The Pepper Sauce Principle&#8482;</span>{' '}
+            names five conditions that make joy possible alongside pain, not after it. A framework, a community, and a table full of people who will never ask you to shrink again. Because pain doesn't have to be the end of pleasure, for the same reason pepper sauce burns your mouth and is still delicious, and you still want more. Grounded in neuroscience, positive psychology, and the cultural wisdom that was living this truth generations before the research caught up.
+          </p>
+        </RevealSection>
+
+        {/* 8. The Declaration */}
+        <RevealSection delay={1400}>
+          <p className="mx-auto mb-10 max-w-[500px] font-accent text-[clamp(1rem,2.5vw,1.2rem)] italic leading-[1.7] text-gold-pale">
+            I want more out of this life than coping. I want a delicious life. And I won't let this pain, your disbelief, or anything else stop me from living it.
+          </p>
+        </RevealSection>
+
+        {/* 9. Tagline */}
+        <RevealSection delay={1550}>
           <p className="mb-6 font-accent text-[clamp(1.3rem,3vw,1.8rem)] italic text-gold-light">
             Life is painful. Make it delicious.
           </p>
         </RevealSection>
 
-        {/* 8. Interactive teaser */}
-        <RevealSection delay={1500}>
+        {/* 10. Interactive teaser */}
+        <RevealSection delay={1700}>
           <p className="mx-auto mb-8 max-w-[480px] font-accent text-[clamp(0.85rem,1.5vw,0.95rem)] italic font-medium text-gold-muted">
             This is an interactive framework. Your pepper sauce is unlike anyone else's, and this framework was built to read every ingredient.
           </p>
         </RevealSection>
 
         {/* Bottom pain types divider */}
-        <RevealSection delay={1650}>
+        <RevealSection delay={1850}>
           <div className="mx-auto mt-14 max-w-[600px] border-t border-cream-mid/15 pt-6">
             <p className="text-[clamp(0.82rem,1.8vw,0.9rem)] leading-[1.7] text-cream-mid/70">
               <span className="text-gold-pale/90 font-medium">Physical pain.</span>{' '}
