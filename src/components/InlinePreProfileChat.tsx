@@ -58,6 +58,7 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
   const analyticsSessionRef = useRef(crypto.randomUUID());
   const chatStartTimeRef = useRef(Date.now());
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const isNearBottomRef = useRef(true);
 
@@ -66,15 +67,17 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
     isNearBottomRef.current = el.scrollHeight - el.scrollTop - el.clientHeight < 80;
   }, []);
 
+  // Scroll within the chat container only, not the whole page
   useEffect(() => {
-    if (isNearBottomRef.current) {
-      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (isNearBottomRef.current && scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = scrollContainerRef.current.scrollHeight;
     }
   }, [messages, showCTA]);
 
   useEffect(() => {
     if (!sending && !conversationDone) {
-      setTimeout(() => inputRef.current?.focus(), 300);
+      // Use preventScroll to avoid scrolling the page to the input
+      setTimeout(() => inputRef.current?.focus({ preventScroll: true }), 300);
     }
   }, [sending, conversationDone]);
 
@@ -399,7 +402,7 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
         className="rounded-2xl border border-gold/15 bg-dark overflow-hidden"
       >
         {/* Messages */}
-        <div className="max-h-[400px] overflow-y-auto px-5 py-5" onScroll={handleScroll}>
+        <div ref={scrollContainerRef} className="max-h-[400px] overflow-y-auto px-5 py-5" onScroll={handleScroll}>
           <div className="space-y-5">
             {messages.map((msg, i) => (
               <div

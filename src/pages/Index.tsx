@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Navbar } from '@/components/Navbar';
 import { HeroSection } from '@/components/sections/HeroSection';
 import { MatrixSection } from '@/components/sections/MatrixSection';
@@ -20,6 +21,14 @@ import { ConnectSection } from '@/components/sections/ConnectSection';
 import { Footer } from '@/components/sections/Footer';
 
 const Index = () => {
+  // Ensure page loads at the top (handles browser scroll restoration)
+  useEffect(() => {
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <Navbar />
