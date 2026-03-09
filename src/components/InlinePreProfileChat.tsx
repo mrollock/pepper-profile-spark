@@ -34,11 +34,11 @@ async function trackChatEvent(
   eventData?: Record<string, unknown>
 ) {
   try {
-    await supabase.from('quiz_analytics').insert({
+    await supabase.from('quiz_analytics').insert([{
       session_id: sessionId,
       event_type: eventType,
       event_data: eventData || {},
-    });
+    }]);
   } catch {
     // Non-critical - don't block chat flow
   }
