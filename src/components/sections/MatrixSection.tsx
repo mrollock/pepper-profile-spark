@@ -544,37 +544,33 @@ export function MatrixSection({ onQuadrantChange }: { onQuadrantChange?: (quadra
           )}
         </div>
 
-        {/* Tagline */}
-        <p className="mt-10 text-center font-accent text-[1.15rem] italic tracking-[0.02em] text-gold-muted">
-          Life is painful. Make it delicious.
-        </p>
-
         {/* Bridge copy */}
         <div className="mx-auto mt-12 max-w-[560px] text-center">
           <p className="font-body text-[15px] leading-[1.7] text-cream-mid">
             You just answered the first question:{" "}
-            <em className="font-accent italic text-gold-light">where am I on the Pepper Sauce map?</em>
+            <em className="font-accent text-[15px] italic text-gold-light">where am I on the Pepper Sauce map?</em>
           </p>
           <p className="mt-4 font-body text-[15px] leading-[1.7] text-cream-mid">
             The Pepper Sauce Profile answers the second:{" "}
-            <em className="font-accent italic text-gold-light">what's in my sauce?</em>{" "}
+            <em className="font-accent text-[15px] italic text-gold-light">what's in my sauce?</em>{" "}
             Thirty-four questions that map your five conditions, name your fire, and check whether the heat you're carrying might need a professional in the kitchen with you. It's free. It takes about seven minutes.
           </p>
-          <p className="mt-4 font-body text-[15px] leading-[1.7] text-cream-mid">
-            For those who want the third question —{" "}
-            <em className="font-accent italic text-gold-light">how do I make life more delicious?</em>{" "}
-            — the Extended Report takes what the Profile found, asks you to go deeper, and returns a personalized guide to building sauce from exactly where you are. Not advice. A recipe worth considering.
+          <p className="mx-auto mt-[1.2rem] mb-[2rem] max-w-[460px] font-accent text-[0.87rem] italic leading-[1.6] text-text-faint">
+            And for those who want to go deeper: a personalized guide to your delicious life, written for your fire and your recipe. But first, the Profile.
           </p>
         </div>
 
         {/* CTA */}
-        <div className="mt-10 flex justify-center">
+        <div className="flex flex-col items-center">
           <a
             href="#quiz"
             className="inline-block rounded-md bg-gold px-9 py-3.5 font-body text-[0.95rem] font-semibold tracking-wide text-dark transition-all hover:bg-gold-light hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(200,150,46,0.3)]"
           >
-            Discover What's in Your Bottle
+            Take the Pepper Sauce Profile
           </a>
+          <p className="mt-[0.7rem] font-body text-[0.7rem] tracking-[0.02em] text-text-faint">
+            Free. Seven minutes. Walk away knowing exactly where to start.
+          </p>
         </div>
       </div>
 
