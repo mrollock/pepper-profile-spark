@@ -82,6 +82,11 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
   useEffect(() => {
     async function getOpening() {
       setSending(true);
+      // Track chat start
+      trackChatEvent(analyticsSessionRef.current, 'preprofile_chat_start', {
+        conversation_id: conversationIdRef.current,
+      });
+      
       try {
         const { data, error: fnError } = await supabase.functions.invoke('pre-profile-chat', {
           body: {
@@ -98,6 +103,7 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
           setError(data.content || "You've been exploring. The Profile is the best next step.");
           setShowCTA(true);
           setConversationDone(true);
+          trackChatEvent(analyticsSessionRef.current, 'preprofile_chat_rate_limited');
           setSending(false);
           return;
         }
@@ -109,6 +115,7 @@ export default function InlinePreProfileChat({ onComplete }: InlinePreProfileCha
         setError("Something went sideways. Let's jump straight into the Profile.");
         setShowCTA(true);
         setConversationDone(true);
+        trackChatEvent(analyticsSessionRef.current, 'preprofile_chat_error', { phase: 'opening' });
       }
       setSending(false);
     }
