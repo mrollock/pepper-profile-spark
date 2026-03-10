@@ -250,6 +250,12 @@ export function InterventionSection() {
             <p className="mt-4 font-body text-[14px] italic text-cream-mid/70">
               Seven days. Starts tonight.
             </p>
+            <a
+              href="/go-deeper"
+              className="mt-6 inline-block font-body text-[14px] text-gold-muted transition-colors hover:text-gold"
+            >
+              Go deeper: the science and cultural wisdom behind the Challenge →
+            </a>
           </div>
         </RevealSection>
 
