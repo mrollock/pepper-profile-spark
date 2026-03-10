@@ -1,0 +1,1 @@
+CREATE POLICY "Allow anonymous insert on nurture_emails" ON public.nurture_emails FOR INSERT TO public WITH CHECK (true);
