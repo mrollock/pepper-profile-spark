@@ -1,0 +1,1 @@
+CREATE POLICY "Allow anonymous update on nurture_emails" ON public.nurture_emails FOR UPDATE TO public USING (true) WITH CHECK (true);
