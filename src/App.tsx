@@ -12,6 +12,7 @@ import TermsPage from "./pages/TermsPage";
 import DisclaimerPage from "./pages/DisclaimerPage";
 import ResultsPage from "./pages/ResultsPage";
 import ConversationPage from "./pages/ConversationPage";
+import UnsubscribePage from "./pages/UnsubscribePage";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +42,7 @@ const App = () => (
           <Route path="/disclaimer" element={<DisclaimerPage />} />
           <Route path="/results/:id" element={<ResultsPage />} />
           <Route path="/conversation/:profileId" element={<ConversationPage />} />
+          <Route path="/unsubscribe/:profileId" element={<UnsubscribePage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

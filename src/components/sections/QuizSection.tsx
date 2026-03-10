@@ -355,6 +355,30 @@ export function QuizSection() {
     supabase.from('quiz_submissions').insert(profileRow as any).select('id').single().then(({ data: row }) => {
       if (row?.id) {
         navigate(`/results/${row.id}`, { replace: true });
+
+        // Queue nurture email sequence (non-blocking)
+        const now = Date.now();
+        const emailSchedule = [
+          { email_number: 1, scheduled_at: new Date(now).toISOString() },
+          { email_number: 2, scheduled_at: new Date(now + 48 * 60 * 60 * 1000).toISOString() },
+          { email_number: 3, scheduled_at: new Date(now + 5 * 24 * 60 * 60 * 1000).toISOString() },
+        ];
+        Promise.all(
+          emailSchedule.map(e =>
+            supabase.from('nurture_emails').upsert({
+              profile_id: row.id,
+              email_number: e.email_number,
+              recipient_email: userEmail,
+              recipient_name: userName || null,
+              scheduled_at: e.scheduled_at,
+            } as any, { onConflict: 'profile_id,email_number' })
+          )
+        ).then(() => {
+          // Send Email 1 immediately
+          supabase.functions.invoke('send-nurture-email', {
+            body: { profile_id: row.id, email_number: 1 },
+          }).then(null, (err: unknown) => console.error('Nurture email 1 send error:', err));
+        }, (err) => console.error('Nurture queue error:', err));
       }
     }, () => {});
     toast.success("Profile submitted!", { description: "Your Pepper Sauce Profile results are ready." });
