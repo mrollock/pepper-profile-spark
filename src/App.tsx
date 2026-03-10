@@ -44,6 +44,7 @@ const App = () => (
           <Route path="/results/:id" element={<ResultsPage />} />
           <Route path="/conversation/:profileId" element={<ConversationPage />} />
           <Route path="/unsubscribe/:profileId" element={<UnsubscribePage />} />
+          <Route path="/go-deeper" element={<GoDeeper />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
