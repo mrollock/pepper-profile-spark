@@ -459,6 +459,7 @@ export type Database = {
     }
     Functions: {
       extract_date: { Args: { ts: string }; Returns: string }
+      process_nurture_queue: { Args: never; Returns: undefined }
     }
     Enums: {
       [_ in never]: never
