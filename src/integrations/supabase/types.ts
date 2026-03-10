@@ -268,6 +268,53 @@ export type Database = {
           },
         ]
       }
+      nurture_emails: {
+        Row: {
+          created_at: string | null
+          email_number: number
+          id: string
+          profile_id: string
+          recipient_email: string
+          recipient_name: string | null
+          scheduled_at: string
+          sent_at: string | null
+          skip_reason: string | null
+          skipped_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email_number: number
+          id?: string
+          profile_id: string
+          recipient_email: string
+          recipient_name?: string | null
+          scheduled_at: string
+          sent_at?: string | null
+          skip_reason?: string | null
+          skipped_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email_number?: number
+          id?: string
+          profile_id?: string
+          recipient_email?: string
+          recipient_name?: string | null
+          scheduled_at?: string
+          sent_at?: string | null
+          skip_reason?: string | null
+          skipped_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nurture_emails_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "quiz_submissions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       pre_profile_conversations: {
         Row: {
           completed_at: string | null
@@ -346,6 +393,8 @@ export type Database = {
           gate_safety: boolean | null
           id: string
           name: string
+          nurture_unsubscribed: boolean | null
+          nurture_unsubscribed_at: string | null
           paid_at: string | null
           primary_fire_type: string | null
           score_agency: number | null
@@ -367,6 +416,8 @@ export type Database = {
           gate_safety?: boolean | null
           id?: string
           name: string
+          nurture_unsubscribed?: boolean | null
+          nurture_unsubscribed_at?: string | null
           paid_at?: string | null
           primary_fire_type?: string | null
           score_agency?: number | null
@@ -388,6 +439,8 @@ export type Database = {
           gate_safety?: boolean | null
           id?: string
           name?: string
+          nurture_unsubscribed?: boolean | null
+          nurture_unsubscribed_at?: string | null
           paid_at?: string | null
           primary_fire_type?: string | null
           score_agency?: number | null
