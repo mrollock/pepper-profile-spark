@@ -12,6 +12,7 @@ import TermsPage from "./pages/TermsPage";
 import DisclaimerPage from "./pages/DisclaimerPage";
 import ResultsPage from "./pages/ResultsPage";
 import ConversationPage from "./pages/ConversationPage";
+import UnsubscribePage from "./pages/UnsubscribePage";
 
 const queryClient = new QueryClient();
 
