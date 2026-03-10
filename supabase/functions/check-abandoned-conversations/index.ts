@@ -7,7 +7,7 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 };
 
-const FROM_EMAIL = "Michael Rollock <michael@ifwall.com>";
+const FROM_EMAIL = "The Pepper Sauce Principle <hello@peppersauceprinciple.com>";
 const REPLY_TO = "michael@ifwall.com";
 
 serve(async (req) => {
