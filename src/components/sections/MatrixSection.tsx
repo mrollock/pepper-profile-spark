@@ -545,7 +545,7 @@ export function MatrixSection({ onQuadrantChange }: { onQuadrantChange?: (quadra
               textAlign: "center",
             }}
           >
-            <p className="font-accent text-[13px] italic" style={{ color: data.color, opacity: 0.85 }}>
+            <p className="font-accent text-[13px] italic text-cream" style={{ color: data.color, opacity: 0.9, textShadow: "0 1px 2px rgba(0,0,0,0.3)" }}>
               {data.insight}
             </p>
           </div>
