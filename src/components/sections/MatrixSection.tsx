@@ -333,7 +333,7 @@ function AxisSlider({
           <div style={{ ...touchTargetStyle, left: "50%", top: `${100 - value}%` }} />
           <div style={{ ...thumbStyle, left: "50%", top: `${100 - value}%` }} />
         </div>
-        <span className={labelClass}>{leftLabel}</span>
+        <span className={labelClass} style={labelShadow}>{leftLabel}</span>
       </div>
     );
   }
