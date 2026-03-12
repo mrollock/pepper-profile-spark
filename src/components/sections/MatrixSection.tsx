@@ -609,6 +609,12 @@ export function MatrixSection({ onQuadrantChange }: { onQuadrantChange?: (quadra
         .matrix-header {
           margin-bottom: 2.5rem;
         }
+        @media (max-width: 640px) {
+          .matrix-inactive-label {
+            font-size: 12px !important;
+            font-weight: 700 !important;
+          }
+        }
         @media (max-width: 480px) {
           .matrix-section { padding-top: 3rem !important; padding-bottom: 2.5rem !important; }
         }
