@@ -217,13 +217,14 @@ function ActiveDescription({ quadrant }: { quadrant: QuadrantKey }) {
       }}
     >
       <p
-        className="font-body text-cream-mid"
+        className="font-body text-cream-soft"
         style={{
           fontSize: "clamp(11px, 2vw, 13px)",
           lineHeight: 1.6,
           maxWidth: 480,
           margin: "0 auto",
-          opacity: 0.85,
+          opacity: 0.9,
+          textShadow: "0 1px 2px rgba(0,0,0,0.3)",
         }}
       >
         {data.description}
