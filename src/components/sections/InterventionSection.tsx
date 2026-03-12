@@ -1,4 +1,221 @@
+import { useState } from 'react';
 import { RevealSection } from '@/components/RevealSection';
+import { supabase } from '@/integrations/supabase/client';
+
+function PassTheSauceForm() {
+  const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [globalError, setGlobalError] = useState('');
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [whatYouDid, setWhatYouDid] = useState('');
+  const [whatJoyFeltLike, setWhatJoyFeltLike] = useState('');
+  const [dayNumber, setDayNumber] = useState('');
+  const [permissionGranted, setPermissionGranted] = useState(false);
+  const [ageConfirmed, setAgeConfirmed] = useState(false);
+
+  const validate = () => {
+    const e: Record<string, string> = {};
+    if (!whatYouDid.trim()) e.whatYouDid = 'This field is required.';
+    if (!whatJoyFeltLike.trim()) e.whatJoyFeltLike = 'This field is required.';
+    if (!permissionGranted) e.permission = 'This field is required.';
+    if (!ageConfirmed) e.age = 'This field is required.';
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
+  const handleSubmit = async (ev: React.FormEvent) => {
+    ev.preventDefault();
+    setGlobalError('');
+    if (!validate()) return;
+    setSubmitting(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('submit-challenge', {
+        body: {
+          name: name.trim() || null,
+          email: email.trim() || null,
+          what_you_did: whatYouDid.trim(),
+          what_joy_felt_like: whatJoyFeltLike.trim(),
+          day_number: dayNumber || null,
+          permission_granted: permissionGranted,
+          age_confirmed: ageConfirmed,
+        },
+      });
+      if (error) throw error;
+      if (data?.error === 'rate_limit') {
+        setGlobalError(data.message || "You've submitted recently. Please wait a bit before submitting again.");
+        return;
+      }
+      if (data?.error) throw new Error(data.error);
+      setSubmitted(true);
+    } catch (err: any) {
+      console.error('Submission error:', err);
+      setGlobalError(err?.message || 'Something went wrong. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const inputBase = "w-full rounded bg-dark border font-body text-[15px] text-cream placeholder:text-cream-mid/50 px-4 py-3 focus:outline-none focus:border-gold transition-colors";
+  const borderNormal = "border-gold/30";
+  const borderError = "border-gold";
+
+  if (submitted) {
+    return (
+      <div id="pass-the-sauce-form" className="mx-auto mt-12 max-w-[540px] rounded-lg border border-gold/20 bg-dark-warm px-8 py-10 text-center">
+        <h4 className="font-display text-[20px] font-bold text-gold">Your sauce has been passed.</h4>
+        <p className="mt-4 font-body text-[15px] leading-[1.8] text-cream-mid">
+          Thank you for sharing your recipe. Every story like yours is evidence that a spicy and delicious life is possible, and it might be exactly what someone else needs to hear.
+        </p>
+        <p className="mt-4 font-accent text-[14px] italic text-cream-mid/80">
+          Pain is real. Joy is possible. Make life delicious.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <form id="pass-the-sauce-form" onSubmit={handleSubmit} className="mx-auto mt-12 max-w-[540px] rounded-lg border border-gold/20 bg-dark-warm p-8">
+      <h4 className="text-center font-display text-[20px] font-bold text-gold">Pass the Sauce</h4>
+      <p className="mt-2 text-center font-body text-[14px] italic text-cream-mid">
+        Tell us about your act of defiant joy. We read every submission.
+      </p>
+      <p className="mt-1 text-center font-body text-[12px] text-cream-mid/50">
+        You must be 18 or older to submit.
+      </p>
+
+      {globalError && (
+        <p className="mt-4 text-center font-body text-[13px] text-gold/80">{globalError}</p>
+      )}
+
+      <div className="mt-6 space-y-5">
+        {/* Name */}
+        <input
+          type="text"
+          placeholder="Your first name (or stay anonymous)"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className={`${inputBase} ${borderNormal}`}
+        />
+
+        {/* Email */}
+        <div>
+          <input
+            type="email"
+            placeholder="Your email (only if you'd like us to follow up)"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className={`${inputBase} ${borderNormal}`}
+          />
+          <p className="mt-1 font-body text-[12px] text-cream-mid/50">
+            We'll never share this. Only used if you want to hear from us.
+          </p>
+        </div>
+
+        {/* What did you do? */}
+        <div>
+          <textarea
+            placeholder="What was your act of defiant joy today?"
+            rows={3}
+            value={whatYouDid}
+            onChange={(e) => { setWhatYouDid(e.target.value); if (errors.whatYouDid) setErrors(p => ({ ...p, whatYouDid: '' })); }}
+            className={`${inputBase} ${errors.whatYouDid ? borderError : borderNormal} resize-y`}
+          />
+          {errors.whatYouDid && <p className="mt-1 font-body text-[12px] text-gold/80">{errors.whatYouDid}</p>}
+        </div>
+
+        {/* What did joy feel like? */}
+        <div>
+          <textarea
+            placeholder="Not what the pain felt like. What the joy felt like while the pain was still there."
+            rows={3}
+            value={whatJoyFeltLike}
+            onChange={(e) => { setWhatJoyFeltLike(e.target.value); if (errors.whatJoyFeltLike) setErrors(p => ({ ...p, whatJoyFeltLike: '' })); }}
+            className={`${inputBase} ${errors.whatJoyFeltLike ? borderError : borderNormal} resize-y`}
+          />
+          {errors.whatJoyFeltLike && <p className="mt-1 font-body text-[12px] text-gold/80">{errors.whatJoyFeltLike}</p>}
+        </div>
+
+        {/* Day number */}
+        <select
+          value={dayNumber}
+          onChange={(e) => setDayNumber(e.target.value)}
+          className={`${inputBase} ${borderNormal}`}
+        >
+          <option value="">Which day of the Challenge?</option>
+          <option value="Day 1">Day 1</option>
+          <option value="Day 2">Day 2</option>
+          <option value="Day 3">Day 3</option>
+          <option value="Day 4">Day 4</option>
+          <option value="Day 5">Day 5</option>
+          <option value="Day 6">Day 6</option>
+          <option value="Day 7">Day 7</option>
+          <option value="After Day 7">After Day 7</option>
+        </select>
+
+        {/* Permission checkbox */}
+        <div>
+          <label className="flex cursor-pointer items-start gap-3">
+            <input
+              type="checkbox"
+              checked={permissionGranted}
+              onChange={(e) => { setPermissionGranted(e.target.checked); if (errors.permission) setErrors(p => ({ ...p, permission: '' })); }}
+              className="mt-1 h-4 w-4 shrink-0 cursor-pointer accent-gold"
+            />
+            <span className="font-body text-[14px] leading-[1.6] text-cream-mid">
+              I give permission for The Pepper Sauce Principle™ to share my story (anonymously or with my first name) to inspire others at the table.
+            </span>
+          </label>
+          {errors.permission && <p className="mt-1 pl-7 font-body text-[12px] text-gold/80">{errors.permission}</p>}
+        </div>
+
+        {/* Age checkbox */}
+        <div>
+          <label className="flex cursor-pointer items-start gap-3">
+            <input
+              type="checkbox"
+              checked={ageConfirmed}
+              onChange={(e) => { setAgeConfirmed(e.target.checked); if (errors.age) setErrors(p => ({ ...p, age: '' })); }}
+              className="mt-1 h-4 w-4 shrink-0 cursor-pointer accent-gold"
+            />
+            <span className="font-body text-[14px] leading-[1.6] text-cream-mid">
+              I confirm that I am 18 years of age or older.
+            </span>
+          </label>
+          {errors.age && <p className="mt-1 pl-7 font-body text-[12px] text-gold/80">{errors.age}</p>}
+        </div>
+
+        {/* Privacy link */}
+        <p className="text-center font-body text-[12px] text-cream-mid/50">
+          By submitting, you agree to our{' '}
+          <a href="/privacy" className="underline transition-colors hover:text-cream-mid">Privacy Policy</a>.
+        </p>
+
+        {/* Submit */}
+        <button
+          type="submit"
+          disabled={submitting}
+          className="w-full rounded-md bg-gold py-4 font-body text-sm font-bold uppercase tracking-[0.12em] text-dark transition-colors hover:bg-gold-light disabled:opacity-60"
+        >
+          {submitting ? 'Submitting…' : 'Pass the Sauce'}
+        </button>
+      </div>
+    </form>
+  );
+}
+
+const EXAMPLES = [
+  "Cooking a meal with real heat in it. Scotch bonnet, habanero, whatever your kitchen allows. Eating it slowly, on purpose.",
+  "Putting on a song that used to make you move, and moving. However your body moves today. No audience required.",
+  "Sitting on a porch with someone who doesn't need you to explain how you feel, and laughing about something that has nothing to do with pain.",
+  "Wearing the outfit you stopped wearing because you didn't think you had the energy to be seen. Putting it on anyway.",
+  "Going to the water. A lake, a pool, a bathtub. Letting your body feel something besides hurt.",
+  "Making something with your hands. Bread, a drawing, a garden row. Letting the making be the point.",
+  "Calling someone you love and telling them something true and funny that happened this week. Not a health update. A life update.",
+  "Tasting something your grandmother made, or something that reminds you of a kitchen where pain wasn't the main ingredient.",
+];
 
 export function InterventionSection() {
   return (
@@ -87,18 +304,30 @@ export function InterventionSection() {
 
           <div className="mt-10 text-center">
             <div className="mx-auto mb-6 h-[2px] w-[60px] bg-gold" />
-            <h3 className="font-display text-[clamp(1.3rem,3vw,1.5rem)] font-bold text-cream">
-              The Pepper Sauce Challenge
+            <h3 className="font-display text-[clamp(1.3rem,3vw,1.5rem)] font-bold text-gold">
+              The Pepper Sauce Challenge: Seven Days of Defiant Joy.
             </h3>
-            <p className="mt-2 font-body text-[16px] text-cream-mid">
-              Seven days. One joyful act per day. No permission required.
-            </p>
           </div>
 
           <div className="mt-8 space-y-6 font-body text-[16px] leading-[1.8] text-cream-mid">
             <p>
-              Not seven different tasks. One task, repeated: do something that brings you authentic joy. Then do it again tomorrow. And the next day. For seven days.
+              One act of defiant joy per day for seven days. A different act each day or the same one repeated. Your recipe, your rules. The only requirement is that you refuse, for seven days, to let pain be the only thing your body gets to feel.
             </p>
+            <p>
+              Not sure where to start? Here's what defiant joy has looked like for others:
+            </p>
+          </div>
+
+          {/* Examples */}
+          <div className="mt-6 space-y-0 pl-4">
+            {EXAMPLES.map((ex, i) => (
+              <p key={i} className="border-l-2 border-gold/40 pl-4 font-accent text-[15px] italic leading-[2.0] text-cream-mid/85">
+                {ex}
+              </p>
+            ))}
+          </div>
+
+          <div className="mt-8 space-y-6 font-body text-[16px] leading-[1.8] text-cream-mid">
             <p>
               But the act has rules. These matter.
             </p>
@@ -210,17 +439,41 @@ export function InterventionSection() {
           </p>
         </RevealSection>
 
-        {/* 8. PASS THE SAUCE */}
+        {/* 8. THAT'S IT */}
+        <RevealSection>
+          <div className="mt-12 space-y-6 font-body text-[16px] leading-[1.8] text-cream-mid">
+            <p>
+              That's it. No app. No tracker. No performance. Just seven days of joining every person who has ever refused to let pain have the last word. The blues musicians who held anguish and craft in the same breath. The grandmother who stirred scotch bonnet into sauce at a table full of people who knew what the burn tasted like. And now you. Tonight.
+            </p>
+          </div>
+        </RevealSection>
+
+        {/* 9. PASS THE SAUCE */}
         <RevealSection>
           <div className="mt-16 space-y-6 font-body text-[16px] leading-[1.8] text-cream-mid">
             <p>
-              When you do it&nbsp;&mdash; and you will&nbsp;&mdash; come back and Pass the Sauce.
+              When you do it (and you will), come back and Pass the Sauce.
             </p>
             <p>
-              Tell us what you did. Not what it felt like to be in pain. What it felt like to be in joy while in pain. That's the testimony the world needs to hear. That's the evidence that a spicy and delicious life is possible. That's the recipe someone else is waiting for.
+              Tell us what you did. Not what the pain felt like. What the joy felt like while the pain was still there. That's the testimony the world needs to hear. That's the recipe someone else is waiting for.
             </p>
+          </div>
+
+          <div className="mt-8 text-center">
+            <a
+              href="#pass-the-sauce-form"
+              className="inline-block rounded-md bg-gold px-8 py-4 font-body text-sm font-bold uppercase tracking-[0.12em] text-dark transition-colors hover:bg-gold-light"
+            >
+              Pass the Sauce →
+            </a>
+            <p className="mt-3 font-body text-[14px] italic text-cream-mid/70">
+              Share your story with us. We read every one.
+            </p>
+          </div>
+
+          <div className="mt-8 space-y-6 font-body text-[16px] leading-[1.8] text-cream-mid">
             <p>
-              Post it here. Post it on social media. Say it out loud to one person. However you share it, use the tags so we can find each other:
+              Or share it with the world. Post on social media with the tags so we can find each other:
             </p>
           </div>
 
@@ -238,7 +491,12 @@ export function InterventionSection() {
           </div>
         </RevealSection>
 
-        {/* 9. CTA BUTTON */}
+        {/* 10. SUBMISSION FORM */}
+        <RevealSection>
+          <PassTheSauceForm />
+        </RevealSection>
+
+        {/* 11. CTA BUTTON */}
         <RevealSection>
           <div className="mt-12 text-center">
             <a
@@ -248,7 +506,7 @@ export function InterventionSection() {
               Take the Pepper Sauce Challenge
             </a>
             <p className="mt-4 font-body text-[14px] italic text-cream-mid/70">
-              Seven days. Starts tonight.
+              Seven days of defiant joy. Starts tonight.
             </p>
             <a
               href="/go-deeper"

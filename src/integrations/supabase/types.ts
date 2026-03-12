@@ -152,6 +152,48 @@ export type Database = {
         }
         Relationships: []
       }
+      challenge_submissions: {
+        Row: {
+          age_confirmed: boolean | null
+          created_at: string | null
+          day_number: string | null
+          email: string | null
+          featured: boolean | null
+          id: string
+          ip_address: string | null
+          name: string | null
+          permission_granted: boolean | null
+          what_joy_felt_like: string
+          what_you_did: string
+        }
+        Insert: {
+          age_confirmed?: boolean | null
+          created_at?: string | null
+          day_number?: string | null
+          email?: string | null
+          featured?: boolean | null
+          id?: string
+          ip_address?: string | null
+          name?: string | null
+          permission_granted?: boolean | null
+          what_joy_felt_like: string
+          what_you_did: string
+        }
+        Update: {
+          age_confirmed?: boolean | null
+          created_at?: string | null
+          day_number?: string | null
+          email?: string | null
+          featured?: boolean | null
+          id?: string
+          ip_address?: string | null
+          name?: string | null
+          permission_granted?: boolean | null
+          what_joy_felt_like?: string
+          what_you_did?: string
+        }
+        Relationships: []
+      }
       contact_submissions: {
         Row: {
           created_at: string
