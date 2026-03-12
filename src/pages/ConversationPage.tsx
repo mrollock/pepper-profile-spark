@@ -472,7 +472,7 @@ export default function ConversationPage() {
       try {
         const { data: aiData, error: aiError } = await supabase.functions.invoke('chat-with-claude', {
           body: {
-            systemPrompt: systemPromptRef.current,
+            profileId,
             messages: apiMessages,
           },
         });
