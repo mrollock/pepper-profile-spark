@@ -263,7 +263,7 @@ const GoDeeper = () => {
                   The fear-avoidance model (Vlaeyen & Linton, 2000) is one of the most robust frameworks in pain psychology. It explains how fear of pain leads to avoidance of movement, which leads to disability and depression. The Joy Penalty extends this model into new territory: what happens when joy itself becomes the feared stimulus? When the avoidance is not of pain but of pleasure?
                 </p>
                 <p>
-                  The answer: the Bland quadrant. A life where the pain is low enough to function but the sauce has gone thin. Where the heat is managed but nothing else has been added. Where the recipe is all survival and no flavor.
+                  The answer: a flavorless life. For some, that means suffering: intense pain with nothing alongside it. For others, it means languishing: the pain may be manageable, but joy has quietly disappeared. Both live in the bottom half of the Pepper-Sauce Matrix. Both are linked to depression and worsening outcomes. And both need their sauce enriched. If the thinning has crossed from uncomfortable to unsafe, adding a healthcare professional to the recipe is the framework working as designed.
                 </p>
                 <p>
                   The Pepper Sauce Challenge is designed to push back against the Joy Penalty. Every act of defiant joy is a refusal to let the cost of showing pleasure be the thing that determines what your body gets to feel. It is not reckless. It is not denial. It is the deliberate, evidence-informed decision to add ingredients back into a recipe that the world has been thinning for you.
