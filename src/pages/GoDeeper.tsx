@@ -254,7 +254,7 @@ const GoDeeper = () => {
                   The Pepper Sauce Principle calls this the Joy Penalty: the price people living with pain pay for daring to look like they feel good.
                 </p>
                 <p>
-                  This is not a mindset problem. It is not negative thinking. It is a rational response to real consequences. Research shows that patients who display positive affect are rated as having less pain, receive less treatment, and are viewed with more suspicion by clinicians and loved ones alike (Chibnall & Tait, 1995; De Ruddere et al., 2011). Women's pain is more often dismissed as emotional or exaggerated (Samulowitz et al., 2018). Black patients' pain is systematically underestimated and undertreated (Hoffman et al., 2016). At the intersection of chronic pain, race, and gender, the penalty compounds: the only affective performance that protects credibility is stoic endurance.
+                  This is not a mindset problem. It is not negative thinking. It is a rational response to real consequences. Research shows that patients who display positive affect are rated as having less pain, receive less treatment, and are viewed with more suspicion by clinicians and loved ones alike (Chibnall & Tait, 1995; De Ruddere et al., 2011). Women's pain is more often dismissed as emotional or exaggerated (Samulowitz et al., 2018). Black patients' pain is systematically underestimated and undertreated (Hoffman et al., 2016). At the intersection of chronic pain, race, and gender, the penalty compounds. Show joy and your pain is doubted. Show stoicism and clinicians question whether you hurt as much as you say. Show distress and you are pathologized. There is no emotional expression that fully protects your credibility. The game is rigged.
                 </p>
                 <p>
                   Joy, anger, vulnerability, delight: all foreclosed.
@@ -263,7 +263,7 @@ const GoDeeper = () => {
                   The fear-avoidance model (Vlaeyen & Linton, 2000) is one of the most robust frameworks in pain psychology. It explains how fear of pain leads to avoidance of movement, which leads to disability and depression. The Joy Penalty extends this model into new territory: what happens when joy itself becomes the feared stimulus? When the avoidance is not of pain but of pleasure?
                 </p>
                 <p>
-                  The answer: the Bland quadrant. A life where the pain is low enough to function but the sauce has gone thin. Where the heat is managed but nothing else has been added. Where the recipe is all survival and no flavor.
+                  The answer: a flavorless life. For some, that means suffering: intense pain with nothing alongside it. For others, it means languishing: the pain may be manageable, but joy has quietly disappeared. Both live in the bottom half of the Pepper-Sauce Matrix. Both are linked to depression and worsening outcomes. And both need their sauce enriched. If the thinning has crossed from uncomfortable to unsafe, adding a healthcare professional to the recipe is the framework working as designed.
                 </p>
                 <p>
                   The Pepper Sauce Challenge is designed to push back against the Joy Penalty. Every act of defiant joy is a refusal to let the cost of showing pleasure be the thing that determines what your body gets to feel. It is not reckless. It is not denial. It is the deliberate, evidence-informed decision to add ingredients back into a recipe that the world has been thinning for you.
