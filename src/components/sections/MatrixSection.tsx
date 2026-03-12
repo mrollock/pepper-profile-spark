@@ -525,7 +525,7 @@ export function MatrixSection({ onQuadrantChange }: { onQuadrantChange?: (quadra
               color="hsl(var(--ember))"
             />
           </div>
-          <div className="mt-1 text-center font-body text-[10px] font-semibold uppercase tracking-[0.15em] text-text-faint" style={{ marginLeft: 56 }}>
+          <div className="mt-1 text-center font-body text-[10px] font-semibold uppercase tracking-[0.15em] text-cream-mid" style={{ marginLeft: 56, textShadow: "0 1px 3px rgba(0,0,0,0.5)" }}>
             Pepper
           </div>
 
