@@ -154,22 +154,23 @@ function QuadrantOverlay({ quadrant, activeQuadrant }: { quadrant: QuadrantKey; 
           ...alignMap[quadrant],
           textAlign,
           transition: "opacity 0.3s ease, transform 0.3s ease",
-          opacity: isActive ? 1 : 0.5,
+          opacity: isActive ? 1 : 0.75,
           transform: isActive ? "scale(1)" : "scale(0.92)",
         }}
       >
         <div
-          className="font-display font-bold"
+          className={`font-display font-bold ${isActive ? '' : 'matrix-inactive-label'}`}
           style={{
             fontSize: isActive ? "clamp(0.9rem, 2.5vw, 1.25rem)" : "clamp(0.7rem, 1.8vw, 0.9rem)",
             color: data.color,
             lineHeight: 1.25,
             transition: "font-size 0.3s ease",
+            textShadow: "0 1px 4px rgba(0,0,0,0.7), 0 0 10px rgba(0,0,0,0.4)",
           }}
         >
           {data.name}
         </div>
-        {isActive && (
+        {isActive ? (
           <div
             className="font-body"
             style={{
@@ -179,6 +180,21 @@ function QuadrantOverlay({ quadrant, activeQuadrant }: { quadrant: QuadrantKey; 
               letterSpacing: "0.04em",
               marginTop: 2,
               animation: "matrix-fade-in 0.3s ease",
+              textShadow: "0 1px 4px rgba(0,0,0,0.7), 0 0 10px rgba(0,0,0,0.4)",
+            }}
+          >
+            {data.subtitle}
+          </div>
+        ) : (
+          <div
+            className="font-body matrix-inactive-label"
+            style={{
+              fontSize: "clamp(7px, 1.3vw, 9px)",
+              color: data.color,
+              opacity: 0.7,
+              letterSpacing: "0.04em",
+              marginTop: 2,
+              textShadow: "0 1px 4px rgba(0,0,0,0.7), 0 0 10px rgba(0,0,0,0.4)",
             }}
           >
             {data.subtitle}
@@ -201,13 +217,14 @@ function ActiveDescription({ quadrant }: { quadrant: QuadrantKey }) {
       }}
     >
       <p
-        className="font-body text-cream-mid"
+        className="font-body text-cream-soft"
         style={{
           fontSize: "clamp(11px, 2vw, 13px)",
           lineHeight: 1.6,
           maxWidth: 480,
           margin: "0 auto",
-          opacity: 0.85,
+          opacity: 0.9,
+          textShadow: "0 1px 2px rgba(0,0,0,0.3)",
         }}
       >
         {data.description}
@@ -293,12 +310,13 @@ function AxisSlider({
     zIndex: 3,
   };
 
-  const labelClass = "font-body text-[10px] font-semibold uppercase tracking-[0.12em] text-text-faint whitespace-nowrap";
+  const labelClass = "font-body text-[10px] font-semibold uppercase tracking-[0.12em] text-cream-mid whitespace-nowrap";
+  const labelShadow: React.CSSProperties = { textShadow: "0 1px 3px rgba(0,0,0,0.5)" };
 
   if (vertical) {
     return (
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8, height: "100%" }}>
-        <span className={labelClass} style={{ color: "hsl(var(--gold-muted))" }}>{rightLabel}</span>
+        <span className={labelClass} style={{ ...labelShadow, color: "hsl(var(--gold-muted))" }}>{rightLabel}</span>
         <div
           ref={trackRef}
           onMouseDown={(e) => { setDragging(true); handleInteraction(e); }}
@@ -316,14 +334,14 @@ function AxisSlider({
           <div style={{ ...touchTargetStyle, left: "50%", top: `${100 - value}%` }} />
           <div style={{ ...thumbStyle, left: "50%", top: `${100 - value}%` }} />
         </div>
-        <span className={labelClass}>{leftLabel}</span>
+        <span className={labelClass} style={labelShadow}>{leftLabel}</span>
       </div>
     );
   }
 
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 12, width: "100%" }}>
-      <span className={labelClass}>{leftLabel}</span>
+      <span className={labelClass} style={labelShadow}>{leftLabel}</span>
       <div
         ref={trackRef}
         onMouseDown={(e) => { setDragging(true); handleInteraction(e); }}
@@ -341,7 +359,7 @@ function AxisSlider({
         <div style={{ ...touchTargetStyle, top: "50%", left: `${value}%` }} />
         <div style={{ ...thumbStyle, top: "50%", left: `${value}%` }} />
       </div>
-      <span className={labelClass} style={{ color: "hsl(var(--gold-muted))" }}>{rightLabel}</span>
+      <span className={labelClass} style={{ ...labelShadow, color: "hsl(var(--gold-muted))" }}>{rightLabel}</span>
     </div>
   );
 }
@@ -437,13 +455,14 @@ export function MatrixSection({ onQuadrantChange }: { onQuadrantChange?: (quadra
             {/* Vertical slider (Sauce) — height matches matrix only */}
             <div style={{ display: "flex", alignItems: "stretch", width: 40 }}>
               <div
-                className="font-body text-[10px] font-semibold uppercase tracking-[0.15em] text-text-faint"
+                className="font-body text-[10px] font-semibold uppercase tracking-[0.15em] text-cream-mid"
                 style={{
                   writingMode: "vertical-rl",
                   transform: "rotate(180deg)",
                   textAlign: "center",
                   display: "flex",
                   alignItems: "center",
+                  textShadow: "0 1px 3px rgba(0,0,0,0.5)",
                 }}
               >
                 Sauce
@@ -507,7 +526,7 @@ export function MatrixSection({ onQuadrantChange }: { onQuadrantChange?: (quadra
               color="hsl(var(--ember))"
             />
           </div>
-          <div className="mt-1 text-center font-body text-[10px] font-semibold uppercase tracking-[0.15em] text-text-faint" style={{ marginLeft: 56 }}>
+          <div className="mt-1 text-center font-body text-[10px] font-semibold uppercase tracking-[0.15em] text-cream-mid" style={{ marginLeft: 56, textShadow: "0 1px 3px rgba(0,0,0,0.5)" }}>
             Pepper
           </div>
 
@@ -526,7 +545,7 @@ export function MatrixSection({ onQuadrantChange }: { onQuadrantChange?: (quadra
               textAlign: "center",
             }}
           >
-            <p className="font-accent text-[13px] italic" style={{ color: data.color, opacity: 0.85 }}>
+            <p className="font-accent text-[13px] italic text-cream" style={{ color: data.color, opacity: 0.9, textShadow: "0 1px 2px rgba(0,0,0,0.3)" }}>
               {data.insight}
             </p>
           </div>
@@ -589,6 +608,12 @@ export function MatrixSection({ onQuadrantChange }: { onQuadrantChange?: (quadra
         }
         .matrix-header {
           margin-bottom: 2.5rem;
+        }
+        @media (max-width: 640px) {
+          .matrix-inactive-label {
+            font-size: 12px !important;
+            font-weight: 700 !important;
+          }
         }
         @media (max-width: 480px) {
           .matrix-section { padding-top: 3rem !important; padding-bottom: 2.5rem !important; }
