@@ -340,7 +340,7 @@ function AxisSlider({
 
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 12, width: "100%" }}>
-      <span className={labelClass}>{leftLabel}</span>
+      <span className={labelClass} style={labelShadow}>{leftLabel}</span>
       <div
         ref={trackRef}
         onMouseDown={(e) => { setDragging(true); handleInteraction(e); }}
