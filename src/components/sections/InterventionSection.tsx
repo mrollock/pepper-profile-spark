@@ -129,7 +129,7 @@ function PassTheSauceForm() {
         {/* What did joy feel like? */}
         <div>
           <textarea
-            placeholder="Not what the pain felt like. What the joy felt like while the pain was still there."
+            placeholder="What did the joy feel like while the pain was still there?"
             rows={3}
             value={whatJoyFeltLike}
             onChange={(e) => { setWhatJoyFeltLike(e.target.value); if (errors.whatJoyFeltLike) setErrors(p => ({ ...p, whatJoyFeltLike: '' })); }}
