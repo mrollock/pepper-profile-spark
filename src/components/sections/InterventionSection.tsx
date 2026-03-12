@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { RevealSection } from '@/components/RevealSection';
 import { supabase } from '@/integrations/supabase/client';
+import { ChevronDown } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 function PassTheSauceForm() {
   const [submitted, setSubmitted] = useState(false);
@@ -209,15 +211,58 @@ function PassTheSauceForm() {
 const EXAMPLES = [
   "Cooking a meal with real heat in it. Scotch bonnet, habanero, whatever your kitchen allows. Eating it slowly, on purpose.",
   "Putting on a song that used to make you move, and moving. However your body moves today. No audience required.",
-  "Sitting on a porch with someone who doesn\u2019t need you to explain how you feel, and laughing about something that has nothing to do with pain.",
-  "Wearing something you love that\u2019s been sitting in the closet. Putting it on anyway.",
+  "Sitting on a porch with someone who doesn't need you to explain how you feel, and laughing about something that has nothing to do with pain.",
+  "Wearing something you love that's been sitting in the closet. Putting it on anyway.",
   "Going to the water. A lake, a pool, a bathtub. Letting your body remember what it feels like to be held.",
   "Making something with your hands. Bread, a drawing, a garden row. Letting the making be the point.",
   "Calling someone you love and telling them something true and funny that happened this week. A life update, not a health update.",
-  "Tasting something your grandmother made, or something that reminds you of a kitchen where pain wasn\u2019t the main ingredient.",
+  "Tasting something your grandmother made, or something that reminds you of a kitchen where pain wasn't the main ingredient.",
 ];
 
+function CollapsibleBlock({ trigger, children }: { trigger: string; children: React.ReactNode }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div>
+      <button
+        type="button"
+        onClick={() => setOpen(o => !o)}
+        className="flex w-full items-center justify-between gap-4 text-left font-body text-[16px] leading-[1.8] text-cream-mid transition-colors hover:text-cream"
+      >
+        <span>{trigger}</span>
+        <ChevronDown
+          size={20}
+          className={cn(
+            'shrink-0 text-gold transition-transform duration-300',
+            open && 'rotate-180'
+          )}
+        />
+      </button>
+      <div
+        className={cn(
+          'overflow-hidden transition-all duration-400',
+          open ? 'max-h-[2000px] opacity-100 mt-4' : 'max-h-0 opacity-0'
+        )}
+      >
+        {children}
+      </div>
+    </div>
+  );
+}
+
 export function InterventionSection() {
+  const shareSubject = encodeURIComponent('Someone shared The Pepper Sauce Challenge with you');
+  const shareBody = encodeURIComponent(
+`Someone who cares about you thought you should see this.
+
+The Pepper Sauce Challenge is seven days of defiant joy. One act per day. Your recipe, your rules. The only requirement: for seven days, your body gets to feel something besides pain.
+
+It was made for people who live with pain and have been told the best they can hope for is coping. It asks a different question: what if joy is possible alongside the pain, and what if you proved it to yourself in seven days?
+
+Start here: https://peppersauceprinciple.com/#seven-days
+
+Pain is real. Joy is possible. Make life delicious.`
+  );
+
   return (
     <section
       className="sec-dark relative bg-dark py-[var(--section-pad)] px-[clamp(1.25rem,5vw,3rem)]"
@@ -225,22 +270,17 @@ export function InterventionSection() {
     >
       <div className="mx-auto max-w-[620px]">
 
-        {/* 1. EYEBROW + HEADLINE */}
+        {/* 1. PROFESSOR STORY (above challenge title, encountered by scrolling) */}
         <RevealSection>
           <div className="text-center">
             <span className="mb-4 block font-body text-xs font-semibold uppercase tracking-[0.18em] text-gold-muted">
               The Pepper Sauce Challenge
             </span>
-            <h2 className="text-cream">
-              The Pepper Sauce Challenge: Seven Days of Defiant Joy.
-            </h2>
-          <div className="mx-auto mt-6 h-[3px] w-[60px] rounded-sm bg-gold-muted" />
           </div>
         </RevealSection>
 
-        {/* 2. THE STORY */}
         <RevealSection>
-          <div className="mt-16 space-y-6 border-l-[3px] border-gold/15 pl-5 font-body text-[16px] leading-[1.8] text-cream-mid">
+          <div className="mt-10 space-y-6 border-l-[3px] border-gold/15 pl-5 font-body text-[16px] leading-[1.8] text-cream-mid">
             <p>
               A professor I worked with stopped teaching the day she started using a wheelchair.
             </p>
@@ -248,7 +288,7 @@ export function InterventionSection() {
               Not because she couldn't teach. Because she couldn't teach the way she always had. The whiteboard. The pacing. The movement around the room that made her feel like herself. She decided that if she couldn't do it that way, she wouldn't do it at all.
             </p>
             <p>
-              So she worked from home. A small office. Small projects. Her world got smaller. Her students never saw her again. And the people who would have watched a brilliant woman teach from a chair, who would have seen that passion doesn't require standing, who would have learned that a life with pain can still be one that matters&nbsp;&mdash; they never got that lesson.
+              So she worked from home. A small office. Small projects. Her world got smaller. Her students never saw her again. And the people who would have watched a brilliant woman teach from a chair, who would have seen that passion doesn't require standing, who would have learned that a life with pain can still be one that matters: they never got that lesson.
             </p>
           </div>
         </RevealSection>
@@ -260,20 +300,20 @@ export function InterventionSection() {
         </RevealSection>
 
         <RevealSection>
-          <div className="space-y-6 font-accent text-[15px] italic leading-[1.85] text-cream-mid/90">
+          <div className="space-y-6 border-l-[3px] border-gold/15 pl-5 font-body text-[16px] leading-[1.8] text-cream-mid">
             <p>
               Her pain was real. But she confused how she used to do things with who she actually was. Her humor. Her depth. Her ability to hold a room. Those were still there. They didn't need a whiteboard. They needed a table.
             </p>
             <p>
-              She made a decision many people living with pain make every day: she let the pepper win. Not all at once. Slowly. One concession at a time. One "I can't do it like I used to" at a time. Until the life that remained was all heat and no flavor. Scorching.
+              She made a decision many people living with pain make every day: she let the pepper be the only thing in the recipe. One concession at a time. One "I can't do it like I used to" at a time. The things that gave her life flavor disappeared slowly. Until what remained was all heat and no sauce. Scorching.
             </p>
           </div>
-          <p className="mt-6 font-accent text-[12px] italic text-cream-mid/50">
+          <p className="mt-6 border-l-[3px] border-gold/15 pl-5 font-body text-[12px] text-cream-mid/50">
             This story is a de-identified composite drawn from clinical experience. It does not describe any specific individual.
           </p>
         </RevealSection>
 
-        {/* 3. THE TURN */}
+        {/* 2. THE TURN */}
         <RevealSection>
           <div className="mt-16 space-y-6 font-body text-[16px] leading-[1.8] text-cream-mid">
             <p>
@@ -294,152 +334,140 @@ export function InterventionSection() {
           </p>
         </RevealSection>
 
-        {/* 4. THE CHALLENGE INTRO */}
+        {/* 3. CHALLENGE INTRO */}
         <RevealSection>
           <div className="space-y-6 font-body text-[16px] leading-[1.8] text-cream-mid">
             <p>
               We are leveling a challenge. Not a wellness assignment. Not a self-care checklist. A challenge. The kind that requires something of you.
             </p>
           </div>
+        </RevealSection>
 
-          <div className="mt-10 text-center">
+        {/* === CHALLENGE TITLE (nav anchor) === */}
+        <RevealSection>
+          <div className="mt-10 text-center" id="seven-days">
             <div className="mx-auto mb-6 h-[2px] w-[60px] bg-gold" />
             <h3 className="font-display text-[clamp(1.3rem,3vw,1.5rem)] font-bold text-gold">
               The Pepper Sauce Challenge: Seven Days of Defiant Joy.
             </h3>
           </div>
 
-          <div className="mt-8 space-y-6 font-body text-[16px] leading-[1.8] text-cream-mid">
+          {/* Share button */}
+          <div className="my-4 text-center">
+            <a
+              href={`mailto:?subject=${shareSubject}&body=${shareBody}`}
+              className="inline-block rounded-md border border-gold bg-transparent px-6 py-2.5 font-body text-[14px] text-gold transition-colors hover:bg-gold/10"
+            >
+              Share This Challenge With Someone Who Needs It
+            </a>
+          </div>
+
+          {/* Description */}
+          <div className="mt-6 space-y-6 font-body text-[16px] leading-[1.8] text-cream-mid">
             <p>
               One act of defiant joy per day for seven days. The same act repeated, or a different one each time. Your recipe, your rules. The only requirement: for seven days, your body gets to feel something besides pain.
             </p>
-            <p>
-              Need a place to start? Here's what defiant joy has looked like for others:
-            </p>
           </div>
 
-          {/* Examples */}
-          <div className="mt-6 space-y-0 pl-4">
-            {EXAMPLES.map((ex, i) => (
-              <p key={i} className="border-l-2 border-gold/40 pl-4 font-accent text-[15px] italic leading-[2.0] text-cream-mid/85">
-                {ex}
-              </p>
-            ))}
+          {/* Collapsible examples */}
+          <div className="mt-8">
+            <CollapsibleBlock trigger="Need a place to start? Here's what defiant joy has looked like for others:">
+              <div className="space-y-0 pl-4">
+                {EXAMPLES.map((ex, i) => (
+                  <p key={i} className="border-l-2 border-gold/40 pl-4 font-accent text-[17px] italic leading-[2.0] text-cream-mid/85">
+                    {ex}
+                  </p>
+                ))}
+              </div>
+            </CollapsibleBlock>
           </div>
 
-          <div className="mt-8 space-y-6 font-body text-[16px] leading-[1.8] text-cream-mid">
-            <p>
-              But the act has rules. These matter.
-            </p>
+          {/* Collapsible rules */}
+          <div className="mt-8">
+            <CollapsibleBlock trigger="But the act has rules. These matter.">
+              <div className="space-y-8">
+                <div className="border-l-2 border-gold/40 pl-6">
+                  <h4 className="font-display text-[18px] font-bold text-gold">
+                    It must be authentic to who you are now.
+                  </h4>
+                  <div className="mt-3 space-y-4 font-body text-[16px] leading-[1.8] text-cream-mid">
+                    <p>
+                      Not who you were before pain arrived. Not the version of you that could dance for three hours, run five miles, cook a feast standing up. That's how you used to do things. It is not who you are.
+                    </p>
+                    <p>
+                      Who you are is your sense of humor. Your taste. The music that still hits you somewhere behind your sternum. The people whose laughter changes the temperature of a room. The food that reminds you of someone who loved you before you knew what pain was.
+                    </p>
+                    <p>
+                      Start there. Not with what you've lost. With what's still true.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="border-l-2 border-gold/40 pl-6">
+                  <h4 className="font-display text-[18px] font-bold text-gold">
+                    It must involve your body.
+                  </h4>
+                  <div className="mt-3 space-y-4 font-body text-[16px] leading-[1.8] text-cream-mid">
+                    <p>
+                      Not necessarily movement. Sensation. The feel of cold water. The taste of something with actual heat in it. Music loud enough to feel in your chest. Singing badly. Dancing in whatever way your body allows today, not the way it used to. Your body carries the pain. Your body also carries the capacity for pleasure. Both live in the same nervous system. The challenge insists they meet.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="border-l-2 border-gold/40 pl-6">
+                  <h4 className="font-display text-[18px] font-bold text-gold">
+                    It can be uncomfortable.
+                  </h4>
+                  <div className="mt-3 space-y-4 font-body text-[16px] leading-[1.8] text-cream-mid">
+                    <p>
+                      Discomfort and joy coexist. That's the whole principle. You might feel self-conscious. You might feel rusty. You might feel the pain the entire time. That doesn't disqualify the joy. Pepper sauce burns your mouth and is still delicious. You are allowed to hurt and laugh in the same breath.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="border-l-2 border-gold/40 pl-6">
+                  <h4 className="font-display text-[18px] font-bold text-gold">
+                    It should be shared, if possible.
+                  </h4>
+                  <div className="mt-3 space-y-4 font-body text-[16px] leading-[1.8] text-cream-mid">
+                    <p>
+                      Not required. But the challenge is richer at a table. Call someone. Invite someone. Do the thing alongside another person who understands that joy in the presence of pain is not denial. It is defiance.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </CollapsibleBlock>
           </div>
         </RevealSection>
 
-        {/* 5. THE RULES */}
-        <div className="mt-12 space-y-8">
-          <RevealSection>
-            <div className="border-l-2 border-gold/40 pl-6">
-              <h4 className="font-display text-[18px] font-bold text-gold">
-                It must be authentic to who you are now.
-              </h4>
-              <div className="mt-3 space-y-4 font-body text-[16px] leading-[1.8] text-cream-mid">
-                <p>
-                  Not who you were before pain arrived. Not the version of you that could dance for three hours, run five miles, cook a feast standing up. That's how you used to do things. It is not who you are.
-                </p>
-                <p>
-                  Who you are is your sense of humor. Your taste. The music that still hits you somewhere behind your sternum. The people whose laughter changes the temperature of a room. The food that reminds you of someone who loved you before you knew what pain was.
-                </p>
-                <p>
-                  Start there. Not with what you've lost. With what's still true.
-                </p>
-              </div>
-            </div>
-          </RevealSection>
-
-          <RevealSection>
-            <div className="border-l-2 border-gold/40 pl-6">
-              <h4 className="font-display text-[18px] font-bold text-gold">
-                It must involve your body.
-              </h4>
-              <div className="mt-3 space-y-4 font-body text-[16px] leading-[1.8] text-cream-mid">
-                <p>
-                  Not necessarily movement. Sensation. The feel of cold water. The taste of something with actual heat in it. Music loud enough to feel in your chest. Singing badly. Dancing in whatever way your body allows today, not the way it used to. Your body carries the pain. Your body also carries the capacity for pleasure. Both live in the same nervous system. The challenge insists they meet.
-                </p>
-              </div>
-            </div>
-          </RevealSection>
-
-          <RevealSection>
-            <div className="border-l-2 border-gold/40 pl-6">
-              <h4 className="font-display text-[18px] font-bold text-gold">
-                It can be uncomfortable.
-              </h4>
-              <div className="mt-3 space-y-4 font-body text-[16px] leading-[1.8] text-cream-mid">
-                <p>
-                  Discomfort and joy coexist. That's the whole principle. You might feel self-conscious. You might feel rusty. You might feel the pain the entire time. That doesn't disqualify the joy. Pepper sauce burns your mouth and is still delicious. You are allowed to hurt and laugh in the same breath.
-                </p>
-              </div>
-            </div>
-          </RevealSection>
-
-          <RevealSection>
-            <div className="border-l-2 border-gold/40 pl-6">
-              <h4 className="font-display text-[18px] font-bold text-gold">
-                It should be shared, if possible.
-              </h4>
-              <div className="mt-3 space-y-4 font-body text-[16px] leading-[1.8] text-cream-mid">
-                <p>
-                  Not required. But the challenge is richer at a table. Call someone. Invite someone. Do the thing alongside another person who understands that joy in the presence of pain is not denial. It is defiance.
-                </p>
-              </div>
-            </div>
-          </RevealSection>
-        </div>
-
-        {/* 6. THE REAL DIFFICULTY */}
+        {/* 4. THE REAL DIFFICULTY (rewritten) */}
         <RevealSection>
           <div className="mt-16 space-y-6 font-body text-[16px] leading-[1.8] text-cream-mid">
             <p>
-              Let's be honest about what makes this hard. It is not the doing. It is the believing you're allowed to.
+              Here is the real difficulty.
             </p>
             <p>
-              If you've been living with pain, you have been trained&nbsp;&mdash; by medicine, by culture, by the people closest to you, and eventually by yourself&nbsp;&mdash; to treat joy as conditional. As something earned by healing. As something that has to wait. And when joy did slip through, when you laughed too loud or danced or simply looked like you were having a good day, someone used it against you. "You seemed fine yesterday." "If you can do that, why can't you do this?"
+              It is not the doing. It is believing you are allowed to.
             </p>
             <p>
-              So you stopped. Not because the joy wasn't there. Because the cost of showing it was too high.
+              If you have been living with pain for a while, you already know: joy comes with a cost. You laugh too loud one day and someone says, "You seemed fine yesterday." You show up looking good and someone wonders why you still need accommodations. So you learn to keep the joy quiet. You perform the pain instead. Because that is what keeps people believing you.
             </p>
             <p>
-              The Pepper Sauce Challenge asks you to pay that cost anyway. On purpose. For seven days. Not because it's easy. Because a life where you've stopped letting yourself feel joy is a life that is slowly going scorching. And you deserve better than scorching.
+              The Pepper Sauce Principle has a name for this. It is called the Joy Penalty: the punishment people living with pain receive for daring to look like they feel good. It is real. It is common. And it is the thing this challenge is designed to push back against.
+            </p>
+            <p>
+              Day 1 is the hardest. Every reason to wait lives there. Do it anyway. Your body has been asked to carry pain for a long time. It deserves to carry something else alongside it.
+            </p>
+            <p>
+              Seven days. One joyful act per day. As you are. Where you are. With whatever your body allows today.
+            </p>
+            <p>
+              Pain is real. Joy is possible. See for yourself this week.
             </p>
           </div>
         </RevealSection>
 
-        {/* 7. THE INVITATION */}
-        <RevealSection>
-          <div className="mt-16 space-y-6 font-body text-[16px] leading-[1.8] text-cream-mid">
-            <p>
-              Day 1 is the hardest. Not because the act is hard. Because Day 1 is where every excuse lives. We know. We've heard them all. We've felt them all.
-            </p>
-            <p>
-              Do it anyway.
-            </p>
-          </div>
-          <div className="mt-6 space-y-6 font-accent text-[16px] italic leading-[1.85] text-cream-mid">
-            <p>
-              Not because it will fix your pain. The Pepper Sauce Principle will never tell you that. Do it because the pepper was never the whole recipe. Because your sauce has been thinning, and the only person who can add ingredients is you. Because somewhere underneath the exhaustion and the performance and the slow dimming, there is a version of you that is still funny, still warm, still capable of delight. And she has been waiting.
-            </p>
-          </div>
-        </RevealSection>
-
-        <RevealSection>
-          <p className="mt-10 text-center font-body text-[17px] leading-[1.7] text-cream">
-            Seven days. One joyful act per day. As you are. Where you are. With whatever your body allows today.
-          </p>
-          <p className="mt-6 text-center font-accent text-[18px] italic text-gold">
-            Pain is real. Joy is possible. Prove it to yourself this week.
-          </p>
-        </RevealSection>
-
-        {/* 8. THAT'S IT */}
+        {/* 5. THAT'S IT */}
         <RevealSection>
           <div className="mt-12 space-y-6 font-body text-[16px] leading-[1.8] text-cream-mid">
             <p>
@@ -448,7 +476,7 @@ export function InterventionSection() {
           </div>
         </RevealSection>
 
-        {/* 9. PASS THE SAUCE */}
+        {/* 6. PASS THE SAUCE */}
         <RevealSection>
           <div className="mt-16 space-y-6 font-body text-[16px] leading-[1.8] text-cream-mid">
             <p>
@@ -491,16 +519,16 @@ export function InterventionSection() {
           </div>
         </RevealSection>
 
-        {/* 10. SUBMISSION FORM */}
+        {/* 7. SUBMISSION FORM */}
         <RevealSection>
           <PassTheSauceForm />
         </RevealSection>
 
-        {/* 11. CTA BUTTON */}
+        {/* 8. CTA BUTTON */}
         <RevealSection>
           <div className="mt-12 text-center">
             <a
-              href="#challenge"
+              href="#seven-days"
               className="inline-block rounded-md bg-gold px-8 py-4 font-body text-sm font-bold uppercase tracking-[0.12em] text-dark transition-colors hover:bg-gold-light"
             >
               Take the Pepper Sauce Challenge

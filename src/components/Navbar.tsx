@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 
 const NAV_LINKS = [
   { href: '#framework', label: 'Framework' },
-  { href: '#challenge', label: 'Take the Challenge' },
+  { href: '#seven-days', label: 'Take the Challenge' },
   { href: '#speaking', label: 'Speaking' },
   { href: '#book', label: 'Book' },
   { href: '#roots', label: 'Resources' },
@@ -63,13 +63,13 @@ export function Navbar() {
           The Pepper Sauce Principle
         </a>
 
-        <ul className="hidden items-center gap-7 lg:flex" style={{ listStyle: 'none' }}>
+        <ul className="hidden items-center gap-6 lg:flex" style={{ listStyle: 'none' }}>
           {NAV_LINKS.map(link => (
             <li key={link.href}>
               <a
                 href={link.href}
                 className={cn(
-                  'text-[0.88rem] font-medium tracking-wide transition-colors',
+                  'text-[0.85rem] font-medium tracking-wide transition-colors',
                   scrolled
                     ? 'text-text-light hover:text-gold'
                     : 'text-cream-soft hover:text-gold-light'
@@ -82,7 +82,7 @@ export function Navbar() {
           <li>
             <a
               href="#quiz"
-              className="rounded-md bg-gold px-5 py-2.5 text-[0.85rem] font-semibold tracking-wide text-dark transition-all hover:bg-gold-light hover:-translate-y-px"
+              className="inline-block whitespace-nowrap rounded-md bg-gold px-5 py-2.5 text-[0.85rem] font-semibold tracking-wide text-dark transition-all hover:bg-gold-light hover:-translate-y-px"
             >
               Take the Quiz
             </a>
