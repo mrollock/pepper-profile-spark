@@ -309,7 +309,8 @@ function AxisSlider({
     zIndex: 3,
   };
 
-  const labelClass = "font-body text-[10px] font-semibold uppercase tracking-[0.12em] text-text-faint whitespace-nowrap";
+  const labelClass = "font-body text-[10px] font-semibold uppercase tracking-[0.12em] text-cream-mid whitespace-nowrap";
+  const labelShadow: React.CSSProperties = { textShadow: "0 1px 3px rgba(0,0,0,0.5)" };
 
   if (vertical) {
     return (
