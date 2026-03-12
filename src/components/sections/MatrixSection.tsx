@@ -315,7 +315,7 @@ function AxisSlider({
   if (vertical) {
     return (
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8, height: "100%" }}>
-        <span className={labelClass} style={{ color: "hsl(var(--gold-muted))" }}>{rightLabel}</span>
+        <span className={labelClass} style={{ ...labelShadow, color: "hsl(var(--gold-muted))" }}>{rightLabel}</span>
         <div
           ref={trackRef}
           onMouseDown={(e) => { setDragging(true); handleInteraction(e); }}
