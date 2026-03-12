@@ -405,7 +405,7 @@ export default function ConversationPage() {
         // Get opening message from Claude
         const { data: aiData, error: aiError } = await supabase.functions.invoke('chat-with-claude', {
           body: {
-            systemPrompt: systemPromptRef.current,
+            profileId,
             messages: [{ role: 'user', content: '[System: The user has just arrived. Generate your opening welcome message for Phase 1.]' }],
           },
         });
