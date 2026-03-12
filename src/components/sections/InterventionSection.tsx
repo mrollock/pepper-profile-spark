@@ -254,7 +254,7 @@ export function InterventionSection() {
   const shareBody = encodeURIComponent(
 `Someone who cares about you thought you should see this.
 
-The Pepper Sauce Challenge is seven days of defiant joy. One act per day. Your recipe, your rules. The only requirement: for seven days, your body gets to feel something besides pain.
+The Pepper Sauce Challenge is seven days of defiant joy. One act per day. Your recipe, your rules. The only requirement: for seven days, you do something that matters to you. The pain may still be there. But surrounded by joy, by connection, by something worth doing, pain stops being the whole story. It becomes one ingredient in a life that has its flavor back.
 
 It was made for people who live with pain and have been told the best they can hope for is coping. It asks a different question: what if joy is possible alongside the pain, and what if you proved it to yourself in seven days?
 
