@@ -3,6 +3,7 @@ import { cn } from '@/lib/utils';
 
 const NAV_LINKS = [
   { href: '#framework', label: 'Framework' },
+  { href: '#challenge', label: 'Take the Challenge' },
   { href: '#speaking', label: 'Speaking' },
   { href: '#book', label: 'Book' },
   { href: '#roots', label: 'Resources' },

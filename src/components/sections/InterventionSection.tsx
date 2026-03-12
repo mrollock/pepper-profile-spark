@@ -67,7 +67,7 @@ function PassTheSauceForm() {
       <div id="pass-the-sauce-form" className="mx-auto mt-12 max-w-[540px] rounded-lg border border-gold/20 bg-dark-warm px-8 py-10 text-center">
         <h4 className="font-display text-[20px] font-bold text-gold">Your sauce has been passed.</h4>
         <p className="mt-4 font-body text-[15px] leading-[1.8] text-cream-mid">
-          Thank you for sharing your recipe. Every story like yours is evidence that a spicy and delicious life is possible, and it might be exactly what someone else needs to hear.
+          Thank you for sharing your recipe. Someone out there is carrying pain right now and wondering if joy is still possible. What you just wrote might be the thing that tells them it is.
         </p>
         <p className="mt-4 font-accent text-[14px] italic text-cream-mid/80">
           Pain is real. Joy is possible. Make life delicious.
@@ -129,7 +129,7 @@ function PassTheSauceForm() {
         {/* What did joy feel like? */}
         <div>
           <textarea
-            placeholder="Not what the pain felt like. What the joy felt like while the pain was still there."
+            placeholder="What did the joy feel like while the pain was still there?"
             rows={3}
             value={whatJoyFeltLike}
             onChange={(e) => { setWhatJoyFeltLike(e.target.value); if (errors.whatJoyFeltLike) setErrors(p => ({ ...p, whatJoyFeltLike: '' })); }}
@@ -209,12 +209,12 @@ function PassTheSauceForm() {
 const EXAMPLES = [
   "Cooking a meal with real heat in it. Scotch bonnet, habanero, whatever your kitchen allows. Eating it slowly, on purpose.",
   "Putting on a song that used to make you move, and moving. However your body moves today. No audience required.",
-  "Sitting on a porch with someone who doesn't need you to explain how you feel, and laughing about something that has nothing to do with pain.",
-  "Wearing the outfit you stopped wearing because you didn't think you had the energy to be seen. Putting it on anyway.",
-  "Going to the water. A lake, a pool, a bathtub. Letting your body feel something besides hurt.",
+  "Sitting on a porch with someone who doesn\u2019t need you to explain how you feel, and laughing about something that has nothing to do with pain.",
+  "Wearing something you love that\u2019s been sitting in the closet. Putting it on anyway.",
+  "Going to the water. A lake, a pool, a bathtub. Letting your body remember what it feels like to be held.",
   "Making something with your hands. Bread, a drawing, a garden row. Letting the making be the point.",
-  "Calling someone you love and telling them something true and funny that happened this week. Not a health update. A life update.",
-  "Tasting something your grandmother made, or something that reminds you of a kitchen where pain wasn't the main ingredient.",
+  "Calling someone you love and telling them something true and funny that happened this week. A life update, not a health update.",
+  "Tasting something your grandmother made, or something that reminds you of a kitchen where pain wasn\u2019t the main ingredient.",
 ];
 
 export function InterventionSection() {
@@ -232,15 +232,15 @@ export function InterventionSection() {
               The Pepper Sauce Challenge
             </span>
             <h2 className="text-cream">
-              Seven Days. One Act of Joy. No Permission Required.
+              The Pepper Sauce Challenge: Seven Days of Defiant Joy.
             </h2>
-            <div className="mx-auto mt-6 h-[3px] w-[60px] rounded-sm bg-gold-muted" />
+          <div className="mx-auto mt-6 h-[3px] w-[60px] rounded-sm bg-gold-muted" />
           </div>
         </RevealSection>
 
         {/* 2. THE STORY */}
         <RevealSection>
-          <div className="mt-16 space-y-6 font-accent text-[15px] italic leading-[1.85] text-cream-mid/90">
+          <div className="mt-16 space-y-6 border-l-[3px] border-gold/15 pl-5 font-body text-[16px] leading-[1.8] text-cream-mid">
             <p>
               A professor I worked with stopped teaching the day she started using a wheelchair.
             </p>
@@ -311,10 +311,10 @@ export function InterventionSection() {
 
           <div className="mt-8 space-y-6 font-body text-[16px] leading-[1.8] text-cream-mid">
             <p>
-              One act of defiant joy per day for seven days. A different act each day or the same one repeated. Your recipe, your rules. The only requirement is that you refuse, for seven days, to let pain be the only thing your body gets to feel.
+              One act of defiant joy per day for seven days. The same act repeated, or a different one each time. Your recipe, your rules. The only requirement: for seven days, your body gets to feel something besides pain.
             </p>
             <p>
-              Not sure where to start? Here's what defiant joy has looked like for others:
+              Need a place to start? Here's what defiant joy has looked like for others:
             </p>
           </div>
 
@@ -443,7 +443,7 @@ export function InterventionSection() {
         <RevealSection>
           <div className="mt-12 space-y-6 font-body text-[16px] leading-[1.8] text-cream-mid">
             <p>
-              That's it. No app. No tracker. No performance. Just seven days of joining every person who has ever refused to let pain have the last word. The blues musicians who held anguish and craft in the same breath. The grandmother who stirred scotch bonnet into sauce at a table full of people who knew what the burn tasted like. And now you. Tonight.
+              That's it. Seven days. You and whatever joy you can get your hands on. You'll be in good company. The blues musicians who held anguish and craft in the same breath did this. The grandmother who stirred scotch bonnet into sauce at a table full of people who knew what the burn tasted like did this. And now you. Tonight.
             </p>
           </div>
         </RevealSection>
@@ -455,7 +455,7 @@ export function InterventionSection() {
               When you do it (and you will), come back and Pass the Sauce.
             </p>
             <p>
-              Tell us what you did. Not what the pain felt like. What the joy felt like while the pain was still there. That's the testimony the world needs to hear. That's the recipe someone else is waiting for.
+              Tell us what you did. We want to hear what the joy felt like while the pain was still there. That's the testimony the world needs. That's the recipe someone else is waiting for.
             </p>
           </div>
 
