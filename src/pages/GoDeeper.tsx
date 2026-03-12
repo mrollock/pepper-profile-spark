@@ -248,7 +248,7 @@ const GoDeeper = () => {
                   If you have been living with chronic pain, you have probably learned something that nobody taught you on purpose: showing joy is expensive. You laugh at a family gathering and someone says, "You seemed fine yesterday." You post a photo from a good day and an insurance reviewer uses it to question your claim. You show up looking strong and your doctor wonders if you really need that referral.
                 </p>
                 <p>
-                  So you learn. You keep the joy quiet. You perform the pain instead. You dim what is bright in you so that what hurts in you will be believed.
+                  So you learn. You silence the joy. You dim what is bright in you so that what hurts in you will be believed.
                 </p>
                 <p>
                   The Pepper Sauce Principle calls this the Joy Penalty: the price people living with pain pay for daring to look like they feel good.
