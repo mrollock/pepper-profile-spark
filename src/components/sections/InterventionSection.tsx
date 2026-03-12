@@ -443,7 +443,7 @@ export function InterventionSection() {
         <RevealSection>
           <div className="mt-12 space-y-6 font-body text-[16px] leading-[1.8] text-cream-mid">
             <p>
-              That's it. No app. No tracker. No performance. Just seven days of joining every person who has ever refused to let pain have the last word. The blues musicians who held anguish and craft in the same breath. The grandmother who stirred scotch bonnet into sauce at a table full of people who knew what the burn tasted like. And now you. Tonight.
+              That's it. Seven days. You and whatever joy you can get your hands on. You'll be in good company. The blues musicians who held anguish and craft in the same breath did this. The grandmother who stirred scotch bonnet into sauce at a table full of people who knew what the burn tasted like did this. And now you. Tonight.
             </p>
           </div>
         </RevealSection>
