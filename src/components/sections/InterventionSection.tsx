@@ -455,7 +455,7 @@ export function InterventionSection() {
               When you do it (and you will), come back and Pass the Sauce.
             </p>
             <p>
-              Tell us what you did. Not what the pain felt like. What the joy felt like while the pain was still there. That's the testimony the world needs to hear. That's the recipe someone else is waiting for.
+              Tell us what you did. We want to hear what the joy felt like while the pain was still there. That's the testimony the world needs. That's the recipe someone else is waiting for.
             </p>
           </div>
 
