@@ -486,6 +486,49 @@ Pain is real. Joy is possible. Make life delicious.`
           </div>
         </RevealSection>
 
+        {/* 5. CALENDAR DOWNLOAD */}
+        <RevealSection>
+          <div className="mt-16 rounded-xl border border-gold/20 bg-dark-warm px-6 py-10 sm:px-10 sm:py-12">
+            <div className="flex flex-col items-center gap-8 md:flex-row md:items-start md:gap-10">
+              {/* Preview image */}
+              <div className="w-full shrink-0 md:w-[280px]">
+                <div className="overflow-hidden rounded-lg shadow-[0_8px_30px_rgba(0,0,0,0.4)] transition-transform hover:scale-[1.02]"
+                  style={{ transform: 'rotate(-1.5deg)' }}
+                >
+                  <img
+                    src={calendarPreview}
+                    alt="The Pepper Sauce Challenge 7-Day Calendar preview showing daily prompts for acts of defiant joy"
+                    className="block w-full"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+
+              {/* Copy */}
+              <div className="flex flex-col items-center text-center md:items-start md:text-left">
+                <h4 className="font-display text-[clamp(1.3rem,3vw,1.5rem)] font-bold text-cream">
+                  Take it with you.
+                </h4>
+                <p className="mt-4 font-body text-[16px] leading-[1.8] text-cream-mid">
+                  A free printable calendar for your wall, your fridge, your desk. Seven days. Three questions each day. Space to write what was delicious.
+                </p>
+                <a
+                  href="https://ovihfxegjbjnxqziazoe.supabase.co/storage/v1/object/public/downloads/PepperSauceChallenge_7Day_Calendar.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-6 inline-flex items-center gap-2 rounded-md bg-gold px-8 py-4 font-body text-sm font-bold uppercase tracking-[0.12em] text-dark transition-colors hover:bg-gold-light"
+                >
+                  <Download size={16} />
+                  Download the Calendar
+                </a>
+                <p className="mt-3 font-body text-[13px] text-cream-mid/50">
+                  Free PDF. No email required. Print it, share it, put it on your wall.
+                </p>
+              </div>
+            </div>
+          </div>
+        </RevealSection>
+
         {/* 6. PASS THE SAUCE */}
         <RevealSection>
           <div className="mt-16 space-y-6 font-body text-[16px] leading-[1.8] text-cream-mid">
