@@ -67,7 +67,7 @@ function PassTheSauceForm() {
       <div id="pass-the-sauce-form" className="mx-auto mt-12 max-w-[540px] rounded-lg border border-gold/20 bg-dark-warm px-8 py-10 text-center">
         <h4 className="font-display text-[20px] font-bold text-gold">Your sauce has been passed.</h4>
         <p className="mt-4 font-body text-[15px] leading-[1.8] text-cream-mid">
-          Thank you for sharing your recipe. Every story like yours is evidence that a spicy and delicious life is possible, and it might be exactly what someone else needs to hear.
+          Thank you for sharing your recipe. Someone out there is carrying pain right now and wondering if joy is still possible. What you just wrote might be the thing that tells them it is.
         </p>
         <p className="mt-4 font-accent text-[14px] italic text-cream-mid/80">
           Pain is real. Joy is possible. Make life delicious.
