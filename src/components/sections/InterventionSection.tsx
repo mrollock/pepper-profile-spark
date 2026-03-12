@@ -372,13 +372,13 @@ Pain is real. Joy is possible. Make life delicious.`
           {/* Collapsible examples */}
           <div className="mt-8">
             <CollapsibleBlock trigger="Need a place to start? Here's what defiant joy has looked like for others:">
-              <div className="space-y-0 pl-4">
+              <ul className="list-disc space-y-3 pl-6">
                 {EXAMPLES.map((ex, i) => (
-                  <p key={i} className="border-l-2 border-gold/40 pl-4 font-accent text-[17px] italic leading-[2.0] text-cream-mid/85">
+                  <li key={i} className="font-body text-[16px] leading-[1.8] text-cream-mid">
                     {ex}
-                  </p>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </CollapsibleBlock>
           </div>
 
@@ -440,39 +440,25 @@ Pain is real. Joy is possible. Make life delicious.`
           </div>
         </RevealSection>
 
-        {/* 4. THE REAL DIFFICULTY (rewritten) */}
+        {/* 4. THE REAL DIFFICULTY (collapsible) */}
         <RevealSection>
-          <div className="mt-16 space-y-6 font-body text-[16px] leading-[1.8] text-cream-mid">
-            <p>
-              Here is the real difficulty.
-            </p>
-            <p>
-              It is not the doing. It is believing you are allowed to.
-            </p>
-            <p>
-              If you have been living with pain for a while, you already know: joy comes with a cost. You laugh too loud one day and someone says, "You seemed fine yesterday." You show up looking good and someone wonders why you still need accommodations. So you learn to keep the joy quiet. You perform the pain instead. Because that is what keeps people believing you.
-            </p>
-            <p>
-              The Pepper Sauce Principle has a name for this. It is called the Joy Penalty: the punishment people living with pain receive for daring to look like they feel good. It is real. It is common. And it is the thing this challenge is designed to push back against.
-            </p>
-            <p>
-              Day 1 is the hardest. Every reason to wait lives there. Do it anyway. Your body has been asked to carry pain for a long time. It deserves to carry something else alongside it.
-            </p>
-            <p>
-              Seven days. One joyful act per day. As you are. Where you are. With whatever your body allows today.
-            </p>
-            <p>
-              Pain is real. Joy is possible. See for yourself this week.
-            </p>
-          </div>
-        </RevealSection>
-
-        {/* 5. THAT'S IT */}
-        <RevealSection>
-          <div className="mt-12 space-y-6 font-body text-[16px] leading-[1.8] text-cream-mid">
-            <p>
-              That's it. Seven days. You and whatever joy you can get your hands on. You'll be in good company. The blues musicians who held anguish and craft in the same breath did this. The grandmother who stirred scotch bonnet into sauce at a table full of people who knew what the burn tasted like did this. And now you. Tonight.
-            </p>
+          <div className="mt-8">
+            <CollapsibleBlock trigger="Why this is harder than it sounds.">
+              <div className="space-y-6 font-body text-[16px] leading-[1.8] text-cream-mid">
+                <p>
+                  It is not the doing. It is believing you are allowed to.
+                </p>
+                <p>
+                  If you have been living with pain for a while, you already know: joy comes with a cost. You laugh too loud one day and someone says, "You seemed fine yesterday." You show up looking good and someone wonders why you still need accommodations. So you learn. You silence the joy. You dim what is bright in you so that what hurts in you will be believed.
+                </p>
+                <p>
+                  The Pepper Sauce Principle has a name for this. It is called the Joy Penalty: the punishment people living with pain receive for daring to look like they feel good. It is real. It is common. And it is the thing this challenge is designed to push back against.
+                </p>
+                <p>
+                  Day 1 is the hardest. Every reason to wait lives there. Do it anyway. Your body has been asked to carry pain for a long time. It deserves to carry something else alongside it. You will be in good company. The blues musicians who held anguish and craft in the same breath did this. The grandmother who stirred scotch bonnet into sauce at a table full of people who knew what the burn tasted like did this. And now you. Tonight.
+                </p>
+              </div>
+            </CollapsibleBlock>
           </div>
         </RevealSection>
 
