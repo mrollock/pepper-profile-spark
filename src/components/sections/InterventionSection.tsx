@@ -209,12 +209,12 @@ function PassTheSauceForm() {
 const EXAMPLES = [
   "Cooking a meal with real heat in it. Scotch bonnet, habanero, whatever your kitchen allows. Eating it slowly, on purpose.",
   "Putting on a song that used to make you move, and moving. However your body moves today. No audience required.",
-  "Sitting on a porch with someone who doesn't need you to explain how you feel, and laughing about something that has nothing to do with pain.",
-  "Wearing the outfit you stopped wearing because you didn't think you had the energy to be seen. Putting it on anyway.",
-  "Going to the water. A lake, a pool, a bathtub. Letting your body feel something besides hurt.",
+  "Sitting on a porch with someone who doesn\u2019t need you to explain how you feel, and laughing about something that has nothing to do with pain.",
+  "Wearing something you love that\u2019s been sitting in the closet. Putting it on anyway.",
+  "Going to the water. A lake, a pool, a bathtub. Letting your body remember what it feels like to be held.",
   "Making something with your hands. Bread, a drawing, a garden row. Letting the making be the point.",
-  "Calling someone you love and telling them something true and funny that happened this week. Not a health update. A life update.",
-  "Tasting something your grandmother made, or something that reminds you of a kitchen where pain wasn't the main ingredient.",
+  "Calling someone you love and telling them something true and funny that happened this week. A life update, not a health update.",
+  "Tasting something your grandmother made, or something that reminds you of a kitchen where pain wasn\u2019t the main ingredient.",
 ];
 
 export function InterventionSection() {
