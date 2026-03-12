@@ -282,56 +282,79 @@ Pain is real. Joy is possible. Make life delicious.`
         <RevealSection>
           <div className="mt-10 space-y-6 border-l-[3px] border-gold/15 pl-5 font-body text-[16px] leading-[1.8] text-cream-mid">
             <p>
-              A professor I worked with stopped teaching the day she started using a wheelchair.
-            </p>
-            <p>
-              Not because she couldn't teach. Because she couldn't teach the way she always had. The whiteboard. The pacing. The movement around the room that made her feel like herself. She decided that if she couldn't do it that way, she wouldn't do it at all.
-            </p>
-            <p>
-              So she worked from home. A small office. Small projects. Her world got smaller. Her students never saw her again. And the people who would have watched a brilliant woman teach from a chair, who would have seen that passion doesn't require standing, who would have learned that a life with pain can still be one that matters: they never got that lesson.
+              A professor I worked with loved teaching the way some people love breathing. The pacing, the whiteboard, the way she could hold a room in her hands. When chronic pain put her in a wheelchair, she could still do all of it. But not the way she used to. And she couldn't bear the thought of her students watching her struggle. She couldn't bear her colleagues seeing her stand on good days and sit on bad ones, and what they'd think. So she made a quiet, reasonable decision. She stopped.
             </p>
           </div>
-        </RevealSection>
 
-        <RevealSection>
-          <p className="my-10 text-center font-accent text-[17px] italic leading-[1.5] text-cream">
-            She didn't lose her legs. She lost her sauce.
-          </p>
-        </RevealSection>
+          <div className="mt-8 pl-5">
+            <CollapsibleBlock trigger="Read her story">
+              <div className="space-y-6 border-l-[3px] border-gold/15 pl-5 font-body text-[16px] leading-[1.8] text-cream-mid">
+                <p>
+                  She told herself it was practical. She'd slow the students down. She'd be a burden. She'd have to explain the wheelchair one day and the cane the next, and the days she walked in looking fine. She imagined the sideways looks. The whispered "but she seemed okay yesterday." She imagined smiling during a lecture and someone deciding her pain must not be that bad after all.
+                </p>
+                <p>
+                  So she chose the version of herself that would be believed. The one at home. The one in pain. The small office, the small projects, the small life.
+                </p>
+                <p>
+                  Her world shrank. One concession at a time. One "I can't do it like I used to" at a time. The things that gave her life flavor disappeared slowly. First the teaching. Then the colleagues. Then the lunches, the conferences, the jokes in the hallway, the version of herself that laughed easily. Until what remained was all heat and no sauce. Pain with nothing around it. Scorching.
+                </p>
+              </div>
 
-        <RevealSection>
-          <div className="space-y-6 border-l-[3px] border-gold/15 pl-5 font-body text-[16px] leading-[1.8] text-cream-mid">
-            <p>
-              Her pain was real. But she confused how she used to do things with who she actually was. Her humor. Her depth. Her ability to hold a room. Those were still there. They didn't need a whiteboard. They needed a table.
-            </p>
-            <p>
-              She made a decision many people living with pain make every day: she let the pepper be the only thing in the recipe. One concession at a time. One "I can't do it like I used to" at a time. The things that gave her life flavor disappeared slowly. Until what remained was all heat and no sauce. Scorching.
-            </p>
+              <p className="my-10 text-center font-accent text-[17px] italic leading-[1.5] text-cream">
+                She didn't lose her legs. She lost her sauce.
+              </p>
+
+              <div className="space-y-6 border-l-[3px] border-gold/15 pl-5 font-body text-[16px] leading-[1.8] text-cream-mid">
+                <p>
+                  Here's what happened, and it happens to people living with chronic pain every single day. She believed that her joy and her pain could not exist in the same room. That if people saw her laughing, they'd stop believing she was hurting. That the cost of being visible and alive and in pain would be judgment, disbelief, and invalidation. So she paid a different cost instead. She gave up the thing she loved to protect herself from a world that punishes people for being sick and happy at the same time.
+                </p>
+                <p>
+                  We call that the joy penalty. And it is one of the most devastating forces in chronic illness. Not the pain itself. The slow, logical, perfectly reasonable decision to stop doing the things that made the pain worth carrying.
+                </p>
+                <p>
+                  Her humor was still there. Her depth. Her ability to make a room full of students forget to check their phones. Those didn't need a whiteboard. They didn't need her legs. They needed a table. A place where she could bring what she had, alongside the pain, and let both be true at the same time.
+                </p>
+                <p>
+                  And the students who would have watched a brilliant woman teach from a chair? Who would have seen that passion doesn't require standing? Who would have learned that a life with pain can still be a life that matters? They never got that lesson. They needed her. And she needed them. And nobody told either of them.
+                </p>
+              </div>
+
+              <p className="my-6 border-l-[3px] border-gold/15 pl-5 font-body text-[12px] italic text-cream-mid/50">
+                This story is a de-identified composite drawn from clinical experience. It does not describe any specific individual.
+              </p>
+
+              <div className="space-y-6 font-body text-[16px] leading-[1.8] text-cream-mid">
+                <p>
+                  Here's what nobody told her, and what nobody may have told you:
+                </p>
+                <p>
+                  There is no good time to start. There will always be a reason not to. The pain. The energy. The money. The uncertainty about how it will go. The fear that people will see you struggle. The voice in your own head that says: who are you to be out here laughing when you can barely get through the day?
+                </p>
+                <p>
+                  That voice taught you to shrink. To dim what was bright in you so that what hurt in you would be believed. It is the voice of every system, every sideways look, every "but you seemed fine yesterday" that trained you to disappear into the pain instead of living fully.
+                </p>
+              </div>
+
+              <p className="my-12 text-center font-display text-[clamp(1.2rem,3vw,1.4rem)] font-bold leading-[1.4] text-gold">
+                The Pepper Sauce Principle says: enough.
+              </p>
+
+              <div className="space-y-6 font-body text-[16px] leading-[1.8] text-cream-mid">
+                <p>
+                  Your pain is real. It doesn't leave when joy arrives. But joy doesn't have to leave when pain arrives either. They can sit at the same table. They have to. Because the alternative, a life where pain is the only ingredient, is not protection. It's a slow vanishing.
+                </p>
+                <p>
+                  You have a pepper sauce recipe that is yours alone. The specific combination of what lights you up, what you bring to a room, what people taste when they're around you. Pain is one ingredient. It may be a strong one. But it was never meant to be the only one.
+                </p>
+                <p>
+                  The Pepper Sauce Challenge is an invitation to bring the rest of your recipe back.
+                </p>
+                <p className="text-cream">
+                  Welcome to The Table. There are people here who need what you carry. And they have something to pass to you.
+                </p>
+              </div>
+            </CollapsibleBlock>
           </div>
-          <p className="mt-6 border-l-[3px] border-gold/15 pl-5 font-body text-[12px] text-cream-mid/50">
-            This story is a de-identified composite drawn from clinical experience. It does not describe any specific individual.
-          </p>
-        </RevealSection>
-
-        {/* 2. THE TURN */}
-        <RevealSection>
-          <div className="mt-16 space-y-6 font-body text-[16px] leading-[1.8] text-cream-mid">
-            <p>
-              Here's what nobody told her, and what nobody may have told you:
-            </p>
-            <p>
-              There is no good time to start. There will always be a reason not to. The pain. The energy. The money. The clothes that don't fit the way they used to. The uncertainty about how it will go. The fear that people will see you struggle. The voice in your own head that says: who are you to be out here laughing when you can barely get through the day?
-            </p>
-            <p>
-              That voice has a name. It's the same voice that taught you to shrink. To dim what was bright in you so that what hurt in you would be believed. It is the voice of every system, every sideways look, every "but you seemed fine yesterday" that trained you to perform suffering instead of living fully.
-            </p>
-          </div>
-        </RevealSection>
-
-        <RevealSection>
-          <p className="my-12 text-center font-display text-[clamp(1.2rem,3vw,1.4rem)] font-bold leading-[1.4] text-gold">
-            The Pepper Sauce Principle says: enough.
-          </p>
         </RevealSection>
 
         {/* 3. CHALLENGE INTRO */}
