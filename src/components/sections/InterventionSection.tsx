@@ -234,13 +234,13 @@ export function InterventionSection() {
             <h2 className="text-cream">
               Seven Days. One Act of Joy. No Permission Required.
             </h2>
-            <div className="mx-auto mt-6 h-[3px] w-[60px] rounded-sm bg-gold-muted" />
+          <div className="mx-auto mt-6 h-[3px] w-[60px] rounded-sm bg-gold-muted" />
           </div>
         </RevealSection>
 
         {/* 2. THE STORY */}
         <RevealSection>
-          <div className="mt-16 space-y-6 font-accent text-[15px] italic leading-[1.85] text-cream-mid/90">
+          <div className="mt-16 space-y-6 border-l-[3px] border-gold/15 pl-5 font-body text-[16px] leading-[1.8] text-cream-mid">
             <p>
               A professor I worked with stopped teaching the day she started using a wheelchair.
             </p>
