@@ -363,7 +363,7 @@ export default function ConversationPage() {
         }
 
         setProfile(typedProfile);
-        systemPromptRef.current = buildSystemPrompt(typedProfile);
+        
 
         // Check for existing conversation
         const { data: existing } = await supabase
