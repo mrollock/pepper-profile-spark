@@ -302,7 +302,7 @@ const GoDeeper = () => {
 
           {/* FINE PRINT */}
           <RevealSection>
-            <div className="mx-auto mt-16 max-w-[560px] pt-10 text-center">
+            <div className="mx-auto mt-[40px] max-w-[560px] pt-10 text-center">
               <p className="font-body text-[15px] leading-[1.7] text-cream-mid">
                 The Pepper Sauce Principle is an educational framework. It is not therapy, not a clinical intervention, and not a substitute for professional care. If the heat you're carrying has crossed from hurt to harm, adding a professional to your recipe is not a failure of the framework. It is the framework working as designed. Both. Always both.
               </p>
