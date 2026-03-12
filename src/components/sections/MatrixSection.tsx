@@ -454,7 +454,7 @@ export function MatrixSection({ onQuadrantChange }: { onQuadrantChange?: (quadra
             {/* Vertical slider (Sauce) — height matches matrix only */}
             <div style={{ display: "flex", alignItems: "stretch", width: 40 }}>
               <div
-                className="font-body text-[10px] font-semibold uppercase tracking-[0.15em] text-text-faint"
+                className="font-body text-[10px] font-semibold uppercase tracking-[0.15em] text-cream-mid"
                 style={{
                   writingMode: "vertical-rl",
                   transform: "rotate(180deg)",
