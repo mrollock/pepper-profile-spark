@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { RevealSection } from '@/components/RevealSection';
 import { supabase } from '@/integrations/supabase/client';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Download } from 'lucide-react';
+import calendarPreview from '@/assets/pepper-sauce-challenge-calendar-preview.png';
 import { cn } from '@/lib/utils';
 
 function PassTheSauceForm() {
