@@ -232,7 +232,7 @@ export function InterventionSection() {
               The Pepper Sauce Challenge
             </span>
             <h2 className="text-cream">
-              Seven Days. One Act of Joy. No Permission Required.
+              The Pepper Sauce Challenge: Seven Days of Defiant Joy.
             </h2>
           <div className="mx-auto mt-6 h-[3px] w-[60px] rounded-sm bg-gold-muted" />
           </div>
