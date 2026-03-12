@@ -372,13 +372,13 @@ Pain is real. Joy is possible. Make life delicious.`
           {/* Collapsible examples */}
           <div className="mt-8">
             <CollapsibleBlock trigger="Need a place to start? Here's what defiant joy has looked like for others:">
-              <div className="space-y-0 pl-4">
+              <ul className="list-disc space-y-3 pl-6">
                 {EXAMPLES.map((ex, i) => (
-                  <p key={i} className="border-l-2 border-gold/40 pl-4 font-accent text-[17px] italic leading-[2.0] text-cream-mid/85">
+                  <li key={i} className="font-body text-[16px] leading-[1.8] text-cream-mid">
                     {ex}
-                  </p>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </CollapsibleBlock>
           </div>
 
