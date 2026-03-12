@@ -388,7 +388,7 @@ Pain is real. Joy is possible. Make life delicious.`
           {/* Description */}
           <div className="mt-6 space-y-6 font-body text-[16px] leading-[1.8] text-cream-mid">
             <p>
-              One act of defiant joy per day for seven days. The same act repeated, or a different one each time. Your recipe, your rules. The only requirement: for seven days, your body gets to feel something besides pain.
+              One act of defiant joy per day for seven days. The same act repeated, or a different one each time. Your recipe, your rules. The only requirement: for seven days, you do something that matters to you. The pain may still be there. But surrounded by joy, by connection, by something worth doing, pain stops being the whole story. It becomes one ingredient in a life that has its flavor back.
             </p>
           </div>
 
