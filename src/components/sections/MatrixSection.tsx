@@ -358,7 +358,7 @@ function AxisSlider({
         <div style={{ ...touchTargetStyle, top: "50%", left: `${value}%` }} />
         <div style={{ ...thumbStyle, top: "50%", left: `${value}%` }} />
       </div>
-      <span className={labelClass} style={{ color: "hsl(var(--gold-muted))" }}>{rightLabel}</span>
+      <span className={labelClass} style={{ ...labelShadow, color: "hsl(var(--gold-muted))" }}>{rightLabel}</span>
     </div>
   );
 }
