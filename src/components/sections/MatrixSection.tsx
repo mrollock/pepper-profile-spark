@@ -154,22 +154,23 @@ function QuadrantOverlay({ quadrant, activeQuadrant }: { quadrant: QuadrantKey; 
           ...alignMap[quadrant],
           textAlign,
           transition: "opacity 0.3s ease, transform 0.3s ease",
-          opacity: isActive ? 1 : 0.5,
+          opacity: isActive ? 1 : 0.75,
           transform: isActive ? "scale(1)" : "scale(0.92)",
         }}
       >
         <div
-          className="font-display font-bold"
+          className={`font-display font-bold ${isActive ? '' : 'matrix-inactive-label'}`}
           style={{
             fontSize: isActive ? "clamp(0.9rem, 2.5vw, 1.25rem)" : "clamp(0.7rem, 1.8vw, 0.9rem)",
             color: data.color,
             lineHeight: 1.25,
             transition: "font-size 0.3s ease",
+            textShadow: "0 1px 4px rgba(0,0,0,0.7), 0 0 10px rgba(0,0,0,0.4)",
           }}
         >
           {data.name}
         </div>
-        {isActive && (
+        {isActive ? (
           <div
             className="font-body"
             style={{
@@ -179,6 +180,21 @@ function QuadrantOverlay({ quadrant, activeQuadrant }: { quadrant: QuadrantKey; 
               letterSpacing: "0.04em",
               marginTop: 2,
               animation: "matrix-fade-in 0.3s ease",
+              textShadow: "0 1px 4px rgba(0,0,0,0.7), 0 0 10px rgba(0,0,0,0.4)",
+            }}
+          >
+            {data.subtitle}
+          </div>
+        ) : (
+          <div
+            className="font-body matrix-inactive-label"
+            style={{
+              fontSize: "clamp(7px, 1.3vw, 9px)",
+              color: data.color,
+              opacity: 0.7,
+              letterSpacing: "0.04em",
+              marginTop: 2,
+              textShadow: "0 1px 4px rgba(0,0,0,0.7), 0 0 10px rgba(0,0,0,0.4)",
             }}
           >
             {data.subtitle}
