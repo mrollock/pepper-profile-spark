@@ -302,7 +302,7 @@ export default function ConversationPage() {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const systemPromptRef = useRef<string>('');
+  
   const isNearBottomRef = useRef(true);
 
   // Track scroll position
