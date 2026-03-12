@@ -20,7 +20,8 @@ export function HeroSection() {
         {/* 1. Headline */}
         <RevealSection delay={300}>
           <h1 className="mb-6 text-cream">
-            Pain is real.{' '}
+            Pain is real.
+            <br className="md:hidden" />{' '}
             <span className="text-gold">Joy is possible.</span>
           </h1>
         </RevealSection>
