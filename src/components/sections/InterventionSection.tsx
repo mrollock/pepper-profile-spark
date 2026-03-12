@@ -311,10 +311,10 @@ export function InterventionSection() {
 
           <div className="mt-8 space-y-6 font-body text-[16px] leading-[1.8] text-cream-mid">
             <p>
-              One act of defiant joy per day for seven days. A different act each day or the same one repeated. Your recipe, your rules. The only requirement is that you refuse, for seven days, to let pain be the only thing your body gets to feel.
+              One act of defiant joy per day for seven days. The same act repeated, or a different one each time. Your recipe, your rules. The only requirement: for seven days, your body gets to feel something besides pain.
             </p>
             <p>
-              Not sure where to start? Here's what defiant joy has looked like for others:
+              Need a place to start? Here's what defiant joy has looked like for others:
             </p>
           </div>
 
