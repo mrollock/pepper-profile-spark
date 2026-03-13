@@ -10,6 +10,14 @@ const SCIENCE_SOURCES = [
     linkText: 'Read the paper',
   },
   {
+    author: 'Corey L.M. Keyes',
+    work: '\u201CThe Mental Health Continuum: From Languishing to Flourishing in Life\u201D',
+    detail: 'Journal of Health and Social Behavior, 43(2), 207\u2013222 (2002). Also: Keyes, Dhingra, & Simoes, American Journal of Public Health, 100(12), 2366\u20132371 (2010); Keyes & Simoes, American Journal of Public Health, 102(11), 2164\u20132172 (2012). Emory University.',
+    psp: 'Structural precedent for the Pepper-Sauce Matrix. Keyes proved that mental illness and mental health are independent dimensions, not opposite ends of one scale. You can carry a diagnosis and still be thriving. You can have no diagnosis and feel hollow. The Matrix applies this same two-axis architecture to pain. The Bland quadrant is Keyes\u2019 \u201Clanguishing\u201D applied to the pain domain\u2026 not a neutral resting state, but a risk trajectory. Languishing predicted major depression at six times the rate of flourishing, and predicted all-cause mortality over ten years.',
+    link: 'https://doi.org/10.2307/3090197',
+    linkText: 'Read the paper',
+  },
+  {
     author: 'Naomi I. Eisenberger',
     work: '\u201CThe Neural Bases of Social Pain\u201D',
     detail: 'Psychosomatic Medicine, 74(2), 126\u2013135 (2012). Also: Nature Reviews Neuroscience, 13, 421\u2013434 (2012). UCLA.',
@@ -129,6 +137,111 @@ const SCIENCE_SOURCES = [
     link: 'https://doi.org/10.1016/j.socscimed.2024.117324',
     linkText: 'Read the paper',
   },
+  // New entries below
+  {
+    author: 'Barbara L. Fredrickson',
+    work: '\u201CThe Role of Positive Emotions in Positive Psychology: The Broaden-and-Build Theory\u201D',
+    detail: 'American Psychologist, 56(3), 218\u2013226 (2001). Also: Fredrickson, Review of General Psychology, 2(3), 300\u2013319 (1998). University of North Carolina at Chapel Hill.',
+    psp: 'Core mechanism of the framework\u2019s second scientific strand. Positive emotions\u2026 joy, interest, contentment, love\u2026 broaden the range of thoughts and actions that come to mind and build durable personal resources over time. This is how the sauce works at the neural and behavioral level. The positivity ratio was debunked. The core theory stands. PSP draws on the resource-building mechanism specifically, which remains well-supported.',
+    link: 'https://doi.org/10.1037/0003-066X.56.3.218',
+    linkText: 'Read the paper',
+  },
+  {
+    author: 'Clifford J. Woolf',
+    work: '\u201CCentral Sensitization: Implications for the Diagnosis and Treatment of Pain\u201D',
+    detail: 'Pain, 152(3 Suppl), S2\u2013S15 (2011). Harvard Medical School / Boston Children\u2019s Hospital.',
+    psp: 'Central sensitization\u2026 amplified neural signaling within the CNS that produces pain hypersensitivity\u2026 is a learned state of the nervous system. Not structural damage. The critical word is reversible. If chronic suffering is a learned neural pattern, then the conditions that promote unlearning (graded exposure, positive affect, communal processing) have a specifiable neurobiological target. This is the foundation of the framework\u2019s first scientific strand.',
+    link: 'https://doi.org/10.1016/j.pain.2010.09.030',
+    linkText: 'Read the paper',
+  },
+  {
+    author: 'Johan W.S. Vlaeyen & Steven J. Linton',
+    work: '\u201CFear-Avoidance and Its Consequences in Chronic Musculoskeletal Pain\u201D',
+    detail: 'Pain, 85(3), 317\u2013332 (2000). KU Leuven / \u00D6rebro University. Replicated across 335 studies and 65,340 participants in Rogers & Farris\u2019s 2022 meta-analysis.',
+    psp: 'The cognitive engine that drives pain from acute to chronic. Pain perceived as threatening triggers catastrophizing, which triggers avoidance, which triggers disuse and deconditioning, which amplifies pain. The world gets smaller. The sauce gets thinner. The heat stays the same or rises. This model is also the structural basis for the Joy Penalty: fear-avoidance of joy operates through the identical mechanism.',
+    link: 'https://doi.org/10.1016/S0304-3959(99)00242-0',
+    linkText: 'Read the paper',
+  },
+  {
+    author: 'Patrick H. Finan & Eric L. Garland',
+    work: '\u201CThe Role of Positive Affect in Pain and Its Treatment\u201D',
+    detail: 'The Clinical Journal of Pain, 31(2), 177\u2013187 (2015). Johns Hopkins / University of Utah.',
+    psp: 'The most direct evidence for the Y-axis of the Matrix. Higher positive affect attenuates both pain perception and the negative affective response to it. In chronic pain cohorts, higher daily positive affect predicts lower pain intensity and better physical functioning. Low positive affect and high negative affect are not the same construct, do not share the same predictors, and do not respond to the same interventions. A person whose distress has been treated but whose joy remains depleted has moved from Scorching to Bland. They are no longer in crisis. They are languishing.',
+    link: 'https://doi.org/10.1097/AJP.0000000000000092',
+    linkText: 'Read the paper',
+  },
+  {
+    author: 'Anna J. Machin & Robin I.M. Dunbar',
+    work: '\u201CThe Brain Opioid Theory of Social Attachment\u201D',
+    detail: 'Behaviour, 148(9\u201310), 985\u20131025 (2011). University of Oxford.',
+    psp: 'The endogenous opioid system\u2026 especially \u03B2-endorphins acting on \u03BC-opioid receptors\u2026 mediates the pleasurable feelings of social affiliation. Social connection literally activates the same opioid system that suppresses pain. Community is not a contextual preference. It is an analgesic delivery mechanism. Maps to Condition 3: Come to the Table.',
+    link: 'https://doi.org/10.1163/000579511X596624',
+    linkText: 'Read the paper',
+  },
+  {
+    author: 'Behnood Niknejad et al.',
+    work: '\u201CPsychological Interventions and Chronic Pain Outcomes in Older Adults\u201D',
+    detail: 'JAMA Internal Medicine, 178(6), 830\u2013839 (2018). Johns Hopkins.',
+    psp: 'Group-based pain interventions outperformed individual delivery. Mode of therapy\u2026 group versus individual\u2026 showed the only consistent moderating effect on pain intensity outcomes. The table is not optional. It is where the medicine works best. Maps to Condition 3: Come to the Table.',
+    link: 'https://doi.org/10.1001/jamainternmed.2018.0756',
+    linkText: 'Read the paper',
+  },
+  {
+    author: 'Tara L. Gruenewald et al. / Mona Moieni et al.',
+    work: '\u201CGenerativity, Health, and Gene Expression\u201D',
+    detail: 'Gruenewald, Liao, & Seeman, Journals of Gerontology, Series B, 67(6), 660\u2013665 (2012). Moieni et al., Brain, Behavior, and Immunity, 84, 131\u2013138 (2020). UCLA.',
+    psp: 'Older adults with greater self-perceptions of generativity were less likely to become disabled or die over a ten-year follow-up. A six-week generativity writing intervention\u2026 simply sharing life experiences and advice\u2026 reversed pro-inflammatory gene expression associated with chronic stress. Sharing the sauce changes your biology. Generativity is not a luxury that comes after healing. It is an ingredient that participates in healing. Maps to Condition 5: Pass the Sauce.',
+    link: 'https://doi.org/10.1093/geronb/gbs034',
+    linkText: 'Read the Gruenewald paper',
+  },
+  {
+    author: 'Javad A. Hashmi et al.',
+    work: '\u201CShape Shifting Pain: Chronification of Back Pain Shifts Brain Representation\u201D',
+    detail: 'Brain, 136(9), 2751\u20132768 (2013). Northwestern University.',
+    psp: 'When pain becomes chronic, brain activity migrates from sensory-processing regions to emotional circuitry. Pain chronification is not the persistence of tissue damage. It is a reorganization of brain representation from \u201Cthis hurts my body\u201D to \u201Cthis threatens my self.\u201D This is why the five conditions\u2026 which address emotional, social, and meaning-making contexts\u2026 are central to pain treatment, not supplementary.',
+    link: 'https://doi.org/10.1093/brain/awt211',
+    linkText: 'Read the paper',
+  },
+  {
+    author: 'Cheryl L. Woods-Giscomb\u00E9',
+    work: '\u201CSuperwoman Schema: African American Women\u2019s Views on Stress, Strength, and Health\u201D',
+    detail: 'Qualitative Health Research, 20(5), 668\u2013683 (2010). University of North Carolina at Chapel Hill.',
+    psp: 'Five dimensions of the Superwoman Schema\u2026 obligation to present strength, suppress emotions, resist vulnerability, succeed despite limited resources, prioritize caregiving\u2026 function as culturally transmitted fear-avoidance. When you add the Joy Penalty (display joy, lose credibility), the only approved performance for Black women in pain is stoic endurance. No permissible space for joy. The framework\u2019s defiant joy is the direct intervention against this double bind.',
+    link: 'https://doi.org/10.1177/1049732310361892',
+    linkText: 'Read the paper',
+  },
+  {
+    author: 'George M. Slavich & Michael R. Irwin',
+    work: '\u201CFrom Stress to Inflammation and Major Depressive Disorder\u201D',
+    detail: 'Psychological Bulletin, 140(3), 774\u2013815 (2014). UCLA.',
+    psp: 'Social threats upregulate the Conserved Transcriptional Response to Adversity, promoting inflammation that increases pain sensitivity. Adversity becomes embedded in physiology. This is the molecular mechanism by which invalidation and isolation literally get under the skin. The generativity intervention (Moieni et al., 2020) reversed this signature\u2026 meaning Pass the Sauce has documented gene-expression-level effects.',
+    link: 'https://doi.org/10.1037/a0035302',
+    linkText: 'Read the paper',
+  },
+  {
+    author: 'Mark A. Lumley & Howard Schubiner',
+    work: '\u201CEmotional Awareness and Expression Therapy for Chronic Pain\u201D',
+    detail: 'Current Rheumatology Reports, 21, 30 (2019). Wayne State University.',
+    psp: 'EAET is the negative-valence complement to PSP\u2019s positive-valence architecture. EAET works downward into suppressed emotional material\u2026 trauma, grief, rage. PSP works upward into independently absent positive conditions\u2026 joy, community, agency, generativity. Neither claims to remove the pepper. Both change the sauce. They attend to different ingredients. Together, they approximate what the Blues have always done: process anguish AND produce joy simultaneously.',
+    link: 'https://doi.org/10.1007/s11926-019-0829-6',
+    linkText: 'Read the paper',
+  },
+  {
+    author: 'Brendon Stubbs et al.',
+    work: '\u201CIntegrating Physical Activity Into Routine Psychiatric Care: A Review\u201D',
+    detail: 'JAMA Psychiatry (2026). King\u2019s College London / Loughborough University / Medical University of Vienna. Reviewed data from more than 12,000 participants with clinically diagnosed severe mental illness.',
+    psp: 'Physical activity produces moderate-to-large reductions in depressive symptoms, improvements in psychotic symptoms, enhanced cognitive functioning, and improved quality of life in people with severe mental illness. The field\u2019s asymmetric focus on reducing the pathological while neglecting to promote the salutogenic parallels what the Pepper Sauce Principle identifies in pain management: treating what hurts while ignoring what heals.',
+    link: 'https://jamanetwork.com/journals/jamapsychiatry/article-abstract/2845751',
+    linkText: 'Read the paper',
+  },
+  {
+    author: 'Mieke Janevic et al.',
+    work: '\u201CPositive STEPS: A Community Health Worker\u2013Led Intervention for African Americans with Chronic Pain\u201D',
+    detail: 'The Gerontologist, 62(9), 1369\u20131380 (2022). University of Michigan. 86% reported \u201Cbetter/much better\u201D outcomes versus 25% controls.',
+    psp: 'Race-concordant community health workers delivered positive psychology activities combined with pain self-management to older African Americans. A standalone positive psychology intervention for veterans (Hausmann et al., 2018) found no significant effect. The difference was not that Positive STEPS was \u201Cculturally adapted.\u201D It was that the intervention changed the unit of practice from individual to communal and delivered it within a context of cultural congruence. The active ingredient was the conditions, not the techniques.',
+    link: 'https://doi.org/10.1093/geront/gnac008',
+    linkText: 'Read the paper',
+  },
 ];
 
 const VOICES = [
@@ -196,6 +309,55 @@ const VOICES = [
     link: 'https://www.penguinrandomhouse.com/books/321921/jesus-and-the-disinherited-by-howard-thurman/',
     linkText: 'The book',
   },
+  // New entries below
+  {
+    name: 'Albert Murray',
+    work: 'Stomping the Blues (1976)',
+    desc: 'Murray argued that blues music is not an expression of despair but an aesthetic device against suffering. He called it \u201Cthe exorcism of despair.\u201D The Saturday Night Function was a secular ritual equivalent to Sunday morning worship\u2026 blues performance transforming raw experience into art that sustains and revitalizes the spirit. If Baldwin gives you craft, Murray gives you the communal infrastructure within which craft operates.',
+    psp: 'The counter-technology. Blues as graded exposure in aesthetic form\u2026 the repeated, voluntary, communally witnessed confrontation with painful material. Maps to Conditions 3 and 4.',
+    link: 'https://www.penguinrandomhouse.com/books/33697/stomping-the-blues-by-albert-murray/',
+    linkText: 'The book',
+  },
+  {
+    name: 'W.E.B. Du Bois',
+    work: 'The Souls of Black Folk (1903)',
+    desc: 'In \u201COf the Sorrow Songs,\u201D the final chapter, Du Bois heard what the science would take another century to confirm: communal expressions of anguish can become resources for hope, solidarity, and shared meaning. He wrote that through all the sorrow there breathes a faith in the ultimate justice of things. The sorrow songs are broaden-and-build a hundred years before the theory had a name.',
+    psp: 'The earliest American documentation of communal pain processing through craft and song. The ancestors were running the protocol before the science had language for it.',
+    link: 'https://www.gutenberg.org/ebooks/408',
+    linkText: 'The book',
+  },
+  {
+    name: 'Anne Lamott',
+    work: 'Small Victories: Spotting Improbable Moments of Grace (2014)',
+    desc: '\u201CNothing can be delicious when you are holding your breath.\u201D People in pain hold their breath in a hundred ways\u2026 physical bracing, emotional numbing, social withdrawal, dimming what is bright so that what hurts will be believed. The five conditions are what lets you exhale.',
+    psp: 'The exhale. Lamott diagnoses the problem the framework was built to address.',
+    link: 'https://www.penguinrandomhouse.com/books/248811/small-victories-by-anne-lamott/',
+    linkText: 'The book',
+  },
+  {
+    name: 'Anatole France',
+    work: 'Le Jardin d\u2019\u00C9picure (1894)',
+    desc: '\u201CThe truth is that life is delicious, horrible, charming, frightful, sweet, bitter, and that is everything.\u201D France did not say life is delicious despite being horrible. He said it is delicious and horrible and everything\u2026 simultaneously. The coexistence thesis in a single sentence, written 130 years ago.',
+    psp: 'The destination. The Spicy and Delicious quadrant does not require the pepper to leave. It requires the full recipe to be present.',
+    link: 'https://www.gutenberg.org/ebooks/20936',
+    linkText: 'The book',
+  },
+  {
+    name: 'Joy DeGruy',
+    work: 'Post Traumatic Slave Syndrome: America\u2019s Legacy of Enduring Injury and Healing (2005/2017)',
+    desc: 'Documents the dual inheritance: both ancestral trauma and adaptive survival behaviors transmitted across generations. The survival behaviors persist because trauma rewires families, not just individuals. But the adaptive behaviors\u2026 the kitchen tables, the communal rituals, the refusal to be diminished\u2026 those persist too.',
+    psp: 'What happens when all five conditions are systematically withheld across centuries. Also: what happens when communities rebuild them under impossible constraints.',
+    link: 'https://www.joydegruypublications.com',
+    linkText: 'The book',
+  },
+  {
+    name: 'Malidoma Patrice Som\u00E9',
+    work: 'The Healing Wisdom of Africa (1999)',
+    desc: 'Som\u00E9 argued that indigenous African healing centers on three interconnected elements\u2026 healing, ritual, and community\u2026 and that unexpressed grief poisons the self, requiring regular communal grief rituals as ongoing spiritual hygiene. Grief that is not processed communally does not go away. It compounds.',
+    psp: 'The African philosophical foundation for Condition 3. Community as mechanism, not decoration. The bridge between Caribbean Nine Night, the Black Church, and the neuroscience of communal processing.',
+    link: 'https://www.penguinrandomhouse.com/books/330672/the-healing-wisdom-of-africa-by-malidoma-patrice-some/',
+    linkText: 'The book',
+  },
 ];
 
 const BOOKSHELF = [
@@ -245,6 +407,23 @@ const BOOKSHELF = [
     desc: 'Documented how enslaved people\u2019s kitchens became classrooms, chapels, and community centers \u2014 and how cayenne and hot pepper concoctions were part of the foodways from the beginning. The historical bedrock for understanding food as cultural technology.',
     psp: 'The kitchen as the original site of all five conditions \u2014 practiced for centuries, unnamed until now.',
     link: 'https://uncpress.org/book/9781469607689/soul-food/',
+    linkText: 'The book',
+  },
+  // New entries below
+  {
+    title: 'Blues Legacies and Black Feminism',
+    authorLine: 'Angela Y. Davis \u00B7 Pantheon Books, 1998',
+    desc: 'Davis showed that Black women blues artists\u2026 Ma Rainey, Bessie Smith, Billie Holiday\u2026 articulated radical subjects decades before the formal feminist movement. Sexual freedom, domestic violence, economic exploitation, female autonomy. They named what no one else would name, out loud, on purpose. That is Pass the Sauce through song.',
+    psp: 'The gendered dimension of the blues as technology. If Baldwin gives you the mechanism and Murray gives you the infrastructure, Davis gives you the women who wielded it.',
+    link: 'https://www.penguinrandomhouse.com/books/72259/blues-legacies-and-black-feminism-by-angela-y-davis/',
+    linkText: 'The book',
+  },
+  {
+    title: 'Blues People: Negro Music in White America',
+    authorLine: 'Amiri Baraka (LeRoi Jones) \u00B7 William Morrow, 1963',
+    desc: 'Baraka established that the evolution of Black music\u2026 from African origins through work songs, spirituals, blues, jazz, and bebop\u2026 constitutes a social and cultural history of Black life in America. Every transformation in Black musical form corresponds to shifts in social, economic, and political conditions. The music is the recipe, changing as the pepper changes, never losing the burn, always building new sauce.',
+    psp: 'The cultural-historical evidence that pain does not have to diminish for the recipe to evolve. The arc from slavery to sovereignty, tracked through sound.',
+    link: 'https://www.harpercollins.com/products/blues-people-leroi-jones',
     linkText: 'The book',
   },
 ];
@@ -381,11 +560,11 @@ export function RootsResearchSection() {
 
           <RevealSection>
             <div style={{ textAlign: 'center' }}>
-              <p className="mx-auto mb-4 max-w-[560px] font-accent text-[clamp(1.1rem,2vw,1.35rem)] italic leading-[1.4] text-gold">
-                No prominent voice had explicitly made the bridge that <span className="font-semibold text-gold-light">The Pepper Sauce Principle</span> makes: hot sauce as a systematic framework for living with pain.
+              <p className="mx-auto max-w-[560px] text-[0.95rem] leading-[1.7] text-cream-mid">
+                Pain neuroscience exists in one literature. The psychology of positive emotions exists in another. The cultural wisdom of communities who have been holding pain for centuries exists in a third. The science of voluntarily engaging with what burns exists in a fourth. None of them, alone, name the conditions that determine whether pain becomes suffering&hellip; or an ingredient in a life worth savoring.
               </p>
-              <p className="mx-auto max-w-[520px] text-[0.88rem] text-cream-mid">
-                The science exists in one literature. The cultural wisdom exists in another. The psychology of voluntarily engaging with pain exists in a third. None of them name the conditions that determine whether pain becomes suffering &mdash; or an ingredient in a life worth savoring. This framework is the recipe that brings them together.
+              <p className="mx-auto mt-4 max-w-[520px] font-accent text-[clamp(1.1rem,2vw,1.35rem)] italic leading-[1.4] text-gold">
+                <span className="font-semibold text-gold-light">The Pepper Sauce Principle</span> is the recipe that brings them together. Not by softening any of them, but by showing they were always describing the same thing from different vantage points. The science is catching up to what the ancestors already knew.
               </p>
             </div>
           </RevealSection>
