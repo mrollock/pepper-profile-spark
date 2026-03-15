@@ -480,9 +480,78 @@ export function QuizSection() {
     }, 350);
   };
 
-  // CHAT (pre-profile appetizer — shown directly, before name/email)
+  // PRE-PROFILE GATE SCREEN
+  if (phase === 'gate') {
+    return (
+      <section className="bg-dark py-[var(--section-pad)] px-[clamp(1.25rem,5vw,3rem)]" id="quiz">
+        <div className="mx-auto max-w-[560px]">
+          <div className="rounded-2xl border border-gold/15 bg-dark-mid p-8 md:p-10 text-center">
+            <h2 className="mb-6 font-display text-[clamp(1.3rem,3vw,1.6rem)] leading-[1.35] text-gold-light">
+              Before You Begin
+            </h2>
 
-  // CHAT (pre-profile appetizer — shown after clicking CTA, before name/email)
+            <div className="space-y-4 text-left text-[0.92rem] leading-[1.7] text-cream-mid">
+              <p>
+                The Pepper Sauce Profile is a 34-item self-reflection tool designed for adults (18 and older). It asks about your experience of pain, your sense of agency, your community connections, your capacity for engagement, and your generativity.
+              </p>
+              <p>
+                Some questions ask about difficult experiences, including thoughts about being a burden and thoughts that others might be better off without you. These questions are included to ensure your results are handled with appropriate care.
+              </p>
+              <p>
+                <strong className="text-cream-soft">This is not a clinical assessment, diagnostic tool, or crisis service.</strong> Your responses do not generate a diagnosis, clinical evaluation, or referral to a mental health professional. If you are currently in crisis or experiencing thoughts of self-harm, please reach out to one of the resources below before continuing.
+              </p>
+            </div>
+
+            {/* Crisis resource box */}
+            <div className="my-8 rounded-xl border border-gold/20 bg-dark px-6 py-5 text-left">
+              <p className="mb-2 text-[0.95rem] leading-[1.7] text-cream-soft">
+                <strong className="font-semibold">988 Suicide &amp; Crisis Lifeline:</strong> Call or text <strong className="font-semibold">988</strong> (24/7, free, confidential)
+              </p>
+              <p className="mb-2 text-[0.95rem] leading-[1.7] text-cream-soft">
+                <strong className="font-semibold">Crisis Text Line:</strong> Text <strong className="font-semibold">HOME</strong> to <strong className="font-semibold">741741</strong>
+              </p>
+              <p className="text-[0.95rem] leading-[1.7] text-cream-soft">
+                <strong className="font-semibold">Emergency:</strong> Call <strong className="font-semibold">911</strong>
+              </p>
+            </div>
+
+            {/* Age confirmation */}
+            <label className="mb-6 flex items-start gap-3 text-left cursor-pointer">
+              <input
+                type="checkbox"
+                checked={ageConfirmed}
+                onChange={(e) => setAgeConfirmed(e.target.checked)}
+                className="mt-1 h-5 w-5 shrink-0 rounded border-2 border-gold/40 bg-transparent accent-gold cursor-pointer"
+              />
+              <span className="text-[0.92rem] leading-[1.5] text-cream-soft font-medium">
+                I confirm that I am at least 18 years old.
+              </span>
+            </label>
+
+            <button
+              onClick={() => {
+                sessionStorage.setItem('psp_gate_completed', 'true');
+                setPhase('chat');
+                setTimeout(scrollToQuiz, 100);
+              }}
+              disabled={!ageConfirmed}
+              className={cn(
+                "mt-2 w-full rounded-md px-9 py-3.5 font-body text-[0.95rem] font-semibold transition-all",
+                ageConfirmed
+                  ? "bg-gold text-dark hover:bg-gold-light hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(200,150,46,0.3)]"
+                  : "bg-gold/30 text-dark/50 cursor-not-allowed"
+              )}
+            >
+              Begin Profile
+            </button>
+          </div>
+          <CrisisFooter />
+        </div>
+      </section>
+    );
+  }
+
+  // CHAT (pre-profile appetizer)
   if (phase === 'chat') {
     return (
       <section className="bg-cream-soft py-[var(--section-pad)] px-[clamp(1.25rem,5vw,3rem)]" id="quiz">
