@@ -429,7 +429,29 @@ export function QuizSection() {
     trackEvent('item_answer', { item_id: itemId, phase: 'quiz', index: currentItem });
     if (scoring === 'scoville' && value >= 5) {
       setScovilleTriggered(true);
+      // Mark this scoville item as notified (only once per item)
+      setScovilleNotifiedItems(prev => new Set(prev).add(itemId));
     }
+    // Delay auto-advance if scoville notification just triggered
+    const advanceDelay = (scoring === 'scoville' && value >= 5 && !scovilleNotifiedItems.has(itemId)) ? 0 : 300;
+    if (advanceDelay === 0) {
+      // Don't auto-advance for scoville notification; user scrolls past naturally
+      return;
+    }
+    isTransitioning.current = true;
+    setTimeout(() => {
+      if (currentItem + 1 >= likertItems.length) {
+        setPhase('fireIntro');
+      } else {
+        setCurrentItem(prev => prev + 1);
+      }
+      isTransitioning.current = false;
+      scrollToQuiz();
+    }, 300);
+  };
+
+  // Manual advance after scoville notification is visible
+  const handleScovilleAdvance = () => {
     isTransitioning.current = true;
     setTimeout(() => {
       if (currentItem + 1 >= likertItems.length) {
