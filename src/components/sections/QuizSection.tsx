@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import InlinePreProfileChat from '@/components/InlinePreProfileChat';
+import { CrisisFooter } from '@/components/CrisisFooter';
 import { cn } from '@/lib/utils';
 import { Share2, Copy, Check, Printer, Twitter, Facebook, Linkedin } from 'lucide-react';
 import {
@@ -22,7 +23,7 @@ import {
 import { CONDITION_INSIGHTS, FRAMEWORK_REMINDER } from '@/data/conditionInsights';
 import { PRE_ASSESSMENT_DISCLAIMER, POST_RESULTS_DISCLAIMER } from '@/data/legalCopy';
 
-type Phase = 'chat' | 'nameForm' | 'quiz' | 'fireIntro' | 'fire' | 'results';
+type Phase = 'gate' | 'chat' | 'nameForm' | 'quiz' | 'fireIntro' | 'fire' | 'results';
 
 /* ── Fire-to-thin-condition copy mapping ── */
 const FIRE_CONDITION_MAP: Record<string, Record<number, string>> = {
@@ -303,12 +304,15 @@ function ShareActions({ shareText, shareUrl }: { shareText: string; shareUrl: st
 
 export function QuizSection() {
   const navigate = useNavigate();
-  const [phase, setPhase] = useState<Phase>('chat');
+  const gateCompleted = typeof window !== 'undefined' && sessionStorage.getItem('psp_gate_completed') === 'true';
+  const [phase, setPhase] = useState<Phase>(gateCompleted ? 'chat' : 'gate');
+  const [ageConfirmed, setAgeConfirmed] = useState(false);
   const [currentItem, setCurrentItem] = useState(0);
   const [responses, setResponses] = useState<Record<number, number | string>>({});
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [scovilleTriggered, setScovilleTriggered] = useState(false);
+  const [scovilleNotifiedItems, setScovilleNotifiedItems] = useState<Set<number>>(new Set());
   const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const submittedRef = useRef(false);
@@ -425,7 +429,29 @@ export function QuizSection() {
     trackEvent('item_answer', { item_id: itemId, phase: 'quiz', index: currentItem });
     if (scoring === 'scoville' && value >= 5) {
       setScovilleTriggered(true);
+      // Mark this scoville item as notified (only once per item)
+      setScovilleNotifiedItems(prev => new Set(prev).add(itemId));
     }
+    // Delay auto-advance if scoville notification just triggered
+    const advanceDelay = (scoring === 'scoville' && value >= 5 && !scovilleNotifiedItems.has(itemId)) ? 0 : 300;
+    if (advanceDelay === 0) {
+      // Don't auto-advance for scoville notification; user scrolls past naturally
+      return;
+    }
+    isTransitioning.current = true;
+    setTimeout(() => {
+      if (currentItem + 1 >= likertItems.length) {
+        setPhase('fireIntro');
+      } else {
+        setCurrentItem(prev => prev + 1);
+      }
+      isTransitioning.current = false;
+      scrollToQuiz();
+    }, 300);
+  };
+
+  // Manual advance after scoville notification is visible
+  const handleScovilleAdvance = () => {
     isTransitioning.current = true;
     setTimeout(() => {
       if (currentItem + 1 >= likertItems.length) {
@@ -454,9 +480,78 @@ export function QuizSection() {
     }, 350);
   };
 
-  // CHAT (pre-profile appetizer — shown directly, before name/email)
+  // PRE-PROFILE GATE SCREEN
+  if (phase === 'gate') {
+    return (
+      <section className="bg-dark py-[var(--section-pad)] px-[clamp(1.25rem,5vw,3rem)]" id="quiz">
+        <div className="mx-auto max-w-[560px]">
+          <div className="rounded-2xl border border-gold/15 bg-dark-mid p-8 md:p-10 text-center">
+            <h2 className="mb-6 font-display text-[clamp(1.3rem,3vw,1.6rem)] leading-[1.35] text-gold-light">
+              Before You Begin
+            </h2>
 
-  // CHAT (pre-profile appetizer — shown after clicking CTA, before name/email)
+            <div className="space-y-4 text-left text-[0.92rem] leading-[1.7] text-cream-mid">
+              <p>
+                The Pepper Sauce Profile is a 34-item self-reflection tool designed for adults (18 and older). It asks about your experience of pain, your sense of agency, your community connections, your capacity for engagement, and your generativity.
+              </p>
+              <p>
+                Some questions ask about difficult experiences, including thoughts about being a burden and thoughts that others might be better off without you. These questions are included to ensure your results are handled with appropriate care.
+              </p>
+              <p>
+                <strong className="text-cream-soft">This is not a clinical assessment, diagnostic tool, or crisis service.</strong> Your responses do not generate a diagnosis, clinical evaluation, or referral to a mental health professional. If you are currently in crisis or experiencing thoughts of self-harm, please reach out to one of the resources below before continuing.
+              </p>
+            </div>
+
+            {/* Crisis resource box */}
+            <div className="my-8 rounded-xl border border-gold/20 bg-dark px-6 py-5 text-left">
+              <p className="mb-2 text-[0.95rem] leading-[1.7] text-cream-soft">
+                <strong className="font-semibold">988 Suicide &amp; Crisis Lifeline:</strong> Call or text <strong className="font-semibold">988</strong> (24/7, free, confidential)
+              </p>
+              <p className="mb-2 text-[0.95rem] leading-[1.7] text-cream-soft">
+                <strong className="font-semibold">Crisis Text Line:</strong> Text <strong className="font-semibold">HOME</strong> to <strong className="font-semibold">741741</strong>
+              </p>
+              <p className="text-[0.95rem] leading-[1.7] text-cream-soft">
+                <strong className="font-semibold">Emergency:</strong> Call <strong className="font-semibold">911</strong>
+              </p>
+            </div>
+
+            {/* Age confirmation */}
+            <label className="mb-6 flex items-start gap-3 text-left cursor-pointer">
+              <input
+                type="checkbox"
+                checked={ageConfirmed}
+                onChange={(e) => setAgeConfirmed(e.target.checked)}
+                className="mt-1 h-5 w-5 shrink-0 rounded border-2 border-gold/40 bg-transparent accent-gold cursor-pointer"
+              />
+              <span className="text-[0.92rem] leading-[1.5] text-cream-soft font-medium">
+                I confirm that I am at least 18 years old.
+              </span>
+            </label>
+
+            <button
+              onClick={() => {
+                sessionStorage.setItem('psp_gate_completed', 'true');
+                setPhase('chat');
+                setTimeout(scrollToQuiz, 100);
+              }}
+              disabled={!ageConfirmed}
+              className={cn(
+                "mt-2 w-full rounded-md px-9 py-3.5 font-body text-[0.95rem] font-semibold transition-all",
+                ageConfirmed
+                  ? "bg-gold text-dark hover:bg-gold-light hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(200,150,46,0.3)]"
+                  : "bg-gold/30 text-dark/50 cursor-not-allowed"
+              )}
+            >
+              Begin Profile
+            </button>
+          </div>
+          <CrisisFooter />
+        </div>
+      </section>
+    );
+  }
+
+  // CHAT (pre-profile appetizer)
   if (phase === 'chat') {
     return (
       <section className="bg-cream-soft py-[var(--section-pad)] px-[clamp(1.25rem,5vw,3rem)]" id="quiz">
@@ -607,11 +702,40 @@ export function QuizSection() {
                       {v}
                     </div>
                     <div className="text-center text-[0.68rem] leading-tight text-text-faint whitespace-pre-line">
-                      {LIKERT_LABELS[v - 1]}
+              {LIKERT_LABELS[v - 1]}
                     </div>
                   </label>
                 ))}
               </div>
+
+              {/* In-Profile Crisis Resource Notification */}
+              {item.scoring === 'scoville' && scovilleNotifiedItems.has(item.id) && (responses[item.id] as number) >= 5 && (
+                <div className="mt-6 animate-[quizFadeIn_0.3s_ease] rounded-xl border-l-4 border-gold bg-cream/90 p-5 text-left">
+                  <p className="text-[0.92rem] leading-[1.7] text-text-body">
+                    We noticed you responded strongly to a question about a difficult experience. That takes honesty.
+                  </p>
+                  <p className="mt-3 text-[0.92rem] font-medium leading-[1.7] text-text-body">
+                    If what you're feeling right now is more than this tool can hold, these resources are here for you:
+                  </p>
+                  <div className="mt-3 space-y-1">
+                    <p className="text-[0.9rem] leading-[1.7] text-text-body">
+                      <strong className="font-semibold">988 Suicide &amp; Crisis Lifeline:</strong> Call or text <strong className="font-semibold">988</strong> (24/7)
+                    </p>
+                    <p className="text-[0.9rem] leading-[1.7] text-text-body">
+                      <strong className="font-semibold">Crisis Text Line:</strong> Text <strong className="font-semibold">HOME</strong> to <strong className="font-semibold">741741</strong>
+                    </p>
+                  </div>
+                  <p className="mt-3 text-[0.88rem] leading-[1.7] text-text-light">
+                    You are welcome to continue with the Profile at your own pace. Your responses to this question will be handled with additional care.
+                  </p>
+                  <button
+                    onClick={handleScovilleAdvance}
+                    className="mt-4 rounded-md bg-gold px-6 py-2.5 font-body text-[0.9rem] font-semibold text-dark transition-all hover:bg-gold-light"
+                  >
+                    Continue
+                  </button>
+                </div>
+              )}
             </div>
 
             <div className="mt-8 flex justify-between">
@@ -982,6 +1106,9 @@ export function QuizSection() {
           <p className="mt-10 text-center text-[0.78rem] leading-[1.6] text-text-faint">
             The Pepper Sauce Profile and Extended Pepper Sauce Profile are educational and personal development tools. They do not constitute clinical services, psychological assessment, diagnosis, or treatment. Purchasing or completing the Extended Profile does not establish a therapeutic, counseling, or professional&#8209;client relationship with Dr.&nbsp;Rollock or any affiliated entity. If you are in crisis or need clinical support, please contact the 988 Suicide and Crisis Lifeline (call or text 988) or your local emergency services.
           </p>
+
+          {/* Persistent Crisis Footer */}
+          <CrisisFooter />
         </div>
       </div>
     </section>
