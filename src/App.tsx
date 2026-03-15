@@ -10,6 +10,7 @@ import AdminAnalytics from "./pages/AdminAnalytics";
 import PrivacyPage from "./pages/PrivacyPage";
 import TermsPage from "./pages/TermsPage";
 import DisclaimerPage from "./pages/DisclaimerPage";
+import HealthPrivacyPage from "./pages/HealthPrivacyPage";
 import ResultsPage from "./pages/ResultsPage";
 import ConversationPage from "./pages/ConversationPage";
 import UnsubscribePage from "./pages/UnsubscribePage";
@@ -41,6 +42,7 @@ const App = () => (
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/disclaimer" element={<DisclaimerPage />} />
+          <Route path="/health-privacy" element={<HealthPrivacyPage />} />
           <Route path="/results/:id" element={<ResultsPage />} />
           <Route path="/conversation/:profileId" element={<ConversationPage />} />
           <Route path="/unsubscribe/:profileId" element={<UnsubscribePage />} />
