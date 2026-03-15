@@ -484,6 +484,7 @@ export function QuizSection() {
 
   // PRE-PROFILE GATE SCREEN
   if (phase === 'gate') {
+    const allChecked = ageConfirmed && healthConsent && termsAccepted;
     return (
       <section className="bg-dark py-[var(--section-pad)] px-[clamp(1.25rem,5vw,3rem)]" id="quiz">
         <div className="mx-auto max-w-[560px]">
@@ -494,13 +495,10 @@ export function QuizSection() {
 
             <div className="space-y-4 text-left text-[0.92rem] leading-[1.7] text-cream-mid">
               <p>
-                The Pepper Sauce Profile is a 34-item self-reflection tool designed for adults (18 and older). It asks about your experience of pain, your sense of agency, your community connections, your capacity for engagement, and your generativity.
+                The Pepper Sauce Profile is a self-reflection tool for adults. It asks about your experience of pain, your sense of agency, your community connections, and related topics. Some questions ask about thoughts of being a burden &mdash; these are included so your results can be handled with appropriate care.
               </p>
               <p>
-                Some questions ask about difficult experiences, including thoughts about being a burden and thoughts that others might be better off without you. These questions are included to ensure your results are handled with appropriate care.
-              </p>
-              <p>
-                <strong className="text-cream-soft">This is not a clinical assessment, diagnostic tool, or crisis service.</strong> Your responses do not generate a diagnosis, clinical evaluation, or referral to a mental health professional. If you are currently in crisis or experiencing thoughts of self-harm, please reach out to one of the resources below before continuing.
+                <strong className="text-cream-soft">This is not a clinical assessment or crisis service.</strong> If you are in crisis right now, please reach out before continuing:
               </p>
             </div>
 
@@ -517,29 +515,64 @@ export function QuizSection() {
               </p>
             </div>
 
-            {/* Age confirmation */}
-            <label className="mb-6 flex items-start gap-3 text-left cursor-pointer">
-              <input
-                type="checkbox"
-                checked={ageConfirmed}
-                onChange={(e) => setAgeConfirmed(e.target.checked)}
-                className="mt-1 h-5 w-5 shrink-0 rounded border-2 border-gold/40 bg-transparent accent-gold cursor-pointer"
-              />
-              <span className="text-[0.92rem] leading-[1.5] text-cream-soft font-medium">
-                I confirm that I am at least 18 years old.
-              </span>
-            </label>
+            {/* Three checkboxes */}
+            <div className="space-y-4 text-left">
+              <label className="flex items-start gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={ageConfirmed}
+                  onChange={(e) => setAgeConfirmed(e.target.checked)}
+                  className="mt-1 h-5 w-5 shrink-0 rounded border-2 border-gold/40 bg-transparent accent-gold cursor-pointer"
+                />
+                <span className="text-[0.92rem] leading-[1.5] text-cream-soft font-medium">
+                  I am at least 18 years old.
+                </span>
+              </label>
+
+              <label className="flex items-start gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={healthConsent}
+                  onChange={(e) => setHealthConsent(e.target.checked)}
+                  className="mt-1 h-5 w-5 shrink-0 rounded border-2 border-gold/40 bg-transparent accent-gold cursor-pointer"
+                />
+                <span className="text-[0.92rem] leading-[1.5] text-cream-soft font-medium">
+                  I consent to the collection and processing of my health-related responses as described in the{' '}
+                  <a href="/health-privacy" target="_blank" rel="noopener noreferrer" className="text-gold-muted underline hover:text-gold-light">Consumer Health Data Privacy Policy</a>.
+                  I can withdraw this consent at any time by emailing michael@ifwall.com.
+                </span>
+              </label>
+
+              <label className="flex items-start gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={termsAccepted}
+                  onChange={(e) => setTermsAccepted(e.target.checked)}
+                  className="mt-1 h-5 w-5 shrink-0 rounded border-2 border-gold/40 bg-transparent accent-gold cursor-pointer"
+                />
+                <span className="text-[0.92rem] leading-[1.5] text-cream-soft font-medium">
+                  I agree to the{' '}
+                  <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-gold-muted underline hover:text-gold-light">Terms of Use</a>{' '}
+                  and{' '}
+                  <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-gold-muted underline hover:text-gold-light">Privacy Policy</a>.
+                </span>
+              </label>
+            </div>
 
             <button
               onClick={() => {
                 sessionStorage.setItem('psp_gate_completed', 'true');
+                // Store consent timestamps in sessionStorage to write when profile is created
+                const now = new Date().toISOString();
+                sessionStorage.setItem('psp_health_data_consent_at', now);
+                sessionStorage.setItem('psp_terms_accepted_at', now);
                 setPhase('chat');
                 setTimeout(scrollToQuiz, 100);
               }}
-              disabled={!ageConfirmed}
+              disabled={!allChecked}
               className={cn(
-                "mt-2 w-full rounded-md px-9 py-3.5 font-body text-[0.95rem] font-semibold transition-all",
-                ageConfirmed
+                "mt-6 w-full rounded-md px-9 py-3.5 font-body text-[0.95rem] font-semibold transition-all",
+                allChecked
                   ? "bg-gold text-dark hover:bg-gold-light hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(200,150,46,0.3)]"
                   : "bg-gold/30 text-dark/50 cursor-not-allowed"
               )}
