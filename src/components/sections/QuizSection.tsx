@@ -307,6 +307,8 @@ export function QuizSection() {
   const gateCompleted = typeof window !== 'undefined' && sessionStorage.getItem('psp_gate_completed') === 'true';
   const [phase, setPhase] = useState<Phase>(gateCompleted ? 'chat' : 'gate');
   const [ageConfirmed, setAgeConfirmed] = useState(false);
+  const [healthConsent, setHealthConsent] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const [currentItem, setCurrentItem] = useState(0);
   const [responses, setResponses] = useState<Record<number, number | string>>({});
   const [userName, setUserName] = useState('');
