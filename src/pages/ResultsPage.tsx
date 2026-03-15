@@ -312,7 +312,6 @@ export default function ResultsPage() {
   const showChronicSeparately = chronicFireKey && chronicFireKey !== primaryFireKey;
 
   const scovilleTriggered = data.scoville_gate_triggered;
-  const [crisisBannerDismissed, setCrisisBannerDismissed] = useState(false);
   const gateItems: number[] = [];
   if (data.gate_overwhelm) gateItems.push(6);
   if (data.gate_safety) gateItems.push(17);
