@@ -10,6 +10,7 @@ import AdminAnalytics from "./pages/AdminAnalytics";
 import PrivacyPage from "./pages/PrivacyPage";
 import TermsPage from "./pages/TermsPage";
 import DisclaimerPage from "./pages/DisclaimerPage";
+import HealthPrivacyPage from "./pages/HealthPrivacyPage";
 import ResultsPage from "./pages/ResultsPage";
 import ConversationPage from "./pages/ConversationPage";
 import UnsubscribePage from "./pages/UnsubscribePage";
