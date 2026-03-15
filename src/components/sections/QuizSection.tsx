@@ -357,6 +357,10 @@ export function QuizSection() {
       gate_safety: scovilleItems.includes(17),
       gate_burdensomeness: scovilleItems.includes(24),
       gate_numbing: scovilleItems.includes(29),
+      health_data_consent: true,
+      health_data_consent_at: sessionStorage.getItem('psp_health_data_consent_at') || new Date().toISOString(),
+      terms_accepted: true,
+      terms_accepted_at: sessionStorage.getItem('psp_terms_accepted_at') || new Date().toISOString(),
     };
     supabase.from('quiz_submissions').insert(profileRow as any).select('id').single().then(({ data: row }) => {
       if (row?.id) {
