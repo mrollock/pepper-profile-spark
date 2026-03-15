@@ -11,8 +11,9 @@ import {
 import { CONDITION_INSIGHTS, FRAMEWORK_REMINDER } from '@/data/conditionInsights';
 import { FIRE_TYPE_COPY, CHRONIC_BRIDGE_INTRO, CHRONIC_BRIDGE_BODY, CHRONIC_BRIDGE_OUTRO } from '@/data/fireTypeInsights';
 import { POST_RESULTS_DISCLAIMER } from '@/data/legalCopy';
+import { CrisisFooter } from '@/components/CrisisFooter';
 import { cn } from '@/lib/utils';
-import { Share2, Copy, Check, Printer, Twitter, Facebook, Linkedin } from 'lucide-react';
+import { Share2, Copy, Check, Printer, Twitter, Facebook, Linkedin, X } from 'lucide-react';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/sections/Footer';
 
