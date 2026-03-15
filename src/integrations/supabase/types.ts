@@ -433,6 +433,8 @@ export type Database = {
           gate_numbing: boolean | null
           gate_overwhelm: boolean | null
           gate_safety: boolean | null
+          health_data_consent: boolean | null
+          health_data_consent_at: string | null
           id: string
           name: string
           nurture_unsubscribed: boolean | null
@@ -446,6 +448,8 @@ export type Database = {
           score_validation: number | null
           scoville_gate_triggered: boolean | null
           scoville_items_flagged: string[] | null
+          terms_accepted: boolean | null
+          terms_accepted_at: string | null
         }
         Insert: {
           chronic_fire_type?: string | null
@@ -456,6 +460,8 @@ export type Database = {
           gate_numbing?: boolean | null
           gate_overwhelm?: boolean | null
           gate_safety?: boolean | null
+          health_data_consent?: boolean | null
+          health_data_consent_at?: string | null
           id?: string
           name: string
           nurture_unsubscribed?: boolean | null
@@ -469,6 +475,8 @@ export type Database = {
           score_validation?: number | null
           scoville_gate_triggered?: boolean | null
           scoville_items_flagged?: string[] | null
+          terms_accepted?: boolean | null
+          terms_accepted_at?: string | null
         }
         Update: {
           chronic_fire_type?: string | null
@@ -479,6 +487,8 @@ export type Database = {
           gate_numbing?: boolean | null
           gate_overwhelm?: boolean | null
           gate_safety?: boolean | null
+          health_data_consent?: boolean | null
+          health_data_consent_at?: string | null
           id?: string
           name?: string
           nurture_unsubscribed?: boolean | null
@@ -492,6 +502,8 @@ export type Database = {
           score_validation?: number | null
           scoville_gate_triggered?: boolean | null
           scoville_items_flagged?: string[] | null
+          terms_accepted?: boolean | null
+          terms_accepted_at?: string | null
         }
         Relationships: []
       }
