@@ -574,6 +574,9 @@ export default function ResultsPage() {
                 ← Back to The Pepper Sauce Principle
               </Link>
             </div>
+
+            {/* Persistent Crisis Footer */}
+            <CrisisFooter />
           </div>
         </div>
       </section>

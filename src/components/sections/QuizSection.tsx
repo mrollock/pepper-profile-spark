@@ -1106,6 +1106,9 @@ export function QuizSection() {
           <p className="mt-10 text-center text-[0.78rem] leading-[1.6] text-text-faint">
             The Pepper Sauce Profile and Extended Pepper Sauce Profile are educational and personal development tools. They do not constitute clinical services, psychological assessment, diagnosis, or treatment. Purchasing or completing the Extended Profile does not establish a therapeutic, counseling, or professional&#8209;client relationship with Dr.&nbsp;Rollock or any affiliated entity. If you are in crisis or need clinical support, please contact the 988 Suicide and Crisis Lifeline (call or text 988) or your local emergency services.
           </p>
+
+          {/* Persistent Crisis Footer */}
+          <CrisisFooter />
         </div>
       </div>
     </section>

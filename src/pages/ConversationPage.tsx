@@ -483,6 +483,11 @@ export default function ConversationPage() {
           </button>
         </div>
       </div>
+
+      {/* Persistent Crisis Footer */}
+      <div className="flex-shrink-0 border-t border-gold/10">
+        <CrisisFooter />
+      </div>
     </div>
   );
 }
