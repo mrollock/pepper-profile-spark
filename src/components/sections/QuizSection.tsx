@@ -702,11 +702,40 @@ export function QuizSection() {
                       {v}
                     </div>
                     <div className="text-center text-[0.68rem] leading-tight text-text-faint whitespace-pre-line">
-                      {LIKERT_LABELS[v - 1]}
+              {LIKERT_LABELS[v - 1]}
                     </div>
                   </label>
                 ))}
               </div>
+
+              {/* In-Profile Crisis Resource Notification */}
+              {item.scoring === 'scoville' && scovilleNotifiedItems.has(item.id) && (responses[item.id] as number) >= 5 && (
+                <div className="mt-6 animate-[quizFadeIn_0.3s_ease] rounded-xl border-l-4 border-gold bg-cream/90 p-5 text-left">
+                  <p className="text-[0.92rem] leading-[1.7] text-text-body">
+                    We noticed you responded strongly to a question about a difficult experience. That takes honesty.
+                  </p>
+                  <p className="mt-3 text-[0.92rem] font-medium leading-[1.7] text-text-body">
+                    If what you're feeling right now is more than this tool can hold, these resources are here for you:
+                  </p>
+                  <div className="mt-3 space-y-1">
+                    <p className="text-[0.9rem] leading-[1.7] text-text-body">
+                      <strong className="font-semibold">988 Suicide &amp; Crisis Lifeline:</strong> Call or text <strong className="font-semibold">988</strong> (24/7)
+                    </p>
+                    <p className="text-[0.9rem] leading-[1.7] text-text-body">
+                      <strong className="font-semibold">Crisis Text Line:</strong> Text <strong className="font-semibold">HOME</strong> to <strong className="font-semibold">741741</strong>
+                    </p>
+                  </div>
+                  <p className="mt-3 text-[0.88rem] leading-[1.7] text-text-light">
+                    You are welcome to continue with the Profile at your own pace. Your responses to this question will be handled with additional care.
+                  </p>
+                  <button
+                    onClick={handleScovilleAdvance}
+                    className="mt-4 rounded-md bg-gold px-6 py-2.5 font-body text-[0.9rem] font-semibold text-dark transition-all hover:bg-gold-light"
+                  >
+                    Continue
+                  </button>
+                </div>
+              )}
             </div>
 
             <div className="mt-8 flex justify-between">
