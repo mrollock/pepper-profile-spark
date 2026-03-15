@@ -342,6 +342,40 @@ export default function ResultsPage() {
         <div className="mx-auto max-w-[var(--wide-max)]">
           <div className="mx-auto max-w-[720px]" role="region" aria-label="Quiz Results">
 
+            {/* Crisis Banner — shown when scoville gate triggered */}
+            {scovilleTriggered && !crisisBannerDismissed && (
+              <div className="relative mb-10 rounded-xl border-l-4 border-gold bg-[#FAF4E8] px-6 py-5 text-left shadow-sm">
+                <button
+                  onClick={() => setCrisisBannerDismissed(true)}
+                  className="absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-full text-text-faint transition-colors hover:bg-cream-mid/40 hover:text-text-body"
+                  aria-label="Dismiss banner"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+                <h3 className="mb-3 font-display text-[1.1rem] font-bold text-text-body">Before you explore your results</h3>
+                <p className="text-[0.92rem] leading-[1.7] text-text-body">
+                  Your responses included one or more items that tell us you may be carrying something especially heavy right now. The Pepper Sauce Profile is an educational self-reflection tool — it is not a crisis service, and your results are not a clinical assessment.
+                </p>
+                <p className="mt-3 text-[0.92rem] leading-[1.7] text-text-body">
+                  If what you're carrying feels like more than you can hold alone, please reach out:
+                </p>
+                <div className="mt-3 space-y-1">
+                  <p className="text-[0.92rem] leading-[1.7] text-text-body">
+                    <strong className="font-semibold">988 Suicide &amp; Crisis Lifeline:</strong> Call or text <strong className="font-semibold">988</strong> (24/7, free, confidential)
+                  </p>
+                  <p className="text-[0.92rem] leading-[1.7] text-text-body">
+                    <strong className="font-semibold">Crisis Text Line:</strong> Text <strong className="font-semibold">HOME</strong> to <strong className="font-semibold">741741</strong>
+                  </p>
+                  <p className="text-[0.92rem] leading-[1.7] text-text-body">
+                    <strong className="font-semibold">Emergency:</strong> Call <strong className="font-semibold">911</strong>
+                  </p>
+                </div>
+                <p className="mt-3 text-[0.92rem] leading-[1.7] text-text-body">
+                  Your results are below. Take your time.
+                </p>
+              </div>
+            )}
+
             {/* Header */}
             <div className="text-center mb-10">
               <span className="block font-body text-xs font-semibold uppercase tracking-[0.22em] text-gold-muted mb-3">Your Pepper Sauce Profile</span>
