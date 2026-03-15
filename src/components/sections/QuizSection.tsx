@@ -304,12 +304,15 @@ function ShareActions({ shareText, shareUrl }: { shareText: string; shareUrl: st
 
 export function QuizSection() {
   const navigate = useNavigate();
-  const [phase, setPhase] = useState<Phase>('chat');
+  const gateCompleted = typeof window !== 'undefined' && sessionStorage.getItem('psp_gate_completed') === 'true';
+  const [phase, setPhase] = useState<Phase>(gateCompleted ? 'chat' : 'gate');
+  const [ageConfirmed, setAgeConfirmed] = useState(false);
   const [currentItem, setCurrentItem] = useState(0);
   const [responses, setResponses] = useState<Record<number, number | string>>({});
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [scovilleTriggered, setScovilleTriggered] = useState(false);
+  const [scovilleNotifiedItems, setScovilleNotifiedItems] = useState<Set<number>>(new Set());
   const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const submittedRef = useRef(false);
