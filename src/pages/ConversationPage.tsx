@@ -3,6 +3,7 @@ import { useParams, useNavigate, useSearchParams, Link } from 'react-router-dom'
 import { supabase } from '@/integrations/supabase/client';
 import { CONDITION_NAMES, CONDITION_SUBTITLES, FIRE_NAMES } from '@/data/quizData';
 import { Send, ArrowRight, Loader2 } from 'lucide-react';
+import { CrisisFooter } from '@/components/CrisisFooter';
 
 /* ── Types ── */
 type Message = { role: 'user' | 'assistant'; content: string; timestamp: string };
